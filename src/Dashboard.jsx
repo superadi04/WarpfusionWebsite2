@@ -18,6 +18,7 @@ import FinetuneModal from './CreateNewModel'
 import { createClient } from '@supabase/supabase-js'
 import TexttoVideo from "./TexttoVideo"
 import Morph from "./Morph"
+import FAQ from "./FAQ"
 
 const supabase = createClient('https://rrvjkmdsixuiuqktlxcg.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJydmprbWRzaXh1aXVxa3RseGNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTE1NDMxNjcsImV4cCI6MjAwNzExOTE2N30.Vo6_mO9gTwO_XqP9EDFh7LD5qHDGgIa50T8qsjI3wBk')
 
@@ -72,7 +73,8 @@ export default function Dashboard({ pageName, modelID, setModelID, createdAt, se
     { name: 'Explore', href: '/explore', current: false },
     { name: 'Your Videos', href: '/your-videos', current: false },
     { name: 'Pricing', href: '/pricing', current: false },
-    {name: 'Discord', href: 'https://discord.com/invite/fzdHj9DeuC', current: false}
+    {name: 'Discord', href: 'https://discord.com/invite/fzdHj9DeuC', current: false},
+    {name: 'FAQ', href: '/faq', current: false}
   ]);
 
   // console.log(modelID)
@@ -371,6 +373,7 @@ export default function Dashboard({ pageName, modelID, setModelID, createdAt, se
         {pageName === 'Model Details' && <ModelDetails model_id={modelID} model_name={model_name} created_at={createdAt} resolution={resolution} learning_rate={learningRate} batch_size={batchSize} training_steps={trainingSteps} urls={urls} base_model={base_model} is_gif={false} />}
         {pageName === 'API Keys' && <APIKeys />}
         {pageName === 'Pricing' && <Pricing />}
+        {pageName === 'FAQ' && <FAQ />}
       </div>
     </div>
   )
