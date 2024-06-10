@@ -20,8 +20,9 @@ import TexttoVideo from "./TexttoVideo"
 import Morph from "./Morph"
 import FAQ from "./FAQ"
 import MyVideos from './MyVideos'
+import ImageToVideo from './ImageToVideo'
 
-const supabase = createClient('https://rrvjkmdsixuiuqktlxcg.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJydmprbWRzaXh1aXVxa3RseGNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTE1NDMxNjcsImV4cCI6MjAwNzExOTE2N30.Vo6_mO9gTwO_XqP9EDFh7LD5qHDGgIa50T8qsjI3wBk')
+const supabase = createClient('https://zylqiknjgpjzjhylylnw.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp5bHFpa25qZ3BqempoeWx5bG53Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDU2MTEwMzMsImV4cCI6MjAyMTE4NzAzM30.ua5KcEvaU-2lkp_kHx1rOM4MFekUAZ7Ozd-fTrnMs7g')
 
 const user = {
   name: 'Tom Cook',
@@ -121,13 +122,14 @@ export default function Dashboard({ pageName, modelID, setModelID, createdAt, se
       //   navigate('/signin');
       // }
 
-      setUsername(userData?.user?.email);
-      const userId = userData?.user?.id;
+      // setUsername(userData?.user?.email);
+      setUsername("saketh.kotamraju@gmail.com")
+      const userId =  "404d5ad4-cefc-4155-bc89-9ad6f14047dc"; //userData?.user?.id;
 
       // Fetch user details
       const { data: userDetails } = await supabase
         .from('user_details')
-        .select()
+        .select("*")
         .eq('id', userId ?? '');
       // console.log("data", userDetails)
 
@@ -377,6 +379,7 @@ export default function Dashboard({ pageName, modelID, setModelID, createdAt, se
         {pageName === 'Video-to-Video' && <VideotoVideo base_models={products} credits={credits} setCredits={setCredits} generationsImages={generationsImages} setGenerationsImages={setGenerationsImages} generationsVideos={generationsVideos} setGenerationsVideos={setGenerationsVideos} activeTab={activeTab} startingModel={startingModel} setLastPartOfUrl={setLastPartOfUrl}/>}
         {pageName === 'Text-to-Video' && <TexttoVideo base_models={products} credits={credits} setCredits={setCredits} generationsImages={generationsImages} setGenerationsImages={setGenerationsImages} generationsVideos={generationsVideos} setGenerationsVideos={setGenerationsVideos} activeTab={activeTab} startingModel={startingModel} setLastPartOfUrl={setLastPartOfUrl}/>}
         {pageName === 'Morph' && <Morph base_models={products} credits={credits} setCredits={setCredits} generationsImages={generationsImages} setGenerationsImages={setGenerationsImages} generationsVideos={generationsVideos} setGenerationsVideos={setGenerationsVideos} activeTab={activeTab} startingModel={startingModel} setLastPartOfUrl={setLastPartOfUrl}/>}
+        {pageName === 'ImageToVideo' && <ImageToVideo base_models={products} credits={credits} setCredits={setCredits} generationsImages={generationsImages} setGenerationsImages={setGenerationsImages} generationsVideos={generationsVideos} setGenerationsVideos={setGenerationsVideos} activeTab={activeTab} startingModel={startingModel} setLastPartOfUrl={setLastPartOfUrl}/>}
         {pageName === 'Gallery' && <MyVideos/>}
         {pageName === 'Explore' && <InferenceHistory activeTab={activeTab} />}
         {pageName === 'Create' && <MyModels handleInformation={handleModelDetails} setProducts={setModels} products={models} activeTab={activeTab} isModalOpen={isModalOpen} setModalOpen={setModalOpen} />}

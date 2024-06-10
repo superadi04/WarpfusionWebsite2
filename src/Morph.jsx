@@ -9,8 +9,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { VideoCameraIcon, CreditCardIcon, BuildingOfficeIcon, UsersIcon } from '@heroicons/react/20/solid'
 import { createClient } from '@supabase/supabase-js'
 import Masonry from 'react-masonry-css';
+import axios from 'axios';
 
-const supabase = createClient('https://rrvjkmdsixuiuqktlxcg.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJydmprbWRzaXh1aXVxa3RseGNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTE1NDMxNjcsImV4cCI6MjAwNzExOTE2N30.Vo6_mO9gTwO_XqP9EDFh7LD5qHDGgIa50T8qsjI3wBk')
+const supabase = createClient('https://zylqiknjgpjzjhylylnw.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp5bHFpa25qZ3BqempoeWx5bG53Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDU2MTEwMzMsImV4cCI6MjAyMTE4NzAzM30.ua5KcEvaU-2lkp_kHx1rOM4MFekUAZ7Ozd-fTrnMs7g')
 const FastSpinner = styled(CircularProgress)(({ theme }) => ({
   '& .MuiCircularProgress-svg': {
     animationDuration: '0.1s',
@@ -34,45 +35,6 @@ const userNavigation = [
   { name: 'Settings', href: '#' },
   { name: 'Sign out', href: '#' },
 ]
-
-// const base_models = [
-//   {
-//     id: 1,
-//     title: 'Stable Diffusion XL',
-//     price: 'stable-diffusion-xl',
-//     imageSrc: './sdxl.jpeg'
-//   },
-//   {
-//     id: 2,
-//     title: 'Stable Diffusion 1.5',
-//     price: 'stable-diffusion-v15',
-//     imageSrc: './sd21.jpeg'
-//   },
-//   {
-//     id: 3,
-//     title: 'Stable Diffusion 2.1',
-//     price: 'stable-diffusion-v21',
-//     imageSrc: './sd21.jpeg'
-//   },
-//   {
-//     id: 4,
-//     title: 'Absolute Reality',
-//     price: 'absolute-reality',
-//     imageSrc: './absreality.png'
-//   },
-//   {
-//     id: 6,
-//     title: 'Realistic-Vision-5.1',
-//     price: 'realistic-vision-v51',
-//     imageSrc: './realistic_vision_51.jpeg',
-//   },
-//   {
-//     id: 7,
-//     title: 'Anything V-5',
-//     price: 'anything-v5',
-//     imageSrc: './anythingv5.jpeg'
-//   },
-// ]
 const deliveryMethods = [
   { id: 1, title: 'Standard', turnaround: '4–10 business days', price: '$5.00' },
   { id: 2, title: 'Express', turnaround: '2–5 business days', price: '$16.00' },
@@ -163,39 +125,6 @@ function Models({ open, setOpen, model, setModel, models, setHeight, setWidth, s
     </div>
   );
 }
-
-
-// function Models({open, setOpen, model, setModel}) {
-//   return (
-//     <div className="">
-//       <div className="mx-auto max-w-2xl lg:max-w-7xl">
-//         <div className="mt-8 grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8">
-//           {products.map((product) => (
-//             <div key={product.id} className='cursor-pointer'>
-//               <div className="relative">
-//                 <div className="relative h-48 w-48 overflow-hidden rounded-lg product-item">
-//                   <img
-//                     src={product.imageSrc}
-//                     alt={product.imageAlt}
-//                     className="h-full w-full object-cover object-center"
-//                   />
-//                 </div>
-//                 <div className="absolute inset-x-0 top-0 flex h-48 w-48 items-end justify-end overflow-hidden rounded-lg p-4">
-//                   <div
-//                     aria-hidden="true"
-//                     className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-black opacity-50 hover:opacity-100 transition-opacity duration-200" // Added hover:opacity-100 here
-//                   />
-//                   <p className="relative text-lg font-semibold text-white">{product.price}</p>
-//                 </div>
-//               </div>
-//             </div>
-//           ))}
-//         </div>
-//       </div>
-//     </div>
-//   )
-// }
-
 function WarningModal({ show, setShow, message }) {
   useEffect(() => {
     let timer;
@@ -299,418 +228,6 @@ function ModelsModal({ open, setOpen, model, setModel, models, setHeight, setWid
     </Transition.Root>
   )
 }
-
-function ModelsAccordion({ model, setModel, models, setHeight, setWidth, setSteps }) {
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <div className="hs-accordion-group">
-      <div className={`hs-accordion ${isOpen ? "active" : ""}`} id="hs-basic-with-title-and-arrow-stretched-heading-one">
-        <button
-          type="button"  // Add this line
-          className="-mb-10 hs-accordion-toggle hs-accordion-active:text-blue-600 group py-3 inline-flex items-center justify-between gap-x-3 w-full font-semibold text-left text-gray-800 transition hover:text-gray-500 dark:hs-accordion-active:text-blue-500 dark:text-gray-200 dark:hover:text-gray-400"
-          aria-controls="hs-basic-with-title-and-arrow-stretched-collapse-one"
-          onClick={() => setIsOpen(true)}
-        >
-          <h3 className="text-base font-semibold leading-6 text-gray-300">
-            Style: {model.model_name}
-          </h3>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#e2e8f0" class="w-6 h-6">
-            <path d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-          </svg>
-
-        </button>
-
-        <ModelsModal open={isOpen} setOpen={setIsOpen} model={model} setModel={setModel} models={models} setHeight={setHeight} setWidth={setWidth} setSteps={setSteps} />
-      </div>
-    </div>
-  );
-}
-
-function VideoModelsAccordian({ Title }) {
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <div className="hs-accordion-group">
-      <div className={`hs-accordion ${isOpen ? "active" : ""}`} id="hs-basic-with-title-and-arrow-stretched-heading-one">
-        <button
-          type="button"  // Add this line
-          className="-mb-10 hs-accordion-toggle hs-accordion-active:text-blue-600 group py-3 inline-flex items-center justify-between gap-x-3 w-full font-semibold text-left text-gray-800 transition hover:text-gray-500 dark:hs-accordion-active:text-blue-500 dark:text-gray-200 dark:hover:text-gray-400"
-          aria-controls="hs-basic-with-title-and-arrow-stretched-collapse-one"
-          onClick={() => setIsOpen(true)}
-        >
-          <h3 className="text-base font-semibold leading-6 text-gray-300">{Title}</h3>
-
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#e2e8f0" class="w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-          </svg>
-
-        </button>
-
-        {/* <ModelsModal open={isOpen} setOpen={setIsOpen}/> */}
-      </div>
-    </div>
-  );
-}
-
-
-function ImagePlaceholder() {
-  return (
-    <div className="w-full">
-      <div className="relative items-center block p-6 rounded-lg shadow-md bg-indigo-900"> {/* Adjusted background to bg-gray-800 */}
-        <div role="status" className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"> {/* Corrected class to className */}
-          <svg aria-hidden="true" className="w-8 h-8 mr-2 text-gray-200 animate-spin-fast fill-indigo-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-              fill="currentColor"
-            />
-            <path
-              d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-              fill="currentFill"
-            />
-          </svg>
-          <span className="sr-only">Loading...</span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function ImagePlaceholderOther() {
-    return (
-      <div className="w-full">
-        <div className="relative items-center block p-6 rounded-lg shadow-md bg-indigo-900 h-[100px]"> {/* Adjusted background to bg-gray-800 */}
-          <div role="status" className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"> {/* Corrected class to className */}
-            <svg aria-hidden="true" className="w-8 h-8 mr-2 text-gray-200 animate-spin-fast fill-indigo-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                fill="currentColor"
-              />
-              <path
-                d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                fill="currentFill"
-              />
-            </svg>
-            <span className="sr-only">Loading...</span>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-
-function MoreOptionsAccordion({
-  Title,
-  guidanceScale,
-  setGuidanceScale,
-  inferenceSteps,
-  setInferenceSteps,
-  seed,
-  setSeed,
-  numberOfImages,
-  setNumberOfImages,
-  scheduler,
-  setScheduler
-}) {
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <div className="hs-accordion-group">
-      <div className={`hs-accordion ${isOpen ? "active" : ""}`}>
-        <button
-          type="button"
-          className="-mb-10 hs-accordion-toggle hs-accordion-active:text-blue-600 group py-3 inline-flex items-center justify-between gap-x-3 w-full font-semibold text-left text-gray-800 transition hover:text-gray-500 dark:hs-accordion-active:text-blue-500 dark:text-gray-200 dark:hover:text-gray-400"
-          aria-controls="hs-basic-with-title-and-arrow-stretched-collapse-one"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          <h3 className="text-base font-semibold leading-6 text-gray-300">{Title}</h3>
-          {isOpen ? (
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#e2e8f0" className="w-6 h-6">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
-            </svg>
-          ) : (
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#e2e8f0" className="w-6 h-6">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-            </svg>
-          )}
-        </button>
-
-        {isOpen && (
-          <div
-            id="hs-basic-with-title-and-arrow-stretched-collapse-one"
-            className="hs-accordion-content w-full overflow-hidden transition-[height] duration-300"
-            aria-labelledby="hs-basic-with-title-and-arrow-stretched-heading-one"
-          >
-            <label htmlFor="numberOfImages" className="block pt-4 text-sm text-left font-medium leading-6 text-gray-300">
-              {`Number of Images: ${numberOfImages}`}
-            </label>
-            <input
-              id="numberOfImages"
-              type="range"
-              min="1"
-              max="4"
-              step="1"
-              value={numberOfImages}
-              onChange={(e) => setNumberOfImages(parseInt(e.target.value, 10))}
-              className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
-            />
-
-            <div className="flex gap-x-5 pt-4">
-              <div className="flex-1">
-                <label htmlFor="guidanceScale" className="block text-sm text-left font-medium leading-6 text-gray-300">
-                  {`CFG Scale: ${guidanceScale}`}
-                </label>
-                <input
-                  id="guidanceScale"
-                  type="range"
-                  min="1"
-                  max="20"
-                  step="0.1"
-                  value={guidanceScale}
-                  onChange={(e) => setGuidanceScale(parseFloat(e.target.value))}
-                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
-                />
-              </div>
-
-              <div className="flex-1">
-                <label htmlFor="inferenceSteps" className="block text-sm text-left font-medium leading-6 text-gray-300">
-                  {`Inference Steps: ${inferenceSteps}`}
-                </label>
-                <input
-                  id="inferenceSteps"
-                  type="range"
-                  min="10"
-                  max="60"
-                  step="1"
-                  value={inferenceSteps}
-                  onChange={(e) => setInferenceSteps(parseInt(e.target.value, 10))}
-                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
-                />
-              </div>
-            </div>
-
-            {/* <div className='pt-4'>
-              <label htmlFor="optionsDropdown" className="block text-sm text-left font-medium leading-6 text-gray-300">
-                Scheduler:
-              </label>
-              <select
-                value={scheduler}
-                id="optionsDropdown"
-                className="block w-full mt-2 p-2 text-gray-300 bg-gray-800 border border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-                onChange={(e) => setScheduler(e.target.value)}
-              >
-                <option value="EulerA" className="text-gray-300 bg-gray-800">Euler A</option>
-                <option value="Euler" className="text-gray-300 bg-gray-800">Euler</option>
-                <option value="LMS" className="text-gray-300 bg-gray-800">LMS</option>
-                <option value="Heun" className="text-gray-300 bg-gray-800">Heun</option>
-                <option value="DPM2" className="text-gray-300 bg-gray-800">DPM2</option>
-                <option value="DPM2SA" className="text-gray-300 bg-gray-800">DPM2SA</option>
-                <option value="DPM2M" className="text-gray-300 bg-gray-800">DPM2M</option>
-                <option value="DPMSDE" className="text-gray-300 bg-gray-800">DPMSDE</option>
-                <option value="DPMfast" className="text-gray-300 bg-gray-800">DPMfast</option>
-                <option value="DPMAdaptive" className="text-gray-300 bg-gray-800">DPMAdaptive</option>
-                <option value="LMSKarras" className="text-gray-300 bg-gray-800">LMSKarras</option>
-                <option value="DPM2Karras" className="text-gray-300 bg-gray-800">DPM2Karras</option>
-                <option value="DPM2AKarras" className="text-gray-300 bg-gray-800">DPM2AKarras</option>
-                <option value="DPM2MKarras" className="text-gray-300 bg-gray-800">DPM2MKarras</option>
-                <option value="DPMSDEKarras" className="text-gray-300 bg-gray-800">DPMSDEKarras</option>
-                <option value="DDIM" className="text-gray-300 bg-gray-800">DDIM</option>
-                <option value="PLMS" className="text-gray-300 bg-gray-800">PLMS</option>
-                <option value="UniPC" className="text-gray-300 bg-gray-800">UniPC</option>
-                <option value="Undefined" className="text-gray-300 bg-gray-800" selected>Undefined</option>
-                <option value="LCM" className="text-gray-300 bg-gray-800">LCM</option>
-                <option value="DDPM" className="text-gray-300 bg-gray-800">DDPM</option>
-                <option value="DEIS" className="text-gray-300 bg-gray-800">DEIS</option>
-              </select>
-            </div> */}
-
-            <div className='pt-4'>
-              <TextArea
-                Title={"Seed"}
-                Rows={1}
-                value={seed}
-                setValue={setSeed}
-              />
-            </div>
-
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
-
-function VideoMoreOptionsAccordion({
-  Title,
-  seed,
-  setSeed,
-  cond_aug,
-  setCondAug
-}) {
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <div className="hs-accordion-group">
-      <div className={`hs-accordion ${isOpen ? "active" : ""}`}>
-        <button
-          type="button"
-          className="hs-accordion-toggle hs-accordion-active:text-blue-600 group py-3 inline-flex items-center justify-between gap-x-3 w-full font-semibold text-left text-gray-800 transition hover:text-gray-500 dark:hs-accordion-active:text-blue-500 dark:text-gray-200 dark:hover:text-gray-400"
-          aria-controls="hs-basic-with-title-and-arrow-stretched-collapse-one"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          <h3 className="text-base font-semibold leading-6 text-gray-300">{Title}</h3>
-          {isOpen ? (
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#e2e8f0" className="w-6 h-6">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
-            </svg>
-          ) : (
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#e2e8f0" className="w-6 h-6">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-            </svg>
-          )}
-        </button>
-
-        {isOpen && (
-          <div
-            id="hs-basic-with-title-and-arrow-stretched-collapse-one"
-            className="hs-accordion-content w-full overflow-hidden transition-[height] duration-300"
-            aria-labelledby="hs-basic-with-title-and-arrow-stretched-heading-one"
-          >
-
-            <div className="flex gap-x-4">
-              <div className="flex-1">
-                <TextArea
-                  Title={"Seed"}
-                  Rows={1}
-                  value={seed}
-                  onChange={(e) => setSeed(e.target.value)}
-                />
-              </div>
-
-              <div className="flex-1">
-                <TextArea
-                  Title={"Cond Aug"}
-                  Rows={1}
-                  value={cond_aug}
-                  onChange={(e) => setCondAug(e.target.value)}
-                />
-              </div>
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
-
-// const products = [
-//   {
-//     id: "stable-diffusion-xl",
-//     "model_name": "Stable Diffusion XL",
-//     "base_model": "",
-//     "learning_rate": null,
-//     "resolution": null,
-//     "training_steps": null,
-//     "status": "Finished",
-//     "batch_size": null,
-//     title: 'Stable Diffusion XL',
-//     price: 'stable-diffusion-xl',
-//     imageSrc: 'https://flush-user-images.s3.us-east-2.amazonaws.com/sdxl.jpeg',
-//     description: 'Stable Diffusion XL',
-//     link: 'stable-diffusion-xl'
-//   },
-//   {
-//     id: "absolute-reality",
-//     "model_name": "Absolute Reality",
-//     "base_model": "",
-//     "learning_rate": null,
-//     "resolution": null,
-//     "training_steps": null,
-//     "status": "Finished",
-//     "batch_size": null,
-//     title: 'Absolute Reality',
-//     price: 'absolute-reality',
-//     imageSrc: 'https://flush-user-images.s3.us-east-2.amazonaws.com/absreality.png',
-//     description: 'Absolute Reality',
-//     link: 'absolute-reality'
-//   },
-//   {
-//     id: "realistic-vision-v51",
-//     "model_name": "Realistic Vision V51",
-//     "base_model": "",
-//     "learning_rate": null,
-//     "resolution": null,
-//     "training_steps": null,
-//     "status": "Finished",
-//     "batch_size": null,
-//     title: 'Realistic-Vision-5.1',
-//     price: 'realistic-vision-v51',
-//     imageSrc: './realistic_vision_51.jpeg',
-//     description: 'Realistic Vision V5.1',
-//     link: 'realistic-vision-v51'
-//   },
-//   {
-//     id: "meina-mix",
-//     "model_name": "MeinaMix",
-//     "base_model": "",
-//     "learning_rate": null,
-//     "resolution": null,
-//     "training_steps": null,
-//     "status": "Finished",
-//     "batch_size": null,
-//     title: 'Meina mix',
-//     price: 'meinamix',
-//     imageSrc: 'https://flush-user-images.s3.us-east-2.amazonaws.com/meinamix.jpeg',
-//     description: 'meina mix',
-//     link: 'meina-mix'
-//   },
-//   {
-//     id: "epic-photogasm",
-//     "model_name": "Epic Photogasm",
-//     "base_model": "",
-//     "learning_rate": null,
-//     "resolution": null,
-//     "training_steps": null,
-//     "status": "Finished",
-//     "batch_size": null,
-//     title: 'Epic-photogasm',
-//     price: 'Epic-photogasm',
-//     imageSrc: 'https://flush-user-images.s3.us-east-2.amazonaws.com/epicphotogasm.jpeg',
-//     description: 'epicphotogasm',
-//     link: 'epic-photogasm'
-//   },
-//   {
-//     id: "neverending-dream-ned",
-//     "model_name": "Neverending Dream NED",
-//     "base_model": "",
-//     "learning_rate": null,
-//     "resolution": null,
-//     "training_steps": null,
-//     "status": "Finished",
-//     "batch_size": null,
-//     title: 'neverending_ned',
-//     price: 'neverending_ned',
-//     imageSrc: 'https://flush-user-images.s3.us-east-2.amazonaws.com/neverending_ned.png',
-//     description: 'neverending_ned',
-//     link: 'neverending_ned'
-//   },
-//   {
-//     id: "dreamshaper",
-//     "model_name": "Dreamshaper",
-//     "base_model": "",
-//     "learning_rate": null,
-//     "resolution": null,
-//     "training_steps": null,
-//     "status": "Finished",
-//     "batch_size": null,
-//     title: 'dreamshaper',
-//     price: 'dreamshaper',
-//     imageSrc: 'https://flush-user-images.s3.us-east-2.amazonaws.com/dreamshaper.png',
-//     description: 'dreamshaper',
-//     link: "dreamshaper"
-//   },
-// ]
 
 const products = [
   {
@@ -1061,318 +578,340 @@ const products = [
 ]
 
 function Image2Input({ selectedImage, setSelectedImage, displayedImage, setDisplayedImage }) {
-    const [isDragging, setIsDragging] = useState(false);
-    const fileInputRef = useRef(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const fileInputRef = useRef(null);
 
-    const handleFilesUpload = (files) => {
-        const imageFile = Array.from(files).find(file => file.type.startsWith('image/'));
-        if (imageFile) {
-            const imageUrl = URL.createObjectURL(imageFile);
-            console.log("Image URL: ", imageUrl); // Debugging
-            setDisplayedImage(imageUrl);
-            setSelectedImage(imageFile);
-        }
+  const handleFilesUpload = (files) => {
+    const imageFile = Array.from(files).find(file => file.type.startsWith('image/'));
+    if (imageFile) {
+      const imageUrl = URL.createObjectURL(imageFile);
+      console.log("Image URL: ", imageUrl); // Debugging
+      setDisplayedImage(imageUrl);
+      setSelectedImage(imageFile);
     }
+  }
 
-    const onFileChange = (e) => {
-        handleFilesUpload(e.target.files);
-    }
+  const onFileChange = (e) => {
+    handleFilesUpload(e.target.files);
+  }
 
-    const onDragOver = useCallback((e) => {
-        e.preventDefault();
-        setIsDragging(true);
-    }, []);
+  const onDragOver = useCallback((e) => {
+    e.preventDefault();
+    setIsDragging(true);
+  }, []);
 
-    const onDragLeave = useCallback(() => {
-        setIsDragging(false);
-    }, []);
+  const onDragLeave = useCallback(() => {
+    setIsDragging(false);
+  }, []);
 
-    const onDrop = useCallback((e) => {
-        e.preventDefault();
-        setIsDragging(false);
-        const files = e.dataTransfer.files;
-        handleFilesUpload(files);
-    }, []);
+  const onDrop = useCallback((e) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const files = e.dataTransfer.files;
+    handleFilesUpload(files);
+  }, []);
 
-    return (
-        <div className="">
-            {selectedImage ? (
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '30vh' }}>
-                    <img src={displayedImage} alt="Uploaded" style={{ height: '20vh' }} />
-                </div>
-            ) : (
-                <div
-                    className={`mt-1 flex justify-center items-center rounded-lg border ${isDragging ? "bg-gray-500/50" : "bg-[#090911]"} border-dashed border-gray-700/50 px-6 py-7`}
-                    onDragOver={onDragOver}
-                    onDragLeave={onDragLeave}
-                    onDrop={onDrop}
-                    style={{ height: '20vh' }}
-                >
-                    <div className="text-center">
-                        {/* Replace with your icon component */}
-                        <PhotoIcon className="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
-
-                        <div className="mt-1 text-sm leading-6 text-gray-600">
-                            <label
-                                htmlFor="file-upload"
-                                className={`upload-text-bg relative cursor-pointer rounded-md font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500`}
-                            >
-                                <span>Upload image</span>
-                                <input
-                                    ref={fileInputRef}
-                                    id="file-upload"
-                                    name="file-upload"
-                                    type="file"
-                                    className="sr-only"
-                                    onChange={onFileChange}
-                                    accept="image/*" // Accept only image files
-                                    multiple={false} // Allow only one file to be selected
-                                />
-                            </label>
-                            <p className="pl-1">or drag and drop</p>
-                        </div>
-                    </div>
-                </div>
-            )}
+  return (
+    <div className="">
+      {selectedImage ? (
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '30vh' }}>
+          <img src={displayedImage} alt="Uploaded" style={{ height: '20vh' }} />
         </div>
-    );
+      ) : (
+        <div
+          className={`mt-1 flex justify-center items-center rounded-lg border ${isDragging ? "bg-gray-500/50" : "bg-[#090911]"} border-dashed border-gray-700/50 px-6 py-7`}
+          onDragOver={onDragOver}
+          onDragLeave={onDragLeave}
+          onDrop={onDrop}
+          style={{ height: '20vh' }}
+        >
+          <div className="text-center">
+            {/* Replace with your icon component */}
+            <PhotoIcon className="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
+
+            <div className="mt-1 text-sm leading-6 text-gray-600">
+              <label
+                htmlFor="file-upload"
+                className={`upload-text-bg relative cursor-pointer rounded-md font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500`}
+              >
+                <span>Upload image</span>
+                <input
+                  ref={fileInputRef}
+                  id="file-upload"
+                  name="file-upload"
+                  type="file"
+                  className="sr-only"
+                  onChange={onFileChange}
+                  accept="image/*" // Accept only image files
+                  multiple={false} // Allow only one file to be selected
+                />
+              </label>
+              <p className="pl-1">or drag and drop</p>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
 
 function Image3Input({ selectedImage, setSelectedImage, displayedImage, setDisplayedImage }) {
-    const [isDragging, setIsDragging] = useState(false);
-    const fileInputRef = useRef(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const fileInputRef = useRef(null);
 
-    const handleFilesUpload = (files) => {
-        const imageFile = Array.from(files).find(file => file.type.startsWith('image/'));
-        if (imageFile) {
-            const imageUrl = URL.createObjectURL(imageFile);
-            console.log("Image URL: ", imageUrl); // Debugging
-            setDisplayedImage(imageUrl);
-            setSelectedImage(imageFile);
-        }
+  const handleFilesUpload = (files) => {
+    const imageFile = Array.from(files).find(file => file.type.startsWith('image/'));
+    if (imageFile) {
+      const imageUrl = URL.createObjectURL(imageFile);
+      console.log("Image URL: ", imageUrl); // Debugging
+      setDisplayedImage(imageUrl);
+      setSelectedImage(imageFile);
     }
+  }
 
-    const onFileChange = (e) => {
-        handleFilesUpload(e.target.files);
-    }
+  const onFileChange = (e) => {
+    handleFilesUpload(e.target.files);
+  }
 
-    const onDragOver = useCallback((e) => {
-        e.preventDefault();
-        setIsDragging(true);
-    }, []);
+  const onDragOver = useCallback((e) => {
+    e.preventDefault();
+    setIsDragging(true);
+  }, []);
 
-    const onDragLeave = useCallback(() => {
-        setIsDragging(false);
-    }, []);
+  const onDragLeave = useCallback(() => {
+    setIsDragging(false);
+  }, []);
 
-    const onDrop = useCallback((e) => {
-        e.preventDefault();
-        setIsDragging(false);
-        const files = e.dataTransfer.files;
-        handleFilesUpload(files);
-    }, []);
+  const onDrop = useCallback((e) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const files = e.dataTransfer.files;
+    handleFilesUpload(files);
+  }, []);
 
-    return (
-        <div className="">
-            {selectedImage ? (
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '30vh' }}>
-                    <img src={displayedImage} alt="Uploaded" style={{ height: '20vh' }} />
-                </div>
-            ) : (
-                <div
-                    className={`flex justify-center items-center rounded-lg border ${isDragging ? "bg-gray-500/50" : "bg-[#090911]"} border-dashed border-gray-700/50 px-6 py-7`}
-                    onDragOver={onDragOver}
-                    onDragLeave={onDragLeave}
-                    onDrop={onDrop}
-                    style={{ height: '20vh' }}
-                >
-                    <div className="text-center">
-                        {/* Replace with your icon component */}
-                        <PhotoIcon className="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
-
-                        <div className="mt-1 text-sm leading-6 text-gray-600">
-                            <label
-                                htmlFor="file-upload"
-                                className={`upload-text-bg relative cursor-pointer rounded-md font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500`}
-                            >
-                                <span>Upload image</span>
-                                <input
-                                    ref={fileInputRef}
-                                    id="file-upload"
-                                    name="file-upload"
-                                    type="file"
-                                    className="sr-only"
-                                    onChange={onFileChange}
-                                    accept="image/*" // Accept only image files
-                                    multiple={false} // Allow only one file to be selected
-                                />
-                            </label>
-                            <p className="pl-1">or drag and drop</p>
-                        </div>
-                    </div>
-                </div>
-            )}
+  return (
+    <div className="">
+      {selectedImage ? (
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '30vh' }}>
+          <img src={displayedImage} alt="Uploaded" style={{ height: '20vh' }} />
         </div>
-    );
+      ) : (
+        <div
+          className={`flex justify-center items-center rounded-lg border ${isDragging ? "bg-gray-500/50" : "bg-[#090911]"} border-dashed border-gray-700/50 px-6 py-7`}
+          onDragOver={onDragOver}
+          onDragLeave={onDragLeave}
+          onDrop={onDrop}
+          style={{ height: '20vh' }}
+        >
+          <div className="text-center">
+            {/* Replace with your icon component */}
+            <PhotoIcon className="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
+
+            <div className="mt-1 text-sm leading-6 text-gray-600">
+              <label
+                htmlFor="file-upload"
+                className={`upload-text-bg relative cursor-pointer rounded-md font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500`}
+              >
+                <span>Upload image</span>
+                <input
+                  ref={fileInputRef}
+                  id="file-upload"
+                  name="file-upload"
+                  type="file"
+                  className="sr-only"
+                  onChange={onFileChange}
+                  accept="image/*" // Accept only image files
+                  multiple={false} // Allow only one file to be selected
+                />
+              </label>
+              <p className="pl-1">or drag and drop</p>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
 
 function Image4Input({ selectedImage, setSelectedImage, displayedImage, setDisplayedImage }) {
-    const [isDragging, setIsDragging] = useState(false);
-    const fileInputRef = useRef(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const fileInputRef = useRef(null);
 
-    const handleFilesUpload = (files) => {
-        const imageFile = Array.from(files).find(file => file.type.startsWith('image/'));
-        if (imageFile) {
-            const imageUrl = URL.createObjectURL(imageFile);
-            console.log("Image URL: ", imageUrl); // Debugging
-            setDisplayedImage(imageUrl);
-            setSelectedImage(imageFile);
-        }
+  const handleFilesUpload = (files) => {
+    const imageFile = Array.from(files).find(file => file.type.startsWith('image/'));
+    if (imageFile) {
+      const imageUrl = URL.createObjectURL(imageFile);
+      console.log("Image URL: ", imageUrl); // Debugging
+      setDisplayedImage(imageUrl);
+      setSelectedImage(imageFile);
     }
+  }
 
-    const onFileChange = (e) => {
-        handleFilesUpload(e.target.files);
-    }
+  const onFileChange = (e) => {
+    handleFilesUpload(e.target.files);
+  }
 
-    const onDragOver = useCallback((e) => {
-        e.preventDefault();
-        setIsDragging(true);
-    }, []);
+  const onDragOver = useCallback((e) => {
+    e.preventDefault();
+    setIsDragging(true);
+  }, []);
 
-    const onDragLeave = useCallback(() => {
-        setIsDragging(false);
-    }, []);
+  const onDragLeave = useCallback(() => {
+    setIsDragging(false);
+  }, []);
 
-    const onDrop = useCallback((e) => {
-        e.preventDefault();
-        setIsDragging(false);
-        const files = e.dataTransfer.files;
-        handleFilesUpload(files);
-    }, []);
+  const onDrop = useCallback((e) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const files = e.dataTransfer.files;
+    handleFilesUpload(files);
+  }, []);
 
-    return (
-        <div className="">
-            {selectedImage ? (
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '30vh' }}>
-                    <img src={displayedImage} alt="Uploaded" style={{ height: '20vh' }} />
-                </div>
-            ) : (
-                <div
-                    className={`flex justify-center items-center rounded-lg border ${isDragging ? "bg-gray-500/50" : "bg-[#090911]"} border-dashed border-gray-700/50 px-6 py-7`}
-                    onDragOver={onDragOver}
-                    onDragLeave={onDragLeave}
-                    onDrop={onDrop}
-                    style={{ height: '20vh' }}
-                >
-                    <div className="text-center">
-                        {/* Replace with your icon component */}
-                        <PhotoIcon className="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
-
-                        <div className="mt-1 text-sm leading-6 text-gray-600">
-                            <label
-                                htmlFor="file-upload"
-                                className={`upload-text-bg relative cursor-pointer rounded-md font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500`}
-                            >
-                                <span>Upload image</span>
-                                <input
-                                    ref={fileInputRef}
-                                    id="file-upload"
-                                    name="file-upload"
-                                    type="file"
-                                    className="sr-only"
-                                    onChange={onFileChange}
-                                    accept="image/*" // Accept only image files
-                                    multiple={false} // Allow only one file to be selected
-                                />
-                            </label>
-                            <p className="pl-1">or drag and drop</p>
-                        </div>
-                    </div>
-                </div>
-            )}
+  return (
+    <div className="">
+      {selectedImage ? (
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '30vh' }}>
+          <img src={displayedImage} alt="Uploaded" style={{ height: '20vh' }} />
         </div>
-    );
+      ) : (
+        <div
+          className={`flex justify-center items-center rounded-lg border ${isDragging ? "bg-gray-500/50" : "bg-[#090911]"} border-dashed border-gray-700/50 px-6 py-7`}
+          onDragOver={onDragOver}
+          onDragLeave={onDragLeave}
+          onDrop={onDrop}
+          style={{ height: '20vh' }}
+        >
+          <div className="text-center">
+            {/* Replace with your icon component */}
+            <PhotoIcon className="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
+
+            <div className="mt-1 text-sm leading-6 text-gray-600">
+              <label
+                htmlFor="file-upload"
+                className={`upload-text-bg relative cursor-pointer rounded-md font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500`}
+              >
+                <span>Upload image</span>
+                <input
+                  ref={fileInputRef}
+                  id="file-upload"
+                  name="file-upload"
+                  type="file"
+                  className="sr-only"
+                  onChange={onFileChange}
+                  accept="image/*" // Accept only image files
+                  multiple={false} // Allow only one file to be selected
+                />
+              </label>
+              <p className="pl-1">or drag and drop</p>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
 
 function Image1Input({ selectedImage, setSelectedImage, displayedImage, setDisplayedImage }) {
-    const [isDragging, setIsDragging] = useState(false);
-    const fileInputRef = useRef(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const fileInputRef = useRef(null);
 
-    const handleFilesUpload = (files) => {
-        const imageFile = Array.from(files).find(file => file.type.startsWith('image/'));
-        if (imageFile) {
-            const imageUrl = URL.createObjectURL(imageFile);
-            console.log("Image URL: ", imageUrl); // Debugging
-            setDisplayedImage(imageUrl);
-            setSelectedImage(imageFile);
-        }
+  const handleFilesUpload = (files) => {
+    const imageFile = Array.from(files).find(file => file.type.startsWith('image/'));
+    if (imageFile) {
+      const imageUrl = URL.createObjectURL(imageFile);
+      console.log("Image URL: ", imageUrl); // Debugging
+      setDisplayedImage(imageUrl);
+      setSelectedImage(imageFile);
     }
+  }
 
-    const onFileChange = (e) => {
-        handleFilesUpload(e.target.files);
-    }
+  const onFileChange = (e) => {
+    handleFilesUpload(e.target.files);
+  }
 
-    const onDragOver = useCallback((e) => {
-        e.preventDefault();
-        setIsDragging(true);
-    }, []);
+  const onDragOver = useCallback((e) => {
+    e.preventDefault();
+    setIsDragging(true);
+  }, []);
 
-    const onDragLeave = useCallback(() => {
-        setIsDragging(false);
-    }, []);
+  const onDragLeave = useCallback(() => {
+    setIsDragging(false);
+  }, []);
 
-    const onDrop = useCallback((e) => {
-        e.preventDefault();
-        setIsDragging(false);
-        const files = e.dataTransfer.files;
-        handleFilesUpload(files);
-    }, []);
+  const onDrop = useCallback((e) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const files = e.dataTransfer.files;
+    handleFilesUpload(files);
+  }, []);
 
-    return (
-        <div className="">
-            {selectedImage ? (
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '30vh' }}>
-                    <img src={displayedImage} alt="Uploaded" style={{ height: '20vh' }} />
-                </div>
-            ) : (
-                <div
-                    className={`mt-1 flex justify-center items-center rounded-lg border ${isDragging ? "bg-gray-500/50" : "bg-[#090911]"} border-dashed border-gray-700/50 px-6 py-7`}
-                    onDragOver={onDragOver}
-                    onDragLeave={onDragLeave}
-                    onDrop={onDrop}
-                    style={{ height: '20vh' }}
-                >
-                    <div className="text-center">
-                        {/* Replace with your icon component */}
-                        <PhotoIcon className="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
-
-                        <div className="mt-1 text-sm leading-6 text-gray-600">
-                            <label
-                                htmlFor="file-upload"
-                                className={`upload-text-bg relative cursor-pointer rounded-md font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500`}
-                            >
-                                <span>Upload image</span>
-                                <input
-                                    ref={fileInputRef}
-                                    id="file-upload"
-                                    name="file-upload"
-                                    type="file"
-                                    className="sr-only"
-                                    onChange={onFileChange}
-                                    accept="image/*" // Accept only image files
-                                    multiple={false} // Allow only one file to be selected
-                                />
-                            </label>
-                            <p className="pl-1">or drag and drop</p>
-                        </div>
-                    </div>
-                </div>
-            )}
+  return (
+    <div className="">
+      {selectedImage ? (
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '30vh' }}>
+          <img src={displayedImage} alt="Uploaded" style={{ height: '20vh' }} />
         </div>
-    );
+      ) : (
+        <div
+          className={`mt-1 flex justify-center items-center rounded-lg border ${isDragging ? "bg-gray-500/50" : "bg-[#090911]"} border-dashed border-gray-700/50 px-6 py-7`}
+          onDragOver={onDragOver}
+          onDragLeave={onDragLeave}
+          onDrop={onDrop}
+          style={{ height: '20vh' }}
+        >
+          <div className="text-center">
+            {/* Replace with your icon component */}
+            <PhotoIcon className="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
+
+            <div className="mt-1 text-sm leading-6 text-gray-600">
+              <label
+                htmlFor="file-upload"
+                className={`upload-text-bg relative cursor-pointer rounded-md font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500`}
+              >
+                <span>Upload image</span>
+                <input
+                  ref={fileInputRef}
+                  id="file-upload"
+                  name="file-upload"
+                  type="file"
+                  className="sr-only"
+                  onChange={onFileChange}
+                  accept="image/*" // Accept only image files
+                  multiple={false} // Allow only one file to be selected
+                />
+              </label>
+              <p className="pl-1">or drag and drop</p>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
 
-export default function TexttoVideo({ base_models, credits, setCredits, generationsImages, setGenerationsImages, generationsVideos, setGenerationsVideos, activeTab, startingModel, setLastPartOfUrl }) {
+function ImagePlaceholder() {
+  return (
+    <div className="w-full">
+      <div className="relative items-center block p-6 rounded-lg shadow-md bg-indigo-900"> {/* Adjusted background to bg-gray-800 */}
+        <div role="status" className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"> {/* Corrected class to className */}
+          <svg aria-hidden="true" className="w-8 h-8 mr-2 text-gray-200 animate-spin-fast fill-indigo-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+              fill="currentColor"
+            />
+            <path
+              d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+              fill="currentFill"
+            />
+          </svg>
+          <span className="sr-only">Loading...</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default function Morph({ base_models, credits, setCredits, generationsImages, setGenerationsImages, generationsVideos, setGenerationsVideos, activeTab, startingModel, setLastPartOfUrl }) {
   const [selectedDeliveryMethod, setSelectedDeliveryMethod] = useState(deliveryMethods[0])
   const tabs = [
     { name: 'Text-to-Image', href: '#', current: true },
@@ -1433,12 +972,10 @@ export default function TexttoVideo({ base_models, credits, setCredits, generati
         }
       }
       fetchData();
-      // console.log("total models", models);
     };
 
     checkSession();
-    // console.log("api key", apiKey);
-    // setApiKey("a7b91275-b17e-41ea-a988-79a3d6016c12")
+    setApiKey("404d5ad4-cefc-4155-bc89-9ad6f14047dc")
   }, []);
 
   const [promptImage, setPromptImage] = useState("");
@@ -1478,7 +1015,7 @@ export default function TexttoVideo({ base_models, credits, setCredits, generati
   const [displayedTarget, setDisplayedTarget] = useState(null)
   const [displayedImage3, setDisplayedImage3] = useState(null)
   const [displayedImage4, setDisplayedImage4] = useState(null)
-  
+
   const handleFilesUpload = (files) => {
     const videoFile = Array.from(files).find(file => file.type.startsWith('video/'));
     if (videoFile) {
@@ -1511,135 +1048,257 @@ export default function TexttoVideo({ base_models, credits, setCredits, generati
 
   const handleGenerate = (event) => {
     event.preventDefault();
-    if (activeTab == "Videos") {
-      GenerateVideos();
-    }
-    else {
-      GenerateImages();
+    GenerateVideos();
+  }
+
+  async function callVideoGenerationAPI(dataPayload) {
+    const API_URL = "https://api.flushai.cloud/web/v1/morph"//"https://ypaqg548s7.execute-api.us-east-2.amazonaws.com/testing/finetune";
+
+    const headers = {
+      "Content-Type": "application/json",
+    };
+    dataPayload['user_id'] = apiKey
+    try {
+      const response = await fetch(API_URL, {
+        method: "POST", // or POST or PUT etc., depending on the API requirement
+        headers: headers,
+        body: JSON.stringify(dataPayload)
+      });
+      console.log('response', response)
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      return data;
+
+    } catch (error) {
+      console.error("There was a problem with the fetch operation:", error.message);
     }
   }
-  
-  const navigate = useNavigate();
 
-  const GenerateImages = async () => {
-    const { data: userData, error } = await supabase.auth.getSession();
-    console.log(userData.session)
-    if (!userData.session) {
-      console.log("HATEEEEE")
-      navigate('/signin');
-    }
+  const getPresignedUrls = async (files, type, num_urls) => {
     try {
-      // console.log("seed image", seedImage);
-      // console.log("model id", chosenModel.price)
-      let newMessage = "";
-      if (isNaN(seedImage) || seedImage < 0) {
-        newMessage = "Please choose a valid positive seed.";
-      }
-      if (promptImage === "") {
-        newMessage = "Please add a prompt for your images.";
-      }
-      if (newMessage != "") {
-        setShow(false)
-        setMessage(newMessage);
-        setShow(true);
-      }
-      else {
-        setLoading(true);
-        const payloadDataBef = {
-          "prompt": promptImage,
-          "model_id": chosenModel.id,
-          "negative_prompt": negativePromptImage,
-          "seed": seedImage,
-          "num_images": parseInt(numberOfImages, 10),
-          "scale": parseFloat(guidanceScaleImage),
-          "height": parseInt(heightImage, 10),
-          "width": parseInt(widthImage, 10),
-          "num_steps": parseInt(inferenceStepsImage, 10),
-          "scheduler": scheduler
-        };
-        if (uploadedImage != null) {
-          payloadDataBef["input_image"] = base64Image;
-          payloadDataBef["mode"] = "base64";
-        }
+      const data = {
+        "user_id": apiKey,
+        "mode": type, // Assuming all files are images
+        "num_urls": num_urls // The actual number of files you're uploading
+      };
+      const response = await axios.post("https://api.flushai.cloud/web/v1/helper/create-upload-url", data);
+      return response.data['data'];
+    } catch (error) {
+      console.error("Error fetching presigned URL:", error);
+      return null;
+    }
+  };
 
-        let payloadData = {};
-        Object.entries(payloadDataBef).forEach(([key, value]) => {
-          if (value !== null && !Number.isNaN(value)) payloadData[key] = value;
-        });
 
-        const timeOptions = {
-          weekday: undefined, // Do not display
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit',
-          second: '2-digit',
-          hour12: true,
-          timeZone: 'America/Chicago',
-          timeZoneName: 'short'
-        };
-        const timeFormatter = new Intl.DateTimeFormat('en-US', timeOptions);
+  const uploadImageToS3 = async (presignedUrl, file) => {
+    try {
+      console.log("Uploading file with type:", file.type);
+      await axios.put(presignedUrl, file, {
+        headers: {
+          'Content-Type': file.type
+        }
+      });
+    } catch (error) {
+      console.error("Error uploading to S3:", error);
+    }
+  };
 
-        // console.log(modelType);
-        Object.keys(payloadData).forEach(key => {
-          if (payloadData[key] === null || payloadData[key] === undefined || payloadData[key] == "") {
-            delete payloadData[key];
+  const createURLs = async (fileObjects) => {
+    const uploadedImageUrls = [];
+    // Assume all files are of the same type for simplicity, as your previous code suggests.
+    const response = await getPresignedUrls(fileObjects.map(f => f.file), "image", fileObjects.length);
+
+    if (response) {
+      for (let i = 0; i < fileObjects.length; i++) {
+        const file = fileObjects[i].file;
+        if (file) {
+          try {
+            console.log(`Uploading file with type: ${file.type}`);
+            await uploadImageToS3(response[i].signedRequest, file);
+            uploadedImageUrls.push(response[i].url);
+          } catch (error) {
+            console.error(`Error uploading file ${i}:`, error);
           }
-        });
-        // console.log("pay load data", payloadData);
-        let result = null;
-        if (uploadedImage == null) {
-          console.log("payload data", payloadData);
-          result = await callAPI(payloadData, "https://api.flushai.cloud/web/v1/images/txt2img");
+        } else {
+          console.error(`File ${i} is undefined, skipping upload.`);
         }
-        else {
-          if (chosenModel.id == "stable-diffusion-xl" || chosenModel.id == "stable-diffusion-v15" || chosenModel.id == "stable-diffusion-v21" || chosenModel.id == "absolute-reality" || chosenModel.id == "realistic-vision-v51" || chosenModel.id == "anything-v5") {
-            result = await callAPI(payloadData, "https://api.flushai.cloud/web/v1/images/img2img")
-          }
-          else {
-            setShow(false);
-            setMessage("Image to image currently not supported with this model");
-            setShow(true);
-            setLoading(false);
-            return;
-          }
-        }
-        // console.log("result", result);
+      }
+    } else {
+      console.error("Failed to get presigned URLs, cannot upload files.");
+    }
+    return uploadedImageUrls;
+  };
+
+  const VerifiedVideo = ({ imageUrl, altDescription, index }) => {
+    const indexRef = useRef(index);
+
+    const changeIndex = (currIndex) => {
+      const newArr = [...isVerifiedVid];
+      newArr[currIndex] = true;
+      setIsVerifiedVid(newArr);
+    };
+
+    useEffect(() => {
+      let active = true;
+      const checkImageAndUpdate = () => {
+        if (!active || isVerifiedVid[indexRef.current]) return;
+
+        fetch(imageUrl)
+          .then(response => {
+            if (!active) return;
+            if (response.ok) {
+              changeIndex(indexRef.current); // Use the ref's current value
+            } else {
+              setTimeout(checkImageAndUpdate, 5000);
+            }
+          })
+          .catch(error => {
+            if (!active) return;
+            setTimeout(checkImageAndUpdate, 5000);
+          });
+      };
+      checkImageAndUpdate();
+      return () => {
+        active = false;
+      };
+    }, [imageUrl]);
+
+    if (!isVerifiedVid[index]) {
+      return <ImagePlaceholder />; // Render placeholder if the image is not verified.
+    }
+
+    // Render actual image if it is verified.
+    return (
+      <div className='w-full'>
+        <video
+          src={imageUrl}
+          alt={altDescription}
+          className="object-cover rounded-lg hover:brightness-50 transition duration-300 cursor-pointer"
+          controls
+        />
+      </div>
+    );
+  };
+
+  const GenerateVideos = async () => {
+    setLoading(true);
+    try {
+      const fileObjects = [
+        { file: selectedVideo, type: "image" },
+        { file: selectedTarget, type: "image" },
+        { file: selectedImage3, type: "image" },
+        { file: selectedImage4, type: "image" }
+      ];
+
+      let allImageUrls = await createURLs(fileObjects);
+      if (selectedVideo == null) {
+        setWarningModalOpen(true)
+        setMessage("Please add an input 1 image.")
+        setLoading(false)
+        return
+      }
+      if (selectedTarget == null) {
+        setWarningModalOpen(true)
+        setMessage("Please add a input 2 image.")
+        setLoading(false)
+        return
+      }
+      if (selectedImage3 == null) {
+        setWarningModalOpen(true)
+        setMessage("Please add a input 3 image.")
+        setLoading(false)
+        return
+      }
+      if (selectedImage4 == null) {
+        setWarningModalOpen(true)
+        setMessage("Please add a input 4 image.")
+        setLoading(false)
+        return
+      }
+      if (apiKey == "") {
+        setWarningModalOpen(true)
+        setMessage("User not logged in")
+        setLoading(false)
+        return
+      }
+
+      let height = 768;
+      let width = 768;
+
+      if (selectedRatio == "16:9") {
+        height = 1080;
+        width = 1920;
+      }
+      else if (selectedRatio == "9:16") {
+        height = 1920;
+        width = 1080;
+      }
+
+      const payloadDataBef = {
+        "image1": allImageUrls[0], // Corresponds to the URL of 'selectedVideo'
+        "image2": allImageUrls[1], // Corresponds to the URL of 'selectedTarget'
+        "image3": allImageUrls[2], // Corresponds to the URL of 'selectedImage3'
+        "image4": allImageUrls[3],  // Corresponds to the URL of 'selectedImage4'
+        "height": height,
+        "width": width
+      }
+
+      let payloadData = {};
+      Object.entries(payloadDataBef).forEach(([key, value]) => {
+        if (value !== null && !Number.isNaN(value)) payloadData[key] = value;
+      });
+
+      const timeOptions = {
+        weekday: undefined, // Do not display
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true,
+        timeZone: 'America/Chicago',
+        timeZoneName: 'short'
+      };
+      const timeFormatter = new Intl.DateTimeFormat('en-US', timeOptions);
+      const result = await callVideoGenerationAPI(payloadData);
+      // const result = {
+      //   "output": "Request accepted and is being processed",
+      //   "urls": ["https://flush-user-images.s3.amazonaws.com/input_videos/58ae31b2a688e038ada980a2edcf8848eb04bb947aa7ffe9e65f2c398d0de409/video_802.mp4"],
+      // }
+
+      if (result.output == "Request accepted and is being processed") {
+        setMessage("Your video will finish generating in 5-10 minutes!"); 
         let urls = result['urls'];
+        setLoading(false);
         let temp_gen = {
-          'prompt': promptImage,
+          'prompt': "",
           'image_urls': urls,
           'time': timeFormatter.format(new Date()).replace(',', ''),
-          'num_images': parseInt(numberOfImages, 10)
+          'num_images': parseInt(1, 10)
         }
-        if (chosenModel.id == "stable-diffusion-xl" || chosenModel.id == "juggernaut-xl" || chosenModel.id == "dreamshaper-xl") {
-          let val = numberOfImages * 3;
-          setCredits(credits - parseInt(val, 10));
-        }
-        else {
-          if (heightImage > 768 || widthImage > 768) {
-            let val = numberOfImages * 2;
-            setCredits(credits - parseInt(val, 10));
-          }
-          else {
-            setCredits(credits - parseInt(numberOfImages, 10));
-          }
-        }
-        setGenerationsImages(generations => [...generations, temp_gen]);
-        setIsVerified(isVerified => [...isVerified, false]);
+        // setCredits(credits - 200);
+        setGenerationsVideos(generations => [...generations, temp_gen]);
+        setIsVerifiedVid(isVerified => [...isVerified, false]);
+      } else {
+        setMessage("Error with your generation, invalid video or out of credits, upgrade");
       }
     } catch (error) {
+      console.log("error", error);
       if (apiKey === undefined) {
-        setMessage("Error with your generation, please upgrade to access this feature."); // Set the state with the appropriate message.
+        setMessage("Error with your message, user not found, please try again");
       } else {
-        setMessage("Error with your generation, please upgrade to access this feature."); // Set the state with the appropriate message.
+        setMessage("Error with your generation, invalid video or out of credits, upgrade");
       }
-      setShow(true); // Show the modal.
-    } finally {
+      setWarningModalOpen(true);
       setLoading(false);
-    };
-  }
+    }
+  };
+
+  const navigate = useNavigate();
 
   async function callLLMAPI(dataPayload) {
     const API_URL = "https://api.flushai.cloud/web/v1/helper/prompt-enhancer"
@@ -1712,284 +1371,138 @@ export default function TexttoVideo({ base_models, credits, setCredits, generati
 
   const [selectedRatio, setSelectedRatio] = useState('9:16');
 
-    // Function to handle button click
-    const handleSelect = (ratio) => {
-        setSelectedRatio(ratio);
-    };
+  // Function to handle button click
+  const handleSelect = (ratio) => {
+    setSelectedRatio(ratio);
+  };
 
-    // Helper function to get button classes based on selection
-    const getButtonClass = (ratio) => {
-        return `flex items-center justify-center gap-2 rounded-md px-2.5 py-1.5 text-sm text-gray-300 font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ${ratio === selectedRatio ? 'bg-indigo-800 hover:bg-indigo-700' : 'bg-[#17191C] hover:bg-gray-800'}`;
-    };
-
-    const VerifiedImage = ({ imageUrl, altDescription, index }) => {
-        const indexRef = useRef(index);
-    
-        const changeIndex = (currIndex) => {
-          const newArr = [...isVerified];
-          newArr[currIndex] = true;
-          setIsVerified(newArr);
-        };
-    
-        useEffect(() => {
-          let active = true;
-          const checkImageAndUpdate = () => {
-            if (!active || isVerified[indexRef.current]) return;
-    
-            fetch(imageUrl)
-              .then(response => {
-                if (!active) return;
-                if (response.ok) {
-                  changeIndex(indexRef.current); // Use the ref's current value
-                } else {
-                  setTimeout(checkImageAndUpdate, 1000);
-                }
-              })
-              .catch(error => {
-                if (!active) return;
-                setTimeout(checkImageAndUpdate, 1000);
-              });
-          };
-          checkImageAndUpdate();
-          return () => {
-            active = false;
-          };
-        }, [imageUrl]);
-    
-        // if (!isVerified[index]) {
-        //   return (
-        //     <div className='w-full'>
-        //       <ImagePlaceholder />
-        //     </div>
-        //   );
-        // }
-
-        if (true) {
-            return (
-              <div className='w-full pb-2'>
-                <ImagePlaceholder />
-              </div>
-            );
-          }
-    
-        // Render actual image if it is verified.
-        return (
-          <div className='w-full'>
-            <img
-              src={imageUrl}
-              alt={altDescription}
-              className="object-cover rounded-lg hover:brightness-50 transition duration-300 cursor-pointer"
-            />
-          </div>
-        );
-    };
-
-    const VerifiedImage2 = ({ imageUrl, altDescription, index }) => {
-        const indexRef = useRef(index);
-    
-        const changeIndex = (currIndex) => {
-          const newArr = [...isVerified];
-          newArr[currIndex] = true;
-          setIsVerified(newArr);
-        };
-    
-        useEffect(() => {
-          let active = true;
-          const checkImageAndUpdate = () => {
-            if (!active || isVerified[indexRef.current]) return;
-    
-            fetch(imageUrl)
-              .then(response => {
-                if (!active) return;
-                if (response.ok) {
-                  changeIndex(indexRef.current); // Use the ref's current value
-                } else {
-                  setTimeout(checkImageAndUpdate, 1000);
-                }
-              })
-              .catch(error => {
-                if (!active) return;
-                setTimeout(checkImageAndUpdate, 1000);
-              });
-          };
-          checkImageAndUpdate();
-          return () => {
-            active = false;
-          };
-        }, [imageUrl]);
-    
-        // if (!isVerified[index]) {
-        //   return (
-        //     <div className='w-full'>
-        //       <ImagePlaceholder />
-        //     </div>
-        //   );
-        // }
-
-        if (true) {
-            return (
-              <div className='w-full pb-2'>
-                <ImagePlaceholderOther />
-              </div>
-            );
-          }
-    
-        // Render actual image if it is verified.
-        return (
-          <div className='w-full'>
-            <img
-              src={imageUrl}
-              alt={altDescription}
-              className="object-cover rounded-lg hover:brightness-50 transition duration-300 cursor-pointer"
-            />
-          </div>
-        );
-    };
+  // Helper function to get button classes based on selection
+  const getButtonClass = (ratio) => {
+    return `flex items-center justify-center gap-2 rounded-md px-2.5 py-1.5 text-sm text-gray-300 font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ${ratio === selectedRatio ? 'bg-indigo-800 hover:bg-indigo-700' : 'bg-[#17191C] hover:bg-gray-800'}`;
+  };
 
 
-    const breakpointColumnsObj = {
-        default: 4,
-        1300: 3,
-        1000: 2,
-        500: 1
-    };
+  const breakpointColumnsObj = {
+    default: 4,
+    1300: 3,
+    1000: 2,
+    500: 1
+  };
 
   return (
     <div className="">
       <WarningModal show={show} setShow={setShow} message={message} />
       <div className="px-6 pt-2 overflow-y-auto h-screen">
-          <form className="flex flex-col md:flex-row">
-            {/* Order summary */}
-            <div className="flex-shrink-0 w-full md:w-[450px] md:pr-5 h-screen md:h-auto overflow-auto">
-              <div className="mt-4 rounded-lg overflow-y-auto shadow-sm" style={{ border: '0.5px solid', borderColor: "#262B31" }}>
-                <div className="overflow-y-auto overflow-y-auto md:h-[calc(79vh-78px)]"> {/* Adjust height as needed */}
-                 
+        <form className="flex flex-col md:flex-row">
+          {/* Order summary */}
+          <div className="flex-shrink-0 w-full md:w-[450px] md:pr-5 h-screen md:h-auto overflow-auto">
+            <div className="mt-4 rounded-lg overflow-y-auto shadow-sm" style={{ border: '0.5px solid', borderColor: "#262B31" }}>
+              <div className="overflow-y-auto overflow-y-auto md:h-[calc(79vh-78px)]"> {/* Adjust height as needed */}
+
                 <div className='px-5 py-4'>
-                    <label htmlFor="comment" className="block text-md text-left font-medium leading-6 text-gray-300">
-                        Upload Images
-                    </label>
-                    <div className='grid grid-cols-2 gap-2 pt-2'>
+                  <label htmlFor="comment" className="block text-md text-left font-medium leading-6 text-gray-300">
+                    Upload Images
+                  </label>
+                  <div className='grid grid-cols-2 gap-2 pt-2'>
                     <Image1Input selectedImage={selectedVideo} setSelectedImage={setSelectedVideo} displayedImage={displayedVideo} setDisplayedImage={setDisplayedVideo} />
                     <Image2Input selectedImage={selectedTarget} setSelectedImage={setSelectedTarget} displayedImage={displayedTarget} setDisplayedImage={setDisplayedTarget} />
                     <Image3Input selectedImage={selectedImage3} setSelectedImage={setSelectedImage3} displayedImage={displayedImage3} setDisplayedImage={setDisplayedImage3} />
                     <Image4Input selectedImage={selectedImage4} setSelectedImage={setSelectedImage4} displayedImage={displayedImage4} setDisplayedImage={setDisplayedImage4} />
-                    </div>
+                  </div>
                 </div>
 
-                  <div className='px-5 pt-3'>
-                    <div>
-                        <label htmlFor="comment" className="block text-md text-left font-medium leading-6 text-gray-300">
-                            Aspect Ratio
-                        </label>
-                        <div className="mt-3" style={{ alignItems: 'center', gap: '10px' }}>
-                        <div className='flex' style={{ gap: '10px' }}>
-                            <button
-                            type="button"
-                            className={getButtonClass('1:1')}
-                            onClick={() => handleSelect('1:1')}
-                            style={{ border: '0.5px solid', borderColor: "#262B31" }}
-                            >
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-square"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
-                            1:1
-                            </button>
-                            <button
-                            type="button"
-                            className={getButtonClass('16:9')}
-                            onClick={() => handleSelect('16:9')}
-                            style={{ border: '0.5px solid', borderColor: "#262B31" }}
-                            >
-                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="24" viewBox="0 0 34 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-square"><rect width="30" height="18" x="3" y="3" rx="2"/></svg>
-                            16:9
-                            </button>
-                            <button
-                            type="button"
-                            className={getButtonClass('9:16')}
-                            onClick={() => handleSelect('9:16')}
-                            style={{ border: '0.5px solid', borderColor: "#262B31" }}
-                            >
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="30" viewBox="0 0 24 30" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-square"><rect width="18" height="25" x="3" y="3" rx="2"/></svg>
-                            9:16
-                            </button>
-                        </div>
-                        </div>
-                    </div>
-                  </div>                  
-                </div>
-
-                <div className="border-t border-gray-200 px-4 py-6 sm:px-6" style={{ borderTop: '0.5px solid', borderColor: "#3b3b3b" }}>
-                  {loading ? (
-                    <FastSpinner size={20} />
-                  ) : (
-                    <button
-                      type="submit"
-                      className="inline-flex items-center w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-lg font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
-                      onClick={handleGenerate}
-                    >
-                      Generate
-                      <SparklesIcon className="ml-2 h-5 w-5" />
-                    </button>
-                  )}
-                </div>
-              </div>
-            </div>
-
-            <div className='flex-grow md:mt-1 sm:-pt-10'>
-              <div className="mx-auto rounded-md">
-                <div className=''/>
-                <div className="">
-                  <div className="flex w-full flex-col">
-                    <div className="mb-20 overflow-y-scroll">
-
-                      {/* {generationsImages.slice().reverse().map((item, index) => { */}
-                        {/* return ( */}
-                          <div> {/* Set the background to black for a dark theme */}
-                              <div className="pt-3">
-                                <div className=""> {/* Center the content */}
-                                  {/* {item['image_urls'].map((image, imageIndex) => {
-                                    return ( */}
-                                      <Masonry
-                                        breakpointCols={breakpointColumnsObj}
-                                        className="my-masonry-grid pl-5 gap-2"
-                                        columnClassName="my-masonry-grid_column">
-                                        <div>
-                                            <VerifiedImage altDescription="Description of Image" />
-                                        </div>
-                                        <div>
-                                            <VerifiedImage altDescription="Description of Image" />
-                                        </div>
-                                        <div>
-                                            <VerifiedImage altDescription="Description of Image" />
-                                        </div>
-                                        <div>
-                                            <VerifiedImage2 altDescription="Description of Image" />
-                                        </div>
-                                        <div>
-                                            <VerifiedImage altDescription="Description of Image" />
-                                        </div>
-                                        <div>
-                                            <VerifiedImage altDescription="Description of Image" />
-                                        </div>
-                                        <div>
-                                            <VerifiedImage altDescription="Description of Image" />
-                                        </div>
-                                        <div>
-                                            <VerifiedImage2 altDescription="Description of Image" />
-                                        </div>
-                                        {/* Continue adding items as needed */}
-                                    </Masonry>
-                                    {/* );
-                                  })} */}
-                                </div>
-                              </div>
-                            </div>
-                            {/* );
-                        })} */}
+                <div className='px-5 pt-3'>
+                  <div>
+                    <label htmlFor="comment" className="block text-md text-left font-medium leading-6 text-gray-300">
+                      Aspect Ratio
+                    </label>
+                    <div className="mt-3" style={{ alignItems: 'center', gap: '10px' }}>
+                      <div className='flex' style={{ gap: '10px' }}>
+                        <button
+                          type="button"
+                          className={getButtonClass('1:1')}
+                          onClick={() => handleSelect('1:1')}
+                          style={{ border: '0.5px solid', borderColor: "#262B31" }}
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-square"><rect width="18" height="18" x="3" y="3" rx="2" /></svg>
+                          1:1
+                        </button>
+                        <button
+                          type="button"
+                          className={getButtonClass('16:9')}
+                          onClick={() => handleSelect('16:9')}
+                          style={{ border: '0.5px solid', borderColor: "#262B31" }}
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="24" viewBox="0 0 34 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-square"><rect width="30" height="18" x="3" y="3" rx="2" /></svg>
+                          16:9
+                        </button>
+                        <button
+                          type="button"
+                          className={getButtonClass('9:16')}
+                          onClick={() => handleSelect('9:16')}
+                          style={{ border: '0.5px solid', borderColor: "#262B31" }}
+                        >
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="30" viewBox="0 0 24 30" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-square"><rect width="18" height="25" x="3" y="3" rx="2" /></svg>
+                          9:16
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
+
+              <div className="border-t border-gray-200 px-4 py-6 sm:px-6" style={{ borderTop: '0.5px solid', borderColor: "#3b3b3b" }}>
+                {loading ? (
+                  <FastSpinner size={20} />
+                ) : (
+                  <button
+                    type="submit"
+                    className="inline-flex items-center w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-lg font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
+                    onClick={handleGenerate}
+                  >
+                    Generate
+                    <SparklesIcon className="ml-2 h-5 w-5" />
+                  </button>
+                )}
+              </div>
             </div>
-          </form>
+          </div>
+
+          <div className='flex-grow md:mt-1 sm:-pt-10'>
+            <div className="mx-auto rounded-md">
+              <div className='' />
+              <div className="">
+                <div className="flex w-full flex-col">
+                  <div className="mb-20 overflow-y-scroll">
+
+                    {generationsVideos.slice().reverse().map((item, index) => (
+                      <div key={index} className="pt-3">
+                        <div className="center-content">
+                          <Masonry
+                            breakpointCols={breakpointColumnsObj}
+                            className="my-masonry-grid pl-5 gap-2"
+                            columnClassName="my-masonry-grid_column"
+                          >
+                            {item.image_urls.map((image, imageIndex) => (
+                              <div key={imageIndex}>
+                                <VerifiedVideo
+                                  key={imageIndex}
+                                  imageUrl={image}
+                                  altDescription="Description of Image"
+                                  index={generationsVideos.length - index - 1}
+                                />
+                              </div>
+                            ))}
+                          </Masonry>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
   )

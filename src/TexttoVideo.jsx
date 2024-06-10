@@ -377,26 +377,26 @@ function ImagePlaceholder() {
 }
 
 function ImagePlaceholderOther() {
-    return (
-      <div className="w-full">
-        <div className="relative items-center block p-6 rounded-lg shadow-md bg-indigo-900 h-[100px]"> {/* Adjusted background to bg-gray-800 */}
-          <div role="status" className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"> {/* Corrected class to className */}
-            <svg aria-hidden="true" className="w-8 h-8 mr-2 text-gray-200 animate-spin-fast fill-indigo-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-                fill="currentColor"
-              />
-              <path
-                d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-                fill="currentFill"
-              />
-            </svg>
-            <span className="sr-only">Loading...</span>
-          </div>
+  return (
+    <div className="w-full">
+      <div className="relative items-center block p-6 rounded-lg shadow-md bg-indigo-900 h-[100px]"> {/* Adjusted background to bg-gray-800 */}
+        <div role="status" className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"> {/* Corrected class to className */}
+          <svg aria-hidden="true" className="w-8 h-8 mr-2 text-gray-200 animate-spin-fast fill-indigo-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+              fill="currentColor"
+            />
+            <path
+              d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+              fill="currentFill"
+            />
+          </svg>
+          <span className="sr-only">Loading...</span>
         </div>
       </div>
-    );
-  }
+    </div>
+  );
+}
 
 function MoreOptionsAccordion({
   Title,
@@ -1159,7 +1159,7 @@ export default function TexttoVideo({ base_models, credits, setCredits, generati
   const fileInputRef = useRef(null);
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [displayedVideo, setDisplayedVideo] = useState(null)
-  
+
   const handleFilesUpload = (files) => {
     const videoFile = Array.from(files).find(file => file.type.startsWith('video/'));
     if (videoFile) {
@@ -1192,92 +1192,96 @@ export default function TexttoVideo({ base_models, credits, setCredits, generati
 
   const handleGenerate = (event) => {
     event.preventDefault();
-    if (activeTab == "Videos") {
-      GenerateVideos();
-    }
-    else {
-      GenerateImages();
-    }
+    GenerateVideos();
   }
 
   const GenerateVideos = async () => {
-
+    setLoading(true);
     try {
-      let newMessage = "";
-      if (base64Vid == "") {
-        newMessage = "Please upload a valid image, max dimensions of 1024 x 1024"
+      if (promptImage == "") {
+        setWarningModalOpen(true)
+        setMessage("Please add a prompt.")
+        setLoading(false)
+        return
       }
-      else if (isNaN(cond_aug) || cond_aug < 0 || cond_aug > 1) {
-        newMessage = "Please choose a valid cond aug between 0 and 1";
+      else if (apiKey == "") {
+        setWarningModalOpen(true)
+        setMessage("User not logged in")
+        setLoading(false)
+        return
       }
-      else if (isNaN(seedVideo) || seedVideo < 0) {
-        newMessage = "Please choose a valid positive seed.";
-      }
-      if (newMessage != "") {
-        setShow(false);
-        setMessage(newMessage);
-        setShow(true);
-      }
-      else {
-        setLoading2(true);
-        const payloadDataBef = {
-          "url": base64Vid,
-          "fps": fps,
-          "seed": seedVideo,
-          "cond_aug": cond_aug,
-          "motion_bucket_id": motion_bucket_id,
-          "model_id": "stable-video-diffusion"
-        };
 
-        let payloadData = {};
-        Object.entries(payloadDataBef).forEach(([key, value]) => {
-          if (value !== null && !Number.isNaN(value)) payloadData[key] = value;
-        });
+      let height = 768;
+      let width = 768;
 
-        const timeOptions = {
-          weekday: undefined, // Do not display
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit',
-          second: '2-digit',
-          hour12: true,
-          timeZone: 'America/Chicago',
-          timeZoneName: 'short'
-        };
-        const timeFormatter = new Intl.DateTimeFormat('en-US', timeOptions);
+      if (selectedRatio == "16:9") {
+        height = 768;
+        width = 1024;
+      }
+      else if (selectedRatio == "9:16") {
+        height = 1024;
+        width = 768;
+      }
 
-        // console.log(modelType);
-        Object.keys(payloadData).forEach(key => {
-          if (payloadData[key] === null || payloadData[key] === undefined || payloadData[key] == "") {
-            delete payloadData[key];
-          }
-        });
-        let result = null;
-        result = await callAPI(payloadData, "https://api.flushai.cloud/web/v1/video/img2vid");
-        // console.log("result", result);
-        let urls = result['urls'];
-        let temp_gen = {
-          'prompt': "",
-          'image_urls': urls,
-          'time': timeFormatter.format(new Date()).replace(',', ''),
-          'num_images': parseInt(1, 10)
-        }
-        setCredits(credits - 20);
+      const payloadDataBef = {
+        "prompt": promptImage,
+        "height": height,
+        "width": width
+      }
+
+      let payloadData = {};
+      Object.entries(payloadDataBef).forEach(([key, value]) => {
+        if (value !== null && !Number.isNaN(value)) payloadData[key] = value;
+      });
+      // console.log("payload data", payloadData)
+      const result = await callVideoGenerationAPI(payloadData);
+      await fetchData2();
+
+      let urls = result['urls'];
+      let temp_gen = {
+        'prompt': "",
+        'image_urls': urls,
+        'time': timeFormatter.format(new Date()).replace(',', ''),
+        'num_images': parseInt(1, 10)
+      }
+      // if (result.status === 202) {
+      if (result.output == "Request accepted and is being processed") {
+        setCredits(credits - 200);
         setGenerationsVideos(generations => [...generations, temp_gen]);
         setIsVerifiedVid(isVerified => [...isVerified, false]);
-        // console.log("generationImages", generationsImages);
+        // let inference_id = result.inference_id;
+        // let creditsTemp = credits - 200;
+        // setCredits(creditsTemp);
+        // setLoading(false);
+        // navigate(`/video/${inference_id}`);
+        // setCheckModalOpen(true);
+        // setSuccessMessage("Come back in 3-4 minutes to check the results!")
+      } else {
+        setMessage("Error with your generation, invalid video or out of credits, upgrade");
+        setWarningModalOpen(true);
+        setLoading(false);
+
+        setTimeout(() => navigate('/pricing'), 1000);
       }
     } catch (error) {
+      console.log("error", error);
       if (apiKey === undefined) {
-        setMessage("Error with your generation, please upgrade to access this feature."); // Set the state with the appropriate message.
+        setMessage("Error with your message, user not found, please try again");
+        setWarningModalOpen(true);
+        setLoading(false);
+
+        setTimeout(() => navigate('/pricing'), 1000);
+        // await handleSubscribeClick("starter-warpvideo");
       } else {
-        setMessage("Error with your generation, please upgrade to access this feature."); // Set the state with the appropriate message.
+        setMessage("Error with your generation, invalid video or out of credits, upgrade");
+        setWarningModalOpen(true);
+        setLoading(false);
+
+        setTimeout(() => navigate('/pricing'), 1000);
+        // await handleSubscribeClick("starter-warpvideo");
       }
-      setShow(true); // Show the modal.
-    } finally {
-      setLoading2(false);
+      setWarningModalOpen(true);
+      setLoading(false);
     }
   };
 
@@ -1309,123 +1313,7 @@ export default function TexttoVideo({ base_models, credits, setCredits, generati
     } catch (error) {
       console.error("There was a problem with the fetch operation:", error.message);
     }
-  }
-
-  const VerifiedImage = ({ imageUrl, altDescription, index }) => {
-    const indexRef = useRef(index);
-
-    const changeIndex = (currIndex) => {
-      const newArr = [...isVerified];
-      newArr[currIndex] = true;
-      setIsVerified(newArr);
-    };
-
-    useEffect(() => {
-      let active = true;
-      const checkImageAndUpdate = () => {
-        if (!active || isVerified[indexRef.current]) return;
-
-        fetch(imageUrl)
-          .then(response => {
-            if (!active) return;
-            if (response.ok) {
-              changeIndex(indexRef.current); // Use the ref's current value
-            } else {
-              setTimeout(checkImageAndUpdate, 1000);
-            }
-          })
-          .catch(error => {
-            if (!active) return;
-            setTimeout(checkImageAndUpdate, 1000);
-          });
-      };
-      checkImageAndUpdate();
-      return () => {
-        active = false;
-      };
-    }, [imageUrl]);
-
-    if (!isVerified[index]) {
-      return (
-        <div className='w-full'>
-          <ImagePlaceholder />
-        </div>
-      );
-    }
-
-    // Render actual image if it is verified.
-    return (
-      <div className='w-full'>
-        <img
-          src={imageUrl}
-          alt={altDescription}
-          className="object-cover rounded-lg hover:brightness-50 transition duration-300 cursor-pointer"
-        />
-      </div>
-    );
   };
-
-  const VerifiedImage2 = ({ imageUrl, altDescription, index }) => {
-    const indexRef = useRef(index);
-
-    const changeIndex = (currIndex) => {
-      const newArr = [...isVerified];
-      newArr[currIndex] = true;
-      setIsVerified(newArr);
-    };
-
-    useEffect(() => {
-      let active = true;
-      const checkImageAndUpdate = () => {
-        if (!active || isVerified[indexRef.current]) return;
-
-        fetch(imageUrl)
-          .then(response => {
-            if (!active) return;
-            if (response.ok) {
-              changeIndex(indexRef.current); // Use the ref's current value
-            } else {
-              setTimeout(checkImageAndUpdate, 1000);
-            }
-          })
-          .catch(error => {
-            if (!active) return;
-            setTimeout(checkImageAndUpdate, 1000);
-          });
-      };
-      checkImageAndUpdate();
-      return () => {
-        active = false;
-      };
-    }, [imageUrl]);
-
-    // if (!isVerified[index]) {
-    //   return (
-    //     <div className='w-full'>
-    //       <ImagePlaceholder />
-    //     </div>
-    //   );
-    // }
-
-    if (true) {
-        return (
-          <div className='w-full pb-2'>
-            <ImagePlaceholderOther />
-          </div>
-        );
-      }
-
-    // Render actual image if it is verified.
-    return (
-      <div className='w-full'>
-        <img
-          src={imageUrl}
-          alt={altDescription}
-          className="object-cover rounded-lg hover:brightness-50 transition duration-300 cursor-pointer"
-        />
-      </div>
-    );
-};
 
   const VerifiedVideo = ({ imageUrl, altDescription, index }) => {
     const indexRef = useRef(index);
@@ -1479,126 +1367,6 @@ export default function TexttoVideo({ base_models, credits, setCredits, generati
   };
 
   const navigate = useNavigate();
-
-  const GenerateImages = async () => {
-    const { data: userData, error } = await supabase.auth.getSession();
-    console.log(userData.session)
-    if (!userData.session) {
-      console.log("HATEEEEE")
-      navigate('/signin');
-    }
-    try {
-      // console.log("seed image", seedImage);
-      // console.log("model id", chosenModel.price)
-      let newMessage = "";
-      if (isNaN(seedImage) || seedImage < 0) {
-        newMessage = "Please choose a valid positive seed.";
-      }
-      if (promptImage === "") {
-        newMessage = "Please add a prompt for your images.";
-      }
-      if (newMessage != "") {
-        setShow(false)
-        setMessage(newMessage);
-        setShow(true);
-      }
-      else {
-        setLoading(true);
-        const payloadDataBef = {
-          "prompt": promptImage,
-          "model_id": chosenModel.id,
-          "negative_prompt": negativePromptImage,
-          "seed": seedImage,
-          "num_images": parseInt(numberOfImages, 10),
-          "scale": parseFloat(guidanceScaleImage),
-          "height": parseInt(heightImage, 10),
-          "width": parseInt(widthImage, 10),
-          "num_steps": parseInt(inferenceStepsImage, 10),
-          "scheduler": scheduler
-        };
-        if (uploadedImage != null) {
-          payloadDataBef["input_image"] = base64Image;
-          payloadDataBef["mode"] = "base64";
-        }
-
-        let payloadData = {};
-        Object.entries(payloadDataBef).forEach(([key, value]) => {
-          if (value !== null && !Number.isNaN(value)) payloadData[key] = value;
-        });
-
-        const timeOptions = {
-          weekday: undefined, // Do not display
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit',
-          second: '2-digit',
-          hour12: true,
-          timeZone: 'America/Chicago',
-          timeZoneName: 'short'
-        };
-        const timeFormatter = new Intl.DateTimeFormat('en-US', timeOptions);
-
-        // console.log(modelType);
-        Object.keys(payloadData).forEach(key => {
-          if (payloadData[key] === null || payloadData[key] === undefined || payloadData[key] == "") {
-            delete payloadData[key];
-          }
-        });
-        // console.log("pay load data", payloadData);
-        let result = null;
-        if (uploadedImage == null) {
-          console.log("payload data", payloadData);
-          result = await callAPI(payloadData, "https://api.flushai.cloud/web/v1/images/txt2img");
-        }
-        else {
-          if (chosenModel.id == "stable-diffusion-xl" || chosenModel.id == "stable-diffusion-v15" || chosenModel.id == "stable-diffusion-v21" || chosenModel.id == "absolute-reality" || chosenModel.id == "realistic-vision-v51" || chosenModel.id == "anything-v5") {
-            result = await callAPI(payloadData, "https://api.flushai.cloud/web/v1/images/img2img")
-          }
-          else {
-            setShow(false);
-            setMessage("Image to image currently not supported with this model");
-            setShow(true);
-            setLoading(false);
-            return;
-          }
-        }
-        // console.log("result", result);
-        let urls = result['urls'];
-        let temp_gen = {
-          'prompt': promptImage,
-          'image_urls': urls,
-          'time': timeFormatter.format(new Date()).replace(',', ''),
-          'num_images': parseInt(numberOfImages, 10)
-        }
-        if (chosenModel.id == "stable-diffusion-xl" || chosenModel.id == "juggernaut-xl" || chosenModel.id == "dreamshaper-xl") {
-          let val = numberOfImages * 3;
-          setCredits(credits - parseInt(val, 10));
-        }
-        else {
-          if (heightImage > 768 || widthImage > 768) {
-            let val = numberOfImages * 2;
-            setCredits(credits - parseInt(val, 10));
-          }
-          else {
-            setCredits(credits - parseInt(numberOfImages, 10));
-          }
-        }
-        setGenerationsImages(generations => [...generations, temp_gen]);
-        setIsVerified(isVerified => [...isVerified, false]);
-      }
-    } catch (error) {
-      if (apiKey === undefined) {
-        setMessage("Error with your generation, please upgrade to access this feature."); // Set the state with the appropriate message.
-      } else {
-        setMessage("Error with your generation, please upgrade to access this feature."); // Set the state with the appropriate message.
-      }
-      setShow(true); // Show the modal.
-    } finally {
-      setLoading(false);
-    };
-  }
 
   async function callLLMAPI(dataPayload) {
     const API_URL = "https://api.flushai.cloud/web/v1/helper/prompt-enhancer"
@@ -1745,62 +1513,10 @@ export default function TexttoVideo({ base_models, credits, setCredits, generati
     { name: 'Image', href: '#', icon: UsersIcon, current: true },
     { name: 'Morph', href: '#', icon: CreditCardIcon, current: false },
   ]
-  
-
-  function Tabs() {
-    return (
-      <div>
-        <div className="sm:hidden">
-          <label htmlFor="tabs" className="sr-only">
-            Select a tab
-          </label>
-          {/* Use an "onChange" listener to redirect the user to the selected tab URL. */}
-          <select
-            id="tabs"
-            name="tabs"
-            className="block w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
-            defaultValue={tabs.find((tab) => tab.current).name}
-          >
-            {videotabs.map((tab) => (
-              <option key={tab.name}>{tab.name}</option>
-            ))}
-          </select>
-        </div>
-        <div className="hidden sm:block">
-          <div className="border-b border-[#3b3b3b]">
-            <nav className="-mb-px justify-start flex space-x-8" aria-label="Tabs">
-              {videotabs.map((tab) => (
-                <a
-                  key={tab.name}
-                  href={tab.href}
-                  className={classNames(
-                    tab.current
-                      ? 'border-indigo-500 text-indigo-600'
-                      : 'border-transparent text-gray-300 hover:border-gray-300 hover:text-gray-700',
-                    'group inline-flex items-center border-b-2 py-4 px-1 text-sm font-medium'
-                  )}
-                  aria-current={tab.current ? 'page' : undefined}
-                >
-                  <tab.icon
-                    className={classNames(
-                      tab.current ? 'text-indigo-500' : 'text-gray-300 group-hover:text-gray-600',
-                      '-ml-0.5 mr-2 h-5 w-5'
-                    )}
-                    aria-hidden="true"
-                  />
-                  <span>{tab.name}</span>
-                </a>
-              ))}
-            </nav>
-          </div>
-        </div>
-      </div>
-    )
-  }
 
   function Style({ creationName, onClick, isSelected, isLocked }) {
     const navigate = useNavigate(); // Hook for navigation
-    
+
     const handleClick = () => {
       if (isLocked) {
         navigate('/pricing'); // Navigate to the pricing page if the style is locked
@@ -1808,7 +1524,7 @@ export default function TexttoVideo({ base_models, credits, setCredits, generati
         onClick(); // Otherwise, execute the provided onClick function
       }
     };
-  
+
     return (
       <div className={`relative z-10 cursor-pointer rounded-lg ${isSelected ? 'outline outline-2 outline-indigo-600' : ''} ${isLocked ? 'opacity-50 cursor-not-allowed' : ''}`} onClick={handleClick} style={{ width: '100%', paddingBottom: '100%' }}>
         <div
@@ -1840,53 +1556,24 @@ export default function TexttoVideo({ base_models, credits, setCredits, generati
     );
   }
 
-  const SelectStyle = ({ selectedStyle, handleStyleClick, plan }) => {
-    const lockedStyles =  []; //plan === "free" ?  ["Marble", "Studio Ghibli", "Lego", "Bronze"] : [];
-    
-    return (
-      <div style={{ maxWidth: '100%' }} className="flex flex-col items-start">
-        <div className="mt-3 grid grid-cols-3 md:grid-cols-4 gap-4 w-full">
-        {["3D Cartoon", "Cartoon Anime", "fusion", "Japan Anime", "realistic", "toonyou"].map((name, index) => (
-            <Style
-              creationName={name}
-              onClick={() => handleStyleClick(name)}
-              isSelected={selectedStyle === name}
-              isLocked={lockedStyles.includes(name)}
-            />
-          ))}
-        </div>
-      </div>
-    );
-  };
-  
-  const handleStyleClick = (styleName) => {
-    if (selectedStyle === styleName) {
-      // If the clicked style is already selected, unselect it
-      setSelectedStyle(null);
-    } else {
-      // Otherwise, select the clicked style
-      setSelectedStyle(styleName);
-    }
-  };
-
   const [selectedRatio, setSelectedRatio] = useState('9:16');
 
-    // Function to handle button click
-    const handleSelect = (ratio) => {
-      setSelectedRatio(ratio);
-    };
-  
-    // Helper function to get button classes based on selection
-    const getButtonClass = (ratio) => {
-        return `flex items-center justify-center gap-2 rounded-md px-2.5 py-1.5 text-sm text-gray-300 font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ${ratio === selectedRatio ? 'bg-indigo-800 hover:bg-indigo-700' : 'bg-[#17191C] hover:bg-gray-800'}`;
-    };
+  // Function to handle button click
+  const handleSelect = (ratio) => {
+    setSelectedRatio(ratio);
+  };
 
-    const breakpointColumnsObj = {
-        default: 4,
-        1300: 3,
-        1000: 2,
-        500: 1
-    };
+  // Helper function to get button classes based on selection
+  const getButtonClass = (ratio) => {
+    return `flex items-center justify-center gap-2 rounded-md px-2.5 py-1.5 text-sm text-gray-300 font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ${ratio === selectedRatio ? 'bg-indigo-800 hover:bg-indigo-700' : 'bg-[#17191C] hover:bg-gray-800'}`;
+  };
+
+  const breakpointColumnsObj = {
+    default: 4,
+    1300: 3,
+    1000: 2,
+    500: 1
+  };
 
   return (
     <div className="">
@@ -1902,126 +1589,43 @@ export default function TexttoVideo({ base_models, credits, setCredits, generati
                     <div>
                       <TextArea Title={"Prompt"} Rows={4} value={promptImage} setValue={setPromptImage} />
                     </div>
-                    <div className="flex justify-end">
-                      {loading1 ? (
-                        <FastSpinner size={20} />
-                      ) : (
-                        <button
-                          type="button"
-                          className="rounded mt-2 bg-[#101213] px-2 py-1 text-xs font-semibold text-gray-300 ring-0.5 ring-[#363636]"
-                          onClick={improvePrompt}
-                        >
-                          Enhance Prompt
-                        </button>
-                      )}
-                    </div>
                   </div>
 
                   <div className='px-5 pt-5'>
                     <div>
-                      <TextArea Title={"Negative Prompt"} Rows={1} value={negativePromptImage} setValue={setNegativePromptImage} />
-                    </div>
-                  </div>
-                  
-                  <div className='px-5 pt-5'>
-                    <div>
-                        <label htmlFor="comment" className="block text-md text-left font-medium leading-6 text-gray-300">
-                            Aspect Ratio
-                        </label>
-                        <div className="mt-3" style={{ alignItems: 'center', gap: '10px' }}>
+                      <label htmlFor="comment" className="block text-md text-left font-medium leading-6 text-gray-300">
+                        Aspect Ratio
+                      </label>
+                      <div className="mt-3" style={{ alignItems: 'center', gap: '10px' }}>
                         <div className='flex' style={{ gap: '10px' }}>
-                            <button
+                          <button
                             type="button"
                             className={getButtonClass('1:1')}
                             onClick={() => handleSelect('1:1')}
-                            >
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-square"><rect width="18" height="18" x="3" y="3" rx="2"/></svg>
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-square"><rect width="18" height="18" x="3" y="3" rx="2" /></svg>
                             1:1
-                            </button>
-                            <button
+                          </button>
+                          <button
                             type="button"
                             className={getButtonClass('16:9')}
                             onClick={() => handleSelect('16:9')}
-                            >
-                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="24" viewBox="0 0 34 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-square"><rect width="30" height="18" x="3" y="3" rx="2"/></svg>
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="24" viewBox="0 0 34 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-square"><rect width="30" height="18" x="3" y="3" rx="2" /></svg>
                             16:9
-                            </button>
-                            <button
+                          </button>
+                          <button
                             type="button"
                             className={getButtonClass('9:16')}
                             onClick={() => handleSelect('9:16')}
-                            >
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="30" viewBox="0 0 24 30" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-square"><rect width="18" height="25" x="3" y="3" rx="2"/></svg>
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="30" viewBox="0 0 24 30" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-square"><rect width="18" height="25" x="3" y="3" rx="2" /></svg>
                             9:16
-                            </button>
+                          </button>
                         </div>
-                        </div>
+                      </div>
                     </div>
                   </div>
-
-                  <dl className="space-y-6 px-5 py-2 sm:px-5">
-                    <div className="pb-4">
-                      <ModelsAccordion model={chosenModel} setModel={setChosenModel} models={models} setHeight={setHeightImage} setWidth={setWidthImage} setSteps={setInferenceStepsImage} />
-                    </div>
-                  </dl>
-                      
-
-                  {/* Image upload input */}
-                  {/* <div className='px-5'>
-                      <label htmlFor="imageUpload" className="block text-sm text-left font-medium leading-6 text-gray-300">
-                        Upload Image (Optional):
-                      </label>
-                    </div> */}
-
-                  {/* <div
-                      className={`mt-2 mb-3 mx-5 flex justify-center rounded-lg border ${isDragging ? "bg-gray-500/50" : "bg-transparent"} border-dashed border-[#3b3b3b] px-6 py-7`}
-                      onDragOver={onDragOver}
-                      onDragLeave={onDragLeave}
-                      onDrop={onDrop}
-                    >
-                      <div className="text-center">
-                        <PhotoIcon className="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
-                        <div className="mt-4 flex text-sm leading-6 text-gray-600">
-                          <label
-                            htmlFor="file-upload"
-                            className={`upload-text-bg relative cursor-pointer rounded-md font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500`}
-                          >
-                            <span>Upload image</span>
-                            <input
-                              ref={fileInputRef}
-                              id="file-upload"
-                              name="file-upload"
-                              type="file"
-                              className="sr-only"
-                              onChange={handleImageChange}
-                              accept="image/jpeg"
-                              multiple
-                            />
-                          </label>
-                          <p className="pl-1">or drag and drop</p>
-                        </div>
-                        <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
-                      </div>
-                    </div> */}
-
-                  {/* Image preview */}
-                  {/* {uploadedImage && (
-                      <div className='px-5 py-4'>
-                        <img
-                          src={uploadedImage}
-                          alt="Uploaded Preview"
-                          className="w-full h-auto rounded-md"
-                        />
-                      </div>
-                    )} */}
-
-                  {/* <dl className="space-y-6 px-5 py-2 sm:px-5">
-                    <div className=" border-t border-[#3b3b3b] pt-1 pb-2">
-                      <MoreOptionsAccordion Title={"More Options"} guidanceScale={guidanceScaleImage} setGuidanceScale={setGuidanceScaleImage}
-                        inferenceSteps={inferenceStepsImage} setInferenceSteps={setInferenceStepsImage} seed={seedImage} setSeed={setSeedImage}
-                        numberOfImages={numberOfImages} setNumberOfImages={setNumberOfImages} scheduler={scheduler} setScheduler={setScheduler} />
-                    </div>
-                  </dl> */}
                 </div>
 
                 <div className="border-t border-gray-200 px-4 py-6 sm:px-6" style={{ borderTop: '0.5px solid', borderColor: "#3b3b3b" }}>
@@ -2042,54 +1646,30 @@ export default function TexttoVideo({ base_models, credits, setCredits, generati
 
             <div className='flex-grow md:mt-1 sm:pt-10'>
               <div className="mx-auto rounded-md">
-                <div className=''/>
+                <div className='' />
                 <div className="">
                   <div className="flex w-full flex-col">
                     <div className="mb-20 overflow-y-scroll">
 
                       {/* {generationsImages.slice().reverse().map((item, index) => { */}
-                        {/* return ( */}
-                          <div> {/* Set the background to black for a dark theme */}
-                              <div className="pt-3">
-                                <div className=""> {/* Center the content */}
-                                  {/* {item['image_urls'].map((image, imageIndex) => {
+                      {/* return ( */}
+                      <div> {/* Set the background to black for a dark theme */}
+                        <div className="pt-3">
+                          <div className=""> {/* Center the content */}
+                            {/* {item['image_urls'].map((image, imageIndex) => {
                                     return ( */}
-                                      <Masonry
-                                        breakpointCols={breakpointColumnsObj}
-                                        className="my-masonry-grid pl-5 gap-2"
-                                        columnClassName="my-masonry-grid_column">
-                                        <div>
-                                            <VerifiedImage altDescription="Description of Image" />
-                                        </div>
-                                        <div>
-                                            <VerifiedImage altDescription="Description of Image" />
-                                        </div>
-                                        <div>
-                                            <VerifiedImage altDescription="Description of Image" />
-                                        </div>
-                                        <div>
-                                            <VerifiedImage2 altDescription="Description of Image" />
-                                        </div>
-                                        <div>
-                                            <VerifiedImage altDescription="Description of Image" />
-                                        </div>
-                                        <div>
-                                            <VerifiedImage altDescription="Description of Image" />
-                                        </div>
-                                        <div>
-                                            <VerifiedImage altDescription="Description of Image" />
-                                        </div>
-                                        <div>
-                                            <VerifiedImage2 altDescription="Description of Image" />
-                                        </div>
-                                        {/* Continue adding items as needed */}
-                                    </Masonry>
-                                    {/* );
-                                  })} */}
-                                </div>
-                              </div>
-                            </div>
+                            <Masonry
+                              breakpointCols={breakpointColumnsObj}
+                              className="my-masonry-grid pl-5 gap-2"
+                              columnClassName="my-masonry-grid_column">
+                              {/* Continue adding items as needed */}
+                            </Masonry>
                             {/* );
+                                  })} */}
+                          </div>
+                        </div>
+                      </div>
+                      {/* );
                         })} */}
                     </div>
                   </div>
