@@ -7,10 +7,12 @@ import {
   useLocation
 } from 'react-router-dom';
 import HomePage from './HomePage';
-import SignIn from './SignIn';
+import Signin from './SignIn';
+import Signup from './SignUp';
 import Dashboard from './Dashboard';
 import Pricing from './Pricing';
 import Terms from './Terms';
+import AppSumo from './AppSumo';
 
 function App() {
   const [navigation, setNavigation] = useState([
@@ -224,7 +226,9 @@ function App() {
         <Route path = "/text-to-video" element={<Dashboard setUrls={setUrls} products={products} pageName={"Text-to-Video"} navigation={navigation} setNavigation={setNavigation} modelID={modelID} setModelID={setModelID} model_name={model_name} setModelName={setModelName} created_at={createdAt} setCreatedAt={setCreatedAt} resolution={resolution} setResolution={setResolution} learning_rate={learningRate} setLearningRate={setLearningRate} batch_size={batchSize} setBatchSize={setBatchSize} training_steps={trainingSteps} setTrainingSteps={setTrainingSteps} urls={urls} base_model={base_model} setBaseModel={setBaseModel} handleModelDetails={handleModelDetails} startingModel={products[0]} setLastPartOfUrl={setLastPartOfUrl}/>} />
         <Route path = "/morph" element={<Dashboard setUrls={setUrls} products={products} pageName={"Morph"} navigation={navigation} setNavigation={setNavigation} modelID={modelID} setModelID={setModelID} model_name={model_name} setModelName={setModelName} created_at={createdAt} setCreatedAt={setCreatedAt} resolution={resolution} setResolution={setResolution} learning_rate={learningRate} setLearningRate={setLearningRate} batch_size={batchSize} setBatchSize={setBatchSize} training_steps={trainingSteps} setTrainingSteps={setTrainingSteps} urls={urls} base_model={base_model} setBaseModel={setBaseModel} handleModelDetails={handleModelDetails} startingModel={products[0]} setLastPartOfUrl={setLastPartOfUrl}/>} />
         <Route path = "/image-to-video" element={<Dashboard setUrls={setUrls} products={products} pageName={"ImageToVideo"} navigation={navigation} setNavigation={setNavigation} modelID={modelID} setModelID={setModelID} model_name={model_name} setModelName={setModelName} created_at={createdAt} setCreatedAt={setCreatedAt} resolution={resolution} setResolution={setResolution} learning_rate={learningRate} setLearningRate={setLearningRate} batch_size={batchSize} setBatchSize={setBatchSize} training_steps={trainingSteps} setTrainingSteps={setTrainingSteps} urls={urls} base_model={base_model} setBaseModel={setBaseModel} handleModelDetails={handleModelDetails} startingModel={products[0]} setLastPartOfUrl={setLastPartOfUrl}/>} />
-        <Route path = "/signin" element={<SignIn lastPartOfUrl={lastPartOfUrl} />} />
+        <Route path = "/signup" element={<Signup />} />
+        <Route path = "/signin" element={<Signin />} />
+        <Route path = "/appsumo" element={<AppSumo />} />
         <Route path = "/pricing" element={<Dashboard setUrls={setUrls} products={products} pageName={"Pricing"} navigation={navigation} setNavigation={setNavigation} modelID={modelID} setModelID={setModelID} model_name={model_name} setModelName={setModelName} created_at={createdAt} setCreatedAt={setCreatedAt} resolution={resolution} setResolution={setResolution} learning_rate={learningRate} setLearningRate={setLearningRate} batch_size={batchSize} setBatchSize={setBatchSize} training_steps={trainingSteps} setTrainingSteps={setTrainingSteps} urls={urls} base_model={base_model} setBaseModel={setBaseModel} handleModelDetails={handleModelDetails}/>} />
         <Route path = "/faq" element={<Dashboard setUrls={setUrls} products={products} pageName={"FAQ"} navigation={navigation} setNavigation={setNavigation} modelID={modelID} setModelID={setModelID} model_name={model_name} setModelName={setModelName} created_at={createdAt} setCreatedAt={setCreatedAt} resolution={resolution} setResolution={setResolution} learning_rate={learningRate} setLearningRate={setLearningRate} batch_size={batchSize} setBatchSize={setBatchSize} training_steps={trainingSteps} setTrainingSteps={setTrainingSteps} urls={urls} base_model={base_model} setBaseModel={setBaseModel} handleModelDetails={handleModelDetails}/>} />
         <Route path = "/my-videos" element={<Dashboard setUrls={setUrls} products={products} pageName={"Gallery"} navigation={navigation} setNavigation={setNavigation} modelID={modelID} setModelID={setModelID} model_name={model_name} setModelName={setModelName} created_at={createdAt} setCreatedAt={setCreatedAt} resolution={resolution} setResolution={setResolution} learning_rate={learningRate} setLearningRate={setLearningRate} batch_size={batchSize} setBatchSize={setBatchSize} training_steps={trainingSteps} setTrainingSteps={setTrainingSteps} urls={urls} base_model={base_model} setBaseModel={setBaseModel} handleModelDetails={handleModelDetails}/>} />
