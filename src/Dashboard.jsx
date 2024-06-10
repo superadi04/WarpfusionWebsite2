@@ -21,6 +21,7 @@ import Morph from "./Morph"
 import FAQ from "./FAQ"
 import MyVideos from './MyVideos'
 import ImageToVideo from './ImageToVideo'
+import MotionBrush from './MotionBrush'
 
 const supabase = createClient('https://zylqiknjgpjzjhylylnw.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp5bHFpa25qZ3BqempoeWx5bG53Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDU2MTEwMzMsImV4cCI6MjAyMTE4NzAzM30.ua5KcEvaU-2lkp_kHx1rOM4MFekUAZ7Ozd-fTrnMs7g')
 
@@ -380,6 +381,7 @@ export default function Dashboard({ pageName, modelID, setModelID, createdAt, se
         {pageName === 'Text-to-Video' && <TexttoVideo base_models={products} credits={credits} setCredits={setCredits} generationsImages={generationsImages} setGenerationsImages={setGenerationsImages} generationsVideos={generationsVideos} setGenerationsVideos={setGenerationsVideos} activeTab={activeTab} startingModel={startingModel} setLastPartOfUrl={setLastPartOfUrl}/>}
         {pageName === 'Morph' && <Morph base_models={products} credits={credits} setCredits={setCredits} generationsImages={generationsImages} setGenerationsImages={setGenerationsImages} generationsVideos={generationsVideos} setGenerationsVideos={setGenerationsVideos} activeTab={activeTab} startingModel={startingModel} setLastPartOfUrl={setLastPartOfUrl}/>}
         {pageName === 'ImageToVideo' && <ImageToVideo base_models={products} credits={credits} setCredits={setCredits} generationsImages={generationsImages} setGenerationsImages={setGenerationsImages} generationsVideos={generationsVideos} setGenerationsVideos={setGenerationsVideos} activeTab={activeTab} startingModel={startingModel} setLastPartOfUrl={setLastPartOfUrl}/>}
+        {pageName === 'MotionBrush' && <MotionBrush base_models={products} credits={credits} setCredits={setCredits} generationsImages={generationsImages} setGenerationsImages={setGenerationsImages} generationsVideos={generationsVideos} setGenerationsVideos={setGenerationsVideos} activeTab={activeTab} startingModel={startingModel} setLastPartOfUrl={setLastPartOfUrl}/>}
         {pageName === 'Gallery' && <MyVideos/>}
         {pageName === 'Explore' && <InferenceHistory activeTab={activeTab} />}
         {pageName === 'Create' && <MyModels handleInformation={handleModelDetails} setProducts={setModels} products={models} activeTab={activeTab} isModalOpen={isModalOpen} setModalOpen={setModalOpen} />}

@@ -963,9 +963,8 @@ export default function MyModels({ handleInformation, isModalOpen, setModalOpen,
           <ImagetoVideoCreation creationName={"Image-to-Video"} description={"Create a mesmerizing video from an image"} tag={"Popular"} setOpen={setOpen} demoVideoLink={"image_to_video.mp4"} setPricingModalOpen={setPricingModalOpen}/>
           <MorphCreation creationName={"Morph"} description={"Create an immersive video with 4 images"} tag={"Popular"} setOpen={setOpen} demoVideoLink={"morph.mp4"} setPricingModalOpen={setPricingModalOpen} />
           {/* <TexttoVideoCreation creationName={"Deforum"} description={"Create immersive videos with Deforum with a text prompt"} tag={"Popular"} plan={plan} setOpen={setOpen} /> */}
-          <Text2VideoCreation  creationName={"Text to Video"} description={"Create hyperrealistic videos with text"} tag={"Popular"} setOpen={setOpen} demoVideoLink={"text_to_video.mp4"} setPricingModalOpen={setPricingModalOpen} />
+          {/* <Text2VideoCreation  creationName={"Text to Video"} description={"Create hyperrealistic videos with text"} tag={"Popular"} setOpen={setOpen} demoVideoLink={"text_to_video.mp4"} setPricingModalOpen={setPricingModalOpen} /> */}
           <MotionBrush creationName={"Motion Brush"} description={"Make parts of your photo move"} tag={"Popular"} setOpen={setOpen} demoVideoLink={"motion_brush.mp4"} />
-          {/* <InfiniteZoom creationName={"Infinite Zoom"} description={"Create infinitely zoomed videos"} tag={"Popular"} plan={plan} /> */}
         </div>
         <h2 className="text-3xl mt-7 font-semibold tracking-tight text-gray-300 text-left">
           Discover
