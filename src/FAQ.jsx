@@ -5,7 +5,7 @@ import axios from 'axios';
 import { createClient } from '@supabase/supabase-js'
 import { CircularProgress } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-// import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react'
+import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react'
 import { MinusSmallIcon, PlusSmallIcon } from '@heroicons/react/24/outline'
 
 const supabase = createClient('https://rrvjkmdsixuiuqktlxcg.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJydmprbWRzaXh1aXVxa3RseGNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTE1NDMxNjcsImV4cCI6MjAwNzExOTE2N30.Vo6_mO9gTwO_XqP9EDFh7LD5qHDGgIa50T8qsjI3wBk')
@@ -47,7 +47,7 @@ export default function FAQ({ apiKey, curPlan }) {
 
   return (
     <div className="">
-      {/* <div className="mx-auto max-w-7xl px-6 lg:px-8 py-20">
+      <div className="mx-auto max-w-7xl px-6 lg:px-8 py-20">
         <div className="mx-auto max-w-5xl divide-y divide-white/10">
           <h2 className="text-4xl font-bold leading-10 tracking-tight text-white">Frequently asked questions</h2>
           <dl className="mt-10 space-y-6 divide-y divide-white/10">
@@ -76,7 +76,7 @@ export default function FAQ({ apiKey, curPlan }) {
             ))}
           </dl>
         </div>
-      </div> */}
+      </div>
     </div>
   )
 }
