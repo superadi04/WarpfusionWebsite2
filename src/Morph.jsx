@@ -1,13 +1,15 @@
 import { useState, useEffect, useRef, useCallback, Fragment } from 'react'
 import { styled } from '@mui/material/styles';
 import CircularProgress from '@mui/material/CircularProgress';
-import { AtSymbolIcon, CodeBracketIcon, LinkIcon, PhotoIcon } from '@heroicons/react/20/solid'
+import { AtSymbolIcon, CodeBracketIcon, LinkIcon, PhotoIcon, SparklesIcon } from '@heroicons/react/20/solid'
 import { Dialog, Transition } from '@headlessui/react'
 import { ExclamationTriangleIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { XCircleIcon } from '@heroicons/react/20/solid'
 import { useLocation, useNavigate } from 'react-router-dom';
 import { VideoCameraIcon, CreditCardIcon, BuildingOfficeIcon, UsersIcon } from '@heroicons/react/20/solid'
 import { createClient } from '@supabase/supabase-js'
+import Masonry from 'react-masonry-css';
+
 const supabase = createClient('https://rrvjkmdsixuiuqktlxcg.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJydmprbWRzaXh1aXVxa3RseGNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTE1NDMxNjcsImV4cCI6MjAwNzExOTE2N30.Vo6_mO9gTwO_XqP9EDFh7LD5qHDGgIa50T8qsjI3wBk')
 const FastSpinner = styled(CircularProgress)(({ theme }) => ({
   '& .MuiCircularProgress-svg': {
@@ -355,7 +357,7 @@ function VideoModelsAccordian({ Title }) {
 function ImagePlaceholder() {
   return (
     <div className="w-full">
-      <div style={{ paddingTop: '90%' }} className="relative items-center block p-6 rounded-lg shadow-md bg-indigo-900"> {/* Adjusted background to bg-gray-800 */}
+      <div className="relative items-center block p-6 rounded-lg shadow-md bg-indigo-900"> {/* Adjusted background to bg-gray-800 */}
         <div role="status" className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"> {/* Corrected class to className */}
           <svg aria-hidden="true" className="w-8 h-8 mr-2 text-gray-200 animate-spin-fast fill-indigo-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -373,6 +375,29 @@ function ImagePlaceholder() {
     </div>
   );
 }
+
+function ImagePlaceholderOther() {
+    return (
+      <div className="w-full">
+        <div className="relative items-center block p-6 rounded-lg shadow-md bg-indigo-900 h-[100px]"> {/* Adjusted background to bg-gray-800 */}
+          <div role="status" className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"> {/* Corrected class to className */}
+            <svg aria-hidden="true" className="w-8 h-8 mr-2 text-gray-200 animate-spin-fast fill-indigo-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                fill="currentColor"
+              />
+              <path
+                d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                fill="currentFill"
+              />
+            </svg>
+            <span className="sr-only">Loading...</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
 
 function MoreOptionsAccordion({
   Title,
@@ -1493,223 +1518,7 @@ export default function TexttoVideo({ base_models, credits, setCredits, generati
       GenerateImages();
     }
   }
-
-  const GenerateVideos = async () => {
-
-    try {
-      let newMessage = "";
-      if (base64Vid == "") {
-        newMessage = "Please upload a valid image, max dimensions of 1024 x 1024"
-      }
-      else if (isNaN(cond_aug) || cond_aug < 0 || cond_aug > 1) {
-        newMessage = "Please choose a valid cond aug between 0 and 1";
-      }
-      else if (isNaN(seedVideo) || seedVideo < 0) {
-        newMessage = "Please choose a valid positive seed.";
-      }
-      if (newMessage != "") {
-        setShow(false);
-        setMessage(newMessage);
-        setShow(true);
-      }
-      else {
-        setLoading2(true);
-        const payloadDataBef = {
-          "url": base64Vid,
-          "fps": fps,
-          "seed": seedVideo,
-          "cond_aug": cond_aug,
-          "motion_bucket_id": motion_bucket_id,
-          "model_id": "stable-video-diffusion"
-        };
-
-        let payloadData = {};
-        Object.entries(payloadDataBef).forEach(([key, value]) => {
-          if (value !== null && !Number.isNaN(value)) payloadData[key] = value;
-        });
-
-        const timeOptions = {
-          weekday: undefined, // Do not display
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric',
-          hour: '2-digit',
-          minute: '2-digit',
-          second: '2-digit',
-          hour12: true,
-          timeZone: 'America/Chicago',
-          timeZoneName: 'short'
-        };
-        const timeFormatter = new Intl.DateTimeFormat('en-US', timeOptions);
-
-        // console.log(modelType);
-        Object.keys(payloadData).forEach(key => {
-          if (payloadData[key] === null || payloadData[key] === undefined || payloadData[key] == "") {
-            delete payloadData[key];
-          }
-        });
-        let result = null;
-        result = await callAPI(payloadData, "https://api.flushai.cloud/web/v1/video/img2vid");
-        // console.log("result", result);
-        let urls = result['urls'];
-        let temp_gen = {
-          'prompt': "",
-          'image_urls': urls,
-          'time': timeFormatter.format(new Date()).replace(',', ''),
-          'num_images': parseInt(1, 10)
-        }
-        setCredits(credits - 20);
-        setGenerationsVideos(generations => [...generations, temp_gen]);
-        setIsVerifiedVid(isVerified => [...isVerified, false]);
-        // console.log("generationImages", generationsImages);
-      }
-    } catch (error) {
-      if (apiKey === undefined) {
-        setMessage("Error with your generation, please upgrade to access this feature."); // Set the state with the appropriate message.
-      } else {
-        setMessage("Error with your generation, please upgrade to access this feature."); // Set the state with the appropriate message.
-      }
-      setShow(true); // Show the modal.
-    } finally {
-      setLoading2(false);
-    }
-  };
-
-  async function callAPI(dataPayload, url) {
-    const API_URL = url;
-
-    const headers = {
-      "Content-Type": "application/json",
-    };
-
-    dataPayload['user_id'] = apiKey;
-    console.log("data payload", dataPayload)
-
-    try {
-      const response = await fetch(API_URL, {
-        method: "POST", // or POST or PUT etc., depending on the API requirement
-        headers: headers,
-        body: JSON.stringify(dataPayload)
-      });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      console.log('output of API');
-      return data;
-
-    } catch (error) {
-      console.error("There was a problem with the fetch operation:", error.message);
-    }
-  }
-
-  const VerifiedImage = ({ imageUrl, altDescription, index }) => {
-    const indexRef = useRef(index);
-
-    const changeIndex = (currIndex) => {
-      const newArr = [...isVerified];
-      newArr[currIndex] = true;
-      setIsVerified(newArr);
-    };
-
-    useEffect(() => {
-      let active = true;
-      const checkImageAndUpdate = () => {
-        if (!active || isVerified[indexRef.current]) return;
-
-        fetch(imageUrl)
-          .then(response => {
-            if (!active) return;
-            if (response.ok) {
-              changeIndex(indexRef.current); // Use the ref's current value
-            } else {
-              setTimeout(checkImageAndUpdate, 1000);
-            }
-          })
-          .catch(error => {
-            if (!active) return;
-            setTimeout(checkImageAndUpdate, 1000);
-          });
-      };
-      checkImageAndUpdate();
-      return () => {
-        active = false;
-      };
-    }, [imageUrl]);
-
-    if (!isVerified[index]) {
-      return (
-        <div className='w-full'>
-          <ImagePlaceholder />
-        </div>
-      );
-    }
-
-    // Render actual image if it is verified.
-    return (
-      <div className='w-full'>
-        <img
-          src={imageUrl}
-          alt={altDescription}
-          className="object-cover rounded-lg hover:brightness-50 transition duration-300 cursor-pointer"
-        />
-      </div>
-    );
-  };
-
-  const VerifiedVideo = ({ imageUrl, altDescription, index }) => {
-    const indexRef = useRef(index);
-
-    const changeIndex = (currIndex) => {
-      const newArr = [...isVerifiedVid];
-      newArr[currIndex] = true;
-      setIsVerifiedVid(newArr);
-    };
-
-    useEffect(() => {
-      let active = true;
-      const checkImageAndUpdate = () => {
-        if (!active || isVerifiedVid[indexRef.current]) return;
-
-        fetch(imageUrl)
-          .then(response => {
-            if (!active) return;
-            if (response.ok) {
-              changeIndex(indexRef.current); // Use the ref's current value
-            } else {
-              setTimeout(checkImageAndUpdate, 1000);
-            }
-          })
-          .catch(error => {
-            if (!active) return;
-            setTimeout(checkImageAndUpdate, 1000);
-          });
-      };
-      checkImageAndUpdate();
-      return () => {
-        active = false;
-      };
-    }, [imageUrl]);
-
-    if (!isVerifiedVid[index]) {
-      return <ImagePlaceholder />; // Render placeholder if the image is not verified.
-    }
-
-    // Render actual image if it is verified.
-    return (
-      <div className='w-full'>
-        <video
-          src={imageUrl}
-          alt={altDescription}
-          className="object-cover rounded-lg hover:brightness-50 transition duration-300 cursor-pointer"
-          controls
-        />
-      </div>
-    );
-  };
-
+  
   const navigate = useNavigate();
 
   const GenerateImages = async () => {
@@ -1901,227 +1710,158 @@ export default function TexttoVideo({ base_models, credits, setCredits, generati
     }
   }
 
-  const [base64Image, setBase64Image] = useState(""); // State to hold the base64 string
-  const [base64Vid, setBase64Vid] = useState(""); // State to hold the base64 string
-  const handleImageChange = (event) => {
-    event.preventDefault();
-    const files = event.target.files;
-    if (files.length > 0) {
-      const file = files[0]; // Only take the first file
-
-      if (!file.type.includes("jpeg")) {
-        setShow(false); // Hide the modal.
-        setMessage("Only JPEG files are allowed."); // Set the state with the appropriate message.
-        setShow(true); // Show the modal.
-        return; // Exit the function if the file is not a JPEG
-      }
-
-      const reader = new FileReader();
-
-      reader.onload = function (e) {
-        // Create an image element
-        const img = new Image();
-
-        img.onload = function () {
-          // Check if image size is within the bounds
-          if (img.width > 1024 || img.height > 1024) {
-            setShow(false); // Hide the modal.
-            setMessage("Image size exceeds the maximum 1024 x 1024 dimensions."); // Set the state with the appropriate message.
-            setShow(true); // Show the modal.
-            return; // Exit the function if the image is too large
-          }
-
-          // Create a canvas element
-          const canvas = document.createElement('canvas');
-          const ctx = canvas.getContext('2d');
-
-          // Calculate the scaling factor to keep the aspect ratio
-          let scaleFactor = Math.min(1, 512 / img.width, 512 / img.height);
-
-          // Set the canvas size to the scaled dimensions
-          canvas.width = img.width * scaleFactor;
-          canvas.height = img.height * scaleFactor;
-
-          // Draw the image on the canvas
-          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-          // Convert the canvas to a base64 string
-          const resizedDataUrl = canvas.toDataURL(file.type);
-          const base64String = resizedDataUrl.split(',')[1];
-
-          // Store the base64 string in the stat
-
-          // Set the FileReader result as the uploadedImage for preview
-          if (activeTab == "Images") {
-            setUploadedImage(e.target.result);
-            setBase64Image(base64String);
-          }
-          else {
-            setUploadedImage2(e.target.result)
-            setBase64Vid(base64String);
-          }
-          // setUploadedImage(e.target.result);
-        };
-
-        // Set the src of the image to the FileReader result
-        img.src = e.target.result;
-      };
-
-      reader.readAsDataURL(file); // Read the file
-    }
-  };
-
-  const videotabs = [
-    { name: 'Video', href: '#', icon: VideoCameraIcon, current: false },
-    { name: 'Text', href: '#', icon: BuildingOfficeIcon, current: false },
-    { name: 'Image', href: '#', icon: UsersIcon, current: true },
-    { name: 'Morph', href: '#', icon: CreditCardIcon, current: false },
-  ]
-  
-
-  function Tabs() {
-    return (
-      <div>
-        <div className="sm:hidden">
-          <label htmlFor="tabs" className="sr-only">
-            Select a tab
-          </label>
-          {/* Use an "onChange" listener to redirect the user to the selected tab URL. */}
-          <select
-            id="tabs"
-            name="tabs"
-            className="block w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500"
-            defaultValue={tabs.find((tab) => tab.current).name}
-          >
-            {videotabs.map((tab) => (
-              <option key={tab.name}>{tab.name}</option>
-            ))}
-          </select>
-        </div>
-        <div className="hidden sm:block">
-          <div className="border-b border-[#3b3b3b]">
-            <nav className="-mb-px justify-start flex space-x-8" aria-label="Tabs">
-              {videotabs.map((tab) => (
-                <a
-                  key={tab.name}
-                  href={tab.href}
-                  className={classNames(
-                    tab.current
-                      ? 'border-indigo-500 text-indigo-600'
-                      : 'border-transparent text-gray-300 hover:border-gray-300 hover:text-gray-700',
-                    'group inline-flex items-center border-b-2 py-4 px-1 text-sm font-medium'
-                  )}
-                  aria-current={tab.current ? 'page' : undefined}
-                >
-                  <tab.icon
-                    className={classNames(
-                      tab.current ? 'text-indigo-500' : 'text-gray-300 group-hover:text-gray-600',
-                      '-ml-0.5 mr-2 h-5 w-5'
-                    )}
-                    aria-hidden="true"
-                  />
-                  <span>{tab.name}</span>
-                </a>
-              ))}
-            </nav>
-          </div>
-        </div>
-      </div>
-    )
-  }
-
-  function Style({ creationName, onClick, isSelected, isLocked }) {
-    const navigate = useNavigate(); // Hook for navigation
-    
-    const handleClick = () => {
-      if (isLocked) {
-        navigate('/pricing'); // Navigate to the pricing page if the style is locked
-      } else {
-        onClick(); // Otherwise, execute the provided onClick function
-      }
-    };
-  
-    return (
-      <div className={`relative z-10 cursor-pointer rounded-lg ${isSelected ? 'outline outline-2 outline-indigo-600' : ''} ${isLocked ? 'opacity-50 cursor-not-allowed' : ''}`} onClick={handleClick} style={{ width: '100%', paddingBottom: '100%' }}>
-        <div
-          key={creationName}
-          className="group flex flex-col overflow-hidden rounded-lg absolute top-0 left-0 right-0 bottom-0"
-        >
-          <div className="bg-gray-200 sm:aspect-none group-hover:opacity-75">
-            <img
-              src={`/${creationName}.png`}
-              className="h-full w-full object-cover object-center sm:h-full sm:w-full"
-            />
-          </div>
-          {isLocked && (
-            <div className="absolute inset-0 flex justify-center items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="white" className="w-6 h-6">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
-              </svg>
-            </div>
-          )}
-          <div className="absolute bottom-0 left-0 right-0 p-1 bg-[#131313]">
-            <h3 className="text-xs text-gray-300 text-left">
-              <div>
-                {creationName}
-              </div>
-            </h3>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  const SelectStyle = ({ selectedStyle, handleStyleClick, plan }) => {
-    const lockedStyles =  []; //plan === "free" ?  ["Marble", "Studio Ghibli", "Lego", "Bronze"] : [];
-    
-    return (
-      <div style={{ maxWidth: '100%' }} className="flex flex-col items-start">
-        <div className="mt-3 grid grid-cols-3 md:grid-cols-4 gap-4 w-full">
-        {["3D Cartoon", "Cartoon Anime", "fusion", "Japan Anime", "realistic", "toonyou"].map((name, index) => (
-            <Style
-              creationName={name}
-              onClick={() => handleStyleClick(name)}
-              isSelected={selectedStyle === name}
-              isLocked={lockedStyles.includes(name)}
-            />
-          ))}
-        </div>
-      </div>
-    );
-  };
-  
-  const handleStyleClick = (styleName) => {
-    if (selectedStyle === styleName) {
-      // If the clicked style is already selected, unselect it
-      setSelectedStyle(null);
-    } else {
-      // Otherwise, select the clicked style
-      setSelectedStyle(styleName);
-    }
-  };
-
   const [selectedRatio, setSelectedRatio] = useState('9:16');
 
     // Function to handle button click
     const handleSelect = (ratio) => {
-      setSelectedRatio(ratio);
+        setSelectedRatio(ratio);
     };
-  
+
     // Helper function to get button classes based on selection
     const getButtonClass = (ratio) => {
-      return `flex items-center justify-center gap-2 rounded-md px-2.5 py-1.5 text-sm text-gray-300 font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ${ratio === selectedRatio ? 'bg-indigo-800 hover:bg-indigo-700' : 'bg-[#17191C] hover:bg-gray-800'}`;
+        return `flex items-center justify-center gap-2 rounded-md px-2.5 py-1.5 text-sm text-gray-300 font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ${ratio === selectedRatio ? 'bg-indigo-800 hover:bg-indigo-700' : 'bg-[#17191C] hover:bg-gray-800'}`;
+    };
+
+    const VerifiedImage = ({ imageUrl, altDescription, index }) => {
+        const indexRef = useRef(index);
+    
+        const changeIndex = (currIndex) => {
+          const newArr = [...isVerified];
+          newArr[currIndex] = true;
+          setIsVerified(newArr);
+        };
+    
+        useEffect(() => {
+          let active = true;
+          const checkImageAndUpdate = () => {
+            if (!active || isVerified[indexRef.current]) return;
+    
+            fetch(imageUrl)
+              .then(response => {
+                if (!active) return;
+                if (response.ok) {
+                  changeIndex(indexRef.current); // Use the ref's current value
+                } else {
+                  setTimeout(checkImageAndUpdate, 1000);
+                }
+              })
+              .catch(error => {
+                if (!active) return;
+                setTimeout(checkImageAndUpdate, 1000);
+              });
+          };
+          checkImageAndUpdate();
+          return () => {
+            active = false;
+          };
+        }, [imageUrl]);
+    
+        // if (!isVerified[index]) {
+        //   return (
+        //     <div className='w-full'>
+        //       <ImagePlaceholder />
+        //     </div>
+        //   );
+        // }
+
+        if (true) {
+            return (
+              <div className='w-full pb-2'>
+                <ImagePlaceholder />
+              </div>
+            );
+          }
+    
+        // Render actual image if it is verified.
+        return (
+          <div className='w-full'>
+            <img
+              src={imageUrl}
+              alt={altDescription}
+              className="object-cover rounded-lg hover:brightness-50 transition duration-300 cursor-pointer"
+            />
+          </div>
+        );
+    };
+
+    const VerifiedImage2 = ({ imageUrl, altDescription, index }) => {
+        const indexRef = useRef(index);
+    
+        const changeIndex = (currIndex) => {
+          const newArr = [...isVerified];
+          newArr[currIndex] = true;
+          setIsVerified(newArr);
+        };
+    
+        useEffect(() => {
+          let active = true;
+          const checkImageAndUpdate = () => {
+            if (!active || isVerified[indexRef.current]) return;
+    
+            fetch(imageUrl)
+              .then(response => {
+                if (!active) return;
+                if (response.ok) {
+                  changeIndex(indexRef.current); // Use the ref's current value
+                } else {
+                  setTimeout(checkImageAndUpdate, 1000);
+                }
+              })
+              .catch(error => {
+                if (!active) return;
+                setTimeout(checkImageAndUpdate, 1000);
+              });
+          };
+          checkImageAndUpdate();
+          return () => {
+            active = false;
+          };
+        }, [imageUrl]);
+    
+        // if (!isVerified[index]) {
+        //   return (
+        //     <div className='w-full'>
+        //       <ImagePlaceholder />
+        //     </div>
+        //   );
+        // }
+
+        if (true) {
+            return (
+              <div className='w-full pb-2'>
+                <ImagePlaceholderOther />
+              </div>
+            );
+          }
+    
+        // Render actual image if it is verified.
+        return (
+          <div className='w-full'>
+            <img
+              src={imageUrl}
+              alt={altDescription}
+              className="object-cover rounded-lg hover:brightness-50 transition duration-300 cursor-pointer"
+            />
+          </div>
+        );
+    };
+
+
+    const breakpointColumnsObj = {
+        default: 4,
+        1300: 3,
+        1000: 2,
+        500: 1
     };
 
   return (
     <div className="">
       <WarningModal show={show} setShow={setShow} message={message} />
-      <div className="px-6 pb-24 pt-2 overflow-y-auto h-screen">
-        {activeTab === 'Images' && (
+      <div className="px-6 pt-2 overflow-y-auto h-screen">
           <form className="flex flex-col md:flex-row">
             {/* Order summary */}
             <div className="flex-shrink-0 w-full md:w-[450px] md:pr-5 h-screen md:h-auto overflow-auto">
-              <div className="mt-4 rounded-lg overflow-y-auto bg-[#131313] shadow-sm" style={{ border: '0.5px solid', borderColor: "#262B31" }}>
+              <div className="mt-4 rounded-lg overflow-y-auto shadow-sm" style={{ border: '0.5px solid', borderColor: "#262B31" }}>
                 <div className="overflow-y-auto overflow-y-auto md:h-[calc(79vh-78px)]"> {/* Adjust height as needed */}
                  
                 <div className='px-5 py-4'>
@@ -2174,63 +1914,6 @@ export default function TexttoVideo({ base_models, credits, setCredits, generati
                         </div>
                     </div>
                   </div>                  
-
-                  {/* Image upload input */}
-                  {/* <div className='px-5'>
-                      <label htmlFor="imageUpload" className="block text-sm text-left font-medium leading-6 text-gray-300">
-                        Upload Image (Optional):
-                      </label>
-                    </div> */}
-
-                  {/* <div
-                      className={`mt-2 mb-3 mx-5 flex justify-center rounded-lg border ${isDragging ? "bg-gray-500/50" : "bg-transparent"} border-dashed border-[#3b3b3b] px-6 py-7`}
-                      onDragOver={onDragOver}
-                      onDragLeave={onDragLeave}
-                      onDrop={onDrop}
-                    >
-                      <div className="text-center">
-                        <PhotoIcon className="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
-                        <div className="mt-4 flex text-sm leading-6 text-gray-600">
-                          <label
-                            htmlFor="file-upload"
-                            className={`upload-text-bg relative cursor-pointer rounded-md font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500`}
-                          >
-                            <span>Upload image</span>
-                            <input
-                              ref={fileInputRef}
-                              id="file-upload"
-                              name="file-upload"
-                              type="file"
-                              className="sr-only"
-                              onChange={handleImageChange}
-                              accept="image/jpeg"
-                              multiple
-                            />
-                          </label>
-                          <p className="pl-1">or drag and drop</p>
-                        </div>
-                        <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
-                      </div>
-                    </div> */}
-
-                  {/* Image preview */}
-                  {/* {uploadedImage && (
-                      <div className='px-5 py-4'>
-                        <img
-                          src={uploadedImage}
-                          alt="Uploaded Preview"
-                          className="w-full h-auto rounded-md"
-                        />
-                      </div>
-                    )} */}
-
-                  {/* <dl className="space-y-6 px-5 py-2 sm:px-5">
-                    <div className=" border-t border-[#3b3b3b] pt-1 pb-2">
-                      <MoreOptionsAccordion Title={"More Options"} guidanceScale={guidanceScaleImage} setGuidanceScale={setGuidanceScaleImage}
-                        inferenceSteps={inferenceStepsImage} setInferenceSteps={setInferenceStepsImage} seed={seedImage} setSeed={setSeedImage}
-                        numberOfImages={numberOfImages} setNumberOfImages={setNumberOfImages} scheduler={scheduler} setScheduler={setScheduler} />
-                    </div>
-                  </dl> */}
                 </div>
 
                 <div className="border-t border-gray-200 px-4 py-6 sm:px-6" style={{ borderTop: '0.5px solid', borderColor: "#3b3b3b" }}>
@@ -2239,235 +1922,74 @@ export default function TexttoVideo({ base_models, credits, setCredits, generati
                   ) : (
                     <button
                       type="submit"
-                      className="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-lg font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
+                      className="inline-flex items-center w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-lg font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
                       onClick={handleGenerate}
                     >
                       Generate
+                      <SparklesIcon className="ml-2 h-5 w-5" />
                     </button>
                   )}
                 </div>
               </div>
             </div>
 
-            <div className='flex-grow pt-2'>
-              <div className="mx-auto max-w-7xl sm:px-2 lg:px-3 bg-[#1F1F1F] mt-2 rounded-md">
-                <div className='' />
-                <div className="pt-3">
+            <div className='flex-grow md:mt-1 sm:-pt-10'>
+              <div className="mx-auto rounded-md">
+                <div className=''/>
+                <div className="">
                   <div className="flex w-full flex-col">
-                    <div className="mb-4 h-[73vh] overflow-y-scroll">
+                    <div className="mb-20 overflow-y-scroll">
 
-                      {generationsImages.slice().reverse().map((item, index) => {
-                        return (
-                          <div key={index}> {/* Set the background to black for a dark theme */}
-                            <div className="mx-auto max-w-7xl sm:px-2 lg:px-3 mb-5 rounded-md">
-                              <div className="overflow-hidden rounded-lg border border-[#3b3b3b] shadow-sm mb-2 bg-dark"> {/* bg-dark for dark theme text area */}
-                                {/* Prompt display with dark theme */}
-                                <textarea
-                                  rows={1}
-                                  name="description"
-                                  style={{ paddingLeft: "10px", height: "30px", lineHeight: "30px", backgroundColor: "#2D2D2D", color: "text-gray-300" }} /* Adjusted for dark theme */
-                                  id={`description-${index}`}
-                                  className="block w-full resize-none border-0 py-0 text-gray-300 placeholder:text-gray-400 focus:ring-0 focus:outline-none sm:text-sm sm:leading-6" /* Text color changed to white */
-                                  disabled
-                                  value={item.prompt}
-                                />
-                              </div>
+                      {/* {generationsImages.slice().reverse().map((item, index) => { */}
+                        {/* return ( */}
+                          <div> {/* Set the background to black for a dark theme */}
                               <div className="pt-3">
-                                <div className="grid gap-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-center w-full"> {/* Center the content */}
-                                  {/* <div className="flex space-x-2"> */}
-                                  {item['image_urls'].map((image, imageIndex) => {
-                                    return (
-                                      <VerifiedImage
-                                        key={imageIndex}
-                                        imageUrl={image}
-                                        altDescription="Description of Image"
-                                        index={generationsImages.length - index - 1}
-                                      />
-                                    );
-                                  })}
+                                <div className=""> {/* Center the content */}
+                                  {/* {item['image_urls'].map((image, imageIndex) => {
+                                    return ( */}
+                                      <Masonry
+                                        breakpointCols={breakpointColumnsObj}
+                                        className="my-masonry-grid pl-5 gap-2"
+                                        columnClassName="my-masonry-grid_column">
+                                        <div>
+                                            <VerifiedImage altDescription="Description of Image" />
+                                        </div>
+                                        <div>
+                                            <VerifiedImage altDescription="Description of Image" />
+                                        </div>
+                                        <div>
+                                            <VerifiedImage altDescription="Description of Image" />
+                                        </div>
+                                        <div>
+                                            <VerifiedImage2 altDescription="Description of Image" />
+                                        </div>
+                                        <div>
+                                            <VerifiedImage altDescription="Description of Image" />
+                                        </div>
+                                        <div>
+                                            <VerifiedImage altDescription="Description of Image" />
+                                        </div>
+                                        <div>
+                                            <VerifiedImage altDescription="Description of Image" />
+                                        </div>
+                                        <div>
+                                            <VerifiedImage2 altDescription="Description of Image" />
+                                        </div>
+                                        {/* Continue adding items as needed */}
+                                    </Masonry>
+                                    {/* );
+                                  })} */}
                                 </div>
                               </div>
                             </div>
-                          </div>
-                        );
-                      })}
-
+                            {/* );
+                        })} */}
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </form>
-        )}
-
-        {activeTab === 'Videos' && (
-          <form className="flex flex-col md:flex-row">
-            {/* Order summary */}
-            <div className="flex-shrink-0 w-full md:w-[400px] md:pr-5 h-screen md:h-auto overflow-auto">
-              <div className="mt-4 rounded-lg overflow-y-auto bg-[#1F1F1F] shadow-sm" style={{ border: '0.5px solid', borderColor: "#3b3b3b" }}>
-                <div className="overflow-y-auto md:h-[calc(71vh-70px)]"> {/* Adjust height as needed */}
-                  <dl className="space-y-6 px-5 py-2 sm:px-5">
-                    <div className=" border-b border-[#3b3b3b] pb-4">
-                      <VideoModelsAccordian Title={"Stable Video Diffusion"} />
-                    </div>
-                  </dl>
-
-                  {/* Image upload input */}
-                  <div className='px-5'>
-                    <label htmlFor="imageUpload" className="block text-sm text-left font-medium leading-6 text-gray-300">
-                      Upload Image:
-                    </label>
-                  </div>
-
-                  <div
-                    className={`mt-2 mb-3 mx-5 flex justify-center rounded-lg border ${isDragging ? "bg-gray-500/50" : "bg-transparent"} border-dashed border-[#3b3b3b] px-6 py-7`}
-                    onDragOver={onDragOver}
-                    onDragLeave={onDragLeave}
-                    onDrop={onDrop}
-                  >
-                    <div className="text-center">
-                      <PhotoIcon className="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
-                      <div className="mt-4 flex text-sm leading-6 text-gray-600">
-                        <label
-                          htmlFor="file-upload"
-                          className={`upload-text-bg relative cursor-pointer rounded-md font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500`}
-                        >
-                          <span>Upload image</span>
-                          <input
-                            ref={fileInputRef}
-                            id="file-upload"
-                            name="file-upload"
-                            type="file"
-                            className="sr-only"
-                            onChange={handleImageChange}
-                            accept="image/jpeg"
-                            multiple
-                          />
-                        </label>
-                        <p className="pl-1">or drag and drop</p>
-                      </div>
-                      <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
-                    </div>
-                  </div>
-
-                  {/* Image preview */}
-                  {uploadedImage2 && (
-                    <div className='px-5 py-4'>
-                      <img
-                        src={uploadedImage2}
-                        alt="Uploaded Preview"
-                        className="w-full h-auto rounded-md"
-                      />
-                    </div>
-                  )}
-
-                  <div className="flex px-5 gap-x-5 pb-3">
-                    <div className="flex-1">
-                      <label htmlFor="heightRange" className="block text-sm text-left font-medium leading-6 text-gray-300">
-                        {`Frames Per Second: ${fps}`}
-                      </label>
-                      <input
-                        id="heightRange"
-                        type="range"
-                        min="5"
-                        max="20"
-                        step="1"
-                        value={fps} // Bind value to the state variable
-                        onChange={(e) => setFps(parseInt(e.target.value, 10))} // Update state on change
-                        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
-                      />
-                    </div>
-
-                    <div className="flex-1">
-                      <label htmlFor="widthRange" className="block text-sm text-left font-medium leading-6 text-gray-300">
-                        {`Motion Bucket ID: ${motion_bucket_id}`}
-                      </label>
-                      <input
-                        id="widthRange"
-                        type="range"
-                        min="1"
-                        max="255"
-                        step="8"
-                        value={motion_bucket_id} // Bind value to the state variable
-                        onChange={(e) => setMBID(parseInt(e.target.value, 10))} // Update state on change
-                        className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
-                      />
-                    </div>
-                  </div>
-
-                  <dl className="space-y-6 px-5 py-2 sm:px-5">
-                    <div className=" border-t border-[#3b3b3b] pt-1 pb-5">
-                      <VideoMoreOptionsAccordion Title={"More Options"} setCondAug={setCondAug} cond_aug={cond_aug} seed={seedVideo} setSeed={setSeedVideo} />
-                    </div>
-                  </dl>
-                </div>
-
-                <div className="border-t border-gray-200 px-4 py-6 sm:px-6" style={{ borderTop: '0.5px solid', borderColor: "#3b3b3b" }}>
-                  {loading2 ? (
-                    <FastSpinner size={20} />
-                  ) : (<button
-                    type="submit"
-                    className="w-full rounded-md border border-transparent bg-indigo-600 px-4 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
-                    onClick={handleGenerate}
-                  >
-                    Generate
-                  </button>
-                  )}
-                </div>
-              </div>
-            </div>
-
-            <div className='flex-grow pt-2'>
-              <div className="mx-auto max-w-7xl sm:px-2 lg:px-3 bg-[#1F1F1F] mt-2 rounded-md">
-                <div className='' />
-                <div className="pt-3">
-                  <div className="flex w-full flex-col">
-                    <div className={`mb-4`}>
-
-
-                      {generationsVideos.slice().reverse().map((item, index) => {
-                        return (
-                          <div key={index}> {/* Set the background to black for a dark theme */}
-                            <div className="mx-auto max-w-7xl sm:px-2 lg:px-3 mt-2 rounded-md">
-                              <div className="overflow-hidden rounded-lg border border-[#3b3b3b] shadow-sm mb-2 bg-dark"> {/* bg-dark for dark theme text area */}
-                                {/* Prompt display with dark theme */}
-                                <textarea
-                                  rows={1}
-                                  name="description"
-                                  style={{ paddingLeft: "10px", height: "30px", lineHeight: "30px", backgroundColor: "#2D2D2D", color: "text-gray-300" }} /* Adjusted for dark theme */
-                                  id={`description-${index}`}
-                                  className="block w-full resize-none py-0 text-white placeholder:text-gray-400 focus:ring-0 focus:outline-none sm:text-sm sm:leading-6" /* Text color changed to white */
-                                  disabled
-                                  value={item.prompt}
-                                />
-                              </div>
-                              <div className="pt-3">
-                                <div className="grid gap-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-center w-full"> {/* Center the content */}
-                                  {/* <div className="flex space-x-2"> */}
-                                  {item['image_urls'].map((image, imageIndex) => {
-                                    return (
-                                      <VerifiedVideo
-                                        key={imageIndex}
-                                        imageUrl={image}
-                                        altDescription="Description of Image"
-                                        index={generationsVideos.length - index - 1}
-                                      />
-                                    );
-                                  })}
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        );
-                      })}
-
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </form>
-        )}
       </div>
     </div>
   )

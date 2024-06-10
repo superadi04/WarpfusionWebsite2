@@ -445,7 +445,7 @@ function RecentCreations({ }) {
       <Masonry
         breakpointCols={breakpointColumnsObj}
         className="my-masonry-grid"
-        columnClassName="my-masonry-grid_column"
+        columnClassName="my-masonry-grid_column2"
       >
         {data.map((item, index) => (
           <div key={index} className="column">

@@ -213,7 +213,7 @@ export default function Pricing({ apiKey, curPlan }) {
   };
 
   return (
-    <div className='mx-auto px-4 sm:px-6 lg:px-8 overflow-y-auto' style={{ maxHeight: 'calc(100vh - 0px)' }}>
+    <div className='mx-auto px-4 sm:px-6 lg:px-8 overflow-y-auto pb-20' style={{ maxHeight: 'calc(100vh - 0px)' }}>
       <div className="mx-auto px-2 lg:px-2">
         <h2 className="text-3xl mt-5 font-semibold tracking-tight text-gray-300 text-left">
           Pricing

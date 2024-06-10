@@ -5,7 +5,11 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      ringWidth: {
+        '0.5': '0.5px',  // Add custom ring width
+      }
+    }
   },
   variants: {
     extend: {

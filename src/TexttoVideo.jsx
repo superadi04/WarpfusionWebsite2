@@ -8,6 +8,8 @@ import { XCircleIcon } from '@heroicons/react/20/solid'
 import { useLocation, useNavigate } from 'react-router-dom';
 import { VideoCameraIcon, CreditCardIcon, BuildingOfficeIcon, UsersIcon } from '@heroicons/react/20/solid'
 import { createClient } from '@supabase/supabase-js'
+import Masonry from 'react-masonry-css';
+
 const supabase = createClient('https://rrvjkmdsixuiuqktlxcg.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJydmprbWRzaXh1aXVxa3RseGNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTE1NDMxNjcsImV4cCI6MjAwNzExOTE2N30.Vo6_mO9gTwO_XqP9EDFh7LD5qHDGgIa50T8qsjI3wBk')
 const FastSpinner = styled(CircularProgress)(({ theme }) => ({
   '& .MuiCircularProgress-svg': {
@@ -103,7 +105,7 @@ function TextArea({ Title, Rows, value, setValue }) {
           id="comment"
           value={value} // Control the component using value prop
           onChange={handleChange} // Set up the onChange event handler
-          className="bg-[#1C1C1C] block w-full rounded-md border-0 py-1.5 text-gray-300 shadow-sm ring-1 ring-inset ring-[#3b3b3b] placeholder:text-gray-400  sm:text-sm sm:leading-6"
+          className="bg-[#090911] block w-full rounded-md border-0 py-1.5 text-gray-300 shadow-sm ring-0.5  ring-inset ring-[#262B31] placeholder:text-gray-400  sm:text-sm sm:leading-6"
           placeholder={`Enter your ${Title.toLowerCase()}`} // Optional placeholder
           style={{ paddingLeft: '8px', paddingright: '8px' }}
         />
@@ -373,6 +375,28 @@ function ImagePlaceholder() {
     </div>
   );
 }
+
+function ImagePlaceholderOther() {
+    return (
+      <div className="w-full">
+        <div className="relative items-center block p-6 rounded-lg shadow-md bg-indigo-900 h-[100px]"> {/* Adjusted background to bg-gray-800 */}
+          <div role="status" className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"> {/* Corrected class to className */}
+            <svg aria-hidden="true" className="w-8 h-8 mr-2 text-gray-200 animate-spin-fast fill-indigo-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                fill="currentColor"
+              />
+              <path
+                d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                fill="currentFill"
+              />
+            </svg>
+            <span className="sr-only">Loading...</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
 function MoreOptionsAccordion({
   Title,
@@ -1341,6 +1365,68 @@ export default function TexttoVideo({ base_models, credits, setCredits, generati
     );
   };
 
+  const VerifiedImage2 = ({ imageUrl, altDescription, index }) => {
+    const indexRef = useRef(index);
+
+    const changeIndex = (currIndex) => {
+      const newArr = [...isVerified];
+      newArr[currIndex] = true;
+      setIsVerified(newArr);
+    };
+
+    useEffect(() => {
+      let active = true;
+      const checkImageAndUpdate = () => {
+        if (!active || isVerified[indexRef.current]) return;
+
+        fetch(imageUrl)
+          .then(response => {
+            if (!active) return;
+            if (response.ok) {
+              changeIndex(indexRef.current); // Use the ref's current value
+            } else {
+              setTimeout(checkImageAndUpdate, 1000);
+            }
+          })
+          .catch(error => {
+            if (!active) return;
+            setTimeout(checkImageAndUpdate, 1000);
+          });
+      };
+      checkImageAndUpdate();
+      return () => {
+        active = false;
+      };
+    }, [imageUrl]);
+
+    // if (!isVerified[index]) {
+    //   return (
+    //     <div className='w-full'>
+    //       <ImagePlaceholder />
+    //     </div>
+    //   );
+    // }
+
+    if (true) {
+        return (
+          <div className='w-full pb-2'>
+            <ImagePlaceholderOther />
+          </div>
+        );
+      }
+
+    // Render actual image if it is verified.
+    return (
+      <div className='w-full'>
+        <img
+          src={imageUrl}
+          alt={altDescription}
+          className="object-cover rounded-lg hover:brightness-50 transition duration-300 cursor-pointer"
+        />
+      </div>
+    );
+};
+
   const VerifiedVideo = ({ imageUrl, altDescription, index }) => {
     const indexRef = useRef(index);
 
@@ -1792,18 +1878,25 @@ export default function TexttoVideo({ base_models, credits, setCredits, generati
   
     // Helper function to get button classes based on selection
     const getButtonClass = (ratio) => {
-      return `flex items-center justify-center gap-2 rounded-md px-2.5 py-1.5 text-sm text-gray-300 font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ${ratio === selectedRatio ? 'bg-indigo-800 hover:bg-indigo-700' : 'bg-gray-900 hover:bg-gray-800'}`;
+        return `flex items-center justify-center gap-2 rounded-md px-2.5 py-1.5 text-sm text-gray-300 font-semibold shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ${ratio === selectedRatio ? 'bg-indigo-800 hover:bg-indigo-700' : 'bg-[#17191C] hover:bg-gray-800'}`;
+    };
+
+    const breakpointColumnsObj = {
+        default: 4,
+        1300: 3,
+        1000: 2,
+        500: 1
     };
 
   return (
-    <div className="bg-[#1C1C1C]">
+    <div className="">
       <WarningModal show={show} setShow={setShow} message={message} />
       <div className="px-6 pb-24 pt-2 overflow-y-auto h-screen">
         {activeTab === 'Images' && (
           <form className="flex flex-col md:flex-row">
             {/* Order summary */}
             <div className="flex-shrink-0 w-full md:w-[450px] md:pr-5 h-screen md:h-auto overflow-auto">
-              <div className="mt-4 rounded-lg overflow-y-auto bg-[#1F1F1F] shadow-sm" style={{ border: '0.5px solid', borderColor: "#3b3b3b" }}>
+              <div className="mt-4 rounded-lg overflow-y-auto shadow-sm" style={{ border: '0.5px solid', borderColor: "#3b3b3b" }}>
                 <div className="overflow-y-auto overflow-y-auto md:h-[calc(79vh-78px)]"> {/* Adjust height as needed */}
                   <div className='px-5 pt-5'>
                     <div>
@@ -1815,7 +1908,7 @@ export default function TexttoVideo({ base_models, credits, setCredits, generati
                       ) : (
                         <button
                           type="button"
-                          className="rounded mt-2 bg-[#282828] px-2 py-1 text-xs font-semibold text-gray-300 ring-1 ring-[#363636]"
+                          className="rounded mt-2 bg-[#101213] px-2 py-1 text-xs font-semibold text-gray-300 ring-0.5 ring-[#363636]"
                           onClick={improvePrompt}
                         >
                           Enhance Prompt
@@ -1947,49 +2040,57 @@ export default function TexttoVideo({ base_models, credits, setCredits, generati
               </div>
             </div>
 
-            <div className='flex-grow pt-2'>
-              <div className="mx-auto max-w-7xl sm:px-2 lg:px-3 bg-[#1F1F1F] mt-2 rounded-md">
-                <div className='' />
-                <div className="pt-3">
+            <div className='flex-grow md:mt-1 sm:pt-10'>
+              <div className="mx-auto rounded-md">
+                <div className=''/>
+                <div className="">
                   <div className="flex w-full flex-col">
-                    <div className="mb-4 h-[73vh] overflow-y-scroll">
+                    <div className="mb-20 overflow-y-scroll">
 
-                      {generationsImages.slice().reverse().map((item, index) => {
-                        return (
-                          <div key={index}> {/* Set the background to black for a dark theme */}
-                            <div className="mx-auto max-w-7xl sm:px-2 lg:px-3 mb-5 rounded-md">
-                              <div className="overflow-hidden rounded-lg border border-[#3b3b3b] shadow-sm mb-2 bg-dark"> {/* bg-dark for dark theme text area */}
-                                {/* Prompt display with dark theme */}
-                                <textarea
-                                  rows={1}
-                                  name="description"
-                                  style={{ paddingLeft: "10px", height: "30px", lineHeight: "30px", backgroundColor: "#2D2D2D", color: "text-gray-300" }} /* Adjusted for dark theme */
-                                  id={`description-${index}`}
-                                  className="block w-full resize-none border-0 py-0 text-gray-300 placeholder:text-gray-400 focus:ring-0 focus:outline-none sm:text-sm sm:leading-6" /* Text color changed to white */
-                                  disabled
-                                  value={item.prompt}
-                                />
-                              </div>
+                      {/* {generationsImages.slice().reverse().map((item, index) => { */}
+                        {/* return ( */}
+                          <div> {/* Set the background to black for a dark theme */}
                               <div className="pt-3">
-                                <div className="grid gap-2 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 justify-center w-full"> {/* Center the content */}
-                                  {/* <div className="flex space-x-2"> */}
-                                  {item['image_urls'].map((image, imageIndex) => {
-                                    return (
-                                      <VerifiedImage
-                                        key={imageIndex}
-                                        imageUrl={image}
-                                        altDescription="Description of Image"
-                                        index={generationsImages.length - index - 1}
-                                      />
-                                    );
-                                  })}
+                                <div className=""> {/* Center the content */}
+                                  {/* {item['image_urls'].map((image, imageIndex) => {
+                                    return ( */}
+                                      <Masonry
+                                        breakpointCols={breakpointColumnsObj}
+                                        className="my-masonry-grid pl-5 gap-2"
+                                        columnClassName="my-masonry-grid_column">
+                                        <div>
+                                            <VerifiedImage altDescription="Description of Image" />
+                                        </div>
+                                        <div>
+                                            <VerifiedImage altDescription="Description of Image" />
+                                        </div>
+                                        <div>
+                                            <VerifiedImage altDescription="Description of Image" />
+                                        </div>
+                                        <div>
+                                            <VerifiedImage2 altDescription="Description of Image" />
+                                        </div>
+                                        <div>
+                                            <VerifiedImage altDescription="Description of Image" />
+                                        </div>
+                                        <div>
+                                            <VerifiedImage altDescription="Description of Image" />
+                                        </div>
+                                        <div>
+                                            <VerifiedImage altDescription="Description of Image" />
+                                        </div>
+                                        <div>
+                                            <VerifiedImage2 altDescription="Description of Image" />
+                                        </div>
+                                        {/* Continue adding items as needed */}
+                                    </Masonry>
+                                    {/* );
+                                  })} */}
                                 </div>
                               </div>
                             </div>
-                          </div>
-                        );
-                      })}
-
+                            {/* );
+                        })} */}
                     </div>
                   </div>
                 </div>

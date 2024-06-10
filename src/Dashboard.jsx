@@ -19,6 +19,7 @@ import { createClient } from '@supabase/supabase-js'
 import TexttoVideo from "./TexttoVideo"
 import Morph from "./Morph"
 import FAQ from "./FAQ"
+import MyVideos from './MyVideos'
 
 const supabase = createClient('https://rrvjkmdsixuiuqktlxcg.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJydmprbWRzaXh1aXVxa3RseGNnIiwicm9sZSI6ImFub24iLCJpYXQiOjE2OTE1NDMxNjcsImV4cCI6MjAwNzExOTE2N30.Vo6_mO9gTwO_XqP9EDFh7LD5qHDGgIa50T8qsjI3wBk')
 
@@ -71,7 +72,7 @@ export default function Dashboard({ pageName, modelID, setModelID, createdAt, se
   const [navigation, setNavigation] = useState([
     { name: 'Create', href: '/create', current: false },
     { name: 'Explore', href: '/explore', current: false },
-    { name: 'Your Videos', href: '/your-videos', current: false },
+    { name: 'Your Videos', href: '/my-videos', current: false },
     { name: 'Pricing', href: '/pricing', current: false },
     {name: 'Discord', href: 'https://discord.com/invite/fzdHj9DeuC', current: false},
     {name: 'FAQ', href: '/faq', current: false}
@@ -109,6 +110,8 @@ export default function Dashboard({ pageName, modelID, setModelID, createdAt, se
   const [loading, setLoading] = useState(true);
   const [selectedImages, setSelectedImages] = useState([]);
   const [num_models, setNumModels] = useState(0);
+
+  const [email, setEmail] = useState("");
 
   useEffect(() => {
     const fetchDataAndCheckAPIKey = async () => {
@@ -260,13 +263,13 @@ export default function Dashboard({ pageName, modelID, setModelID, createdAt, se
 
                     {/* Profile dropdown */}
                     <Menu as="div" className="relative">
-                      <Menu.Button className="-m-1.5 flex items-center p-1.5">
+                      <Menu.Button className="-m-1.5 flex items-center">
                         <span className="sr-only">Open user menu</span>
                         <span className="hidden lg:flex lg:items-center">
                           <span className="text-sm font-semibold leading-6 text-gray-300" aria-hidden="true">
                             {username}
                           </span>
-                          <ChevronDownIcon className="ml-2 h-5 w-5 text-gray-400" aria-hidden="true" />
+                          <ChevronDownIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
                         </span>
                       </Menu.Button>
                       <Transition
@@ -278,21 +281,27 @@ export default function Dashboard({ pageName, modelID, setModelID, createdAt, se
                         leaveFrom="transform opacity-100 scale-100"
                         leaveTo="transform opacity-0 scale-95"
                       >
-                        <Menu.Items className="absolute right-0 z-10 mt-2.5 w-32 origin-top-right rounded-md bg-white py-2 shadow-lg ring-1 ring-gray-900/5 focus:outline-none">
-                          <Menu.Item key={"logout"}>
-                            {({ active }) => (
-                              <a
-                                onClick={handleLogout}
-                                className={classNames(
-                                  active ? 'bg-gray-50' : '',
-                                  'block px-3 py-1 text-sm leading-6 text-gray-900'
-                                )}
-                              >
-                                {"Log out"}
-                              </a>
-                            )}
-                          </Menu.Item>
-                        </Menu.Items>
+                         <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-gray-900 py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        {/* Non-clickable item */}
+                        <div className="px-3 py-2 text-xs text-left text-gray-500 border-b border-gray-800">
+                          {email}
+                        </div>
+
+                        {/* Divider, if you need extra space or visual separation */}
+                        {/* This can be omitted if the border-b class on the div above is sufficient for your needs */}
+
+                        {/* Existing clickable item */}
+                        <Menu.Item>
+                          {({ active }) => (
+                            <a
+                              className={classNames(active ? 'bg-gray-700 cursor-pointer' : '', 'block px-3 py-2 text-sm text-left text-gray-300')}
+                              onClick={handleLogout}
+                            >
+                              Sign out
+                            </a>
+                          )}
+                        </Menu.Item>
+                      </Menu.Items>
                       </Transition>
                     </Menu>
                   </div>
@@ -368,6 +377,7 @@ export default function Dashboard({ pageName, modelID, setModelID, createdAt, se
         {pageName === 'Video-to-Video' && <VideotoVideo base_models={products} credits={credits} setCredits={setCredits} generationsImages={generationsImages} setGenerationsImages={setGenerationsImages} generationsVideos={generationsVideos} setGenerationsVideos={setGenerationsVideos} activeTab={activeTab} startingModel={startingModel} setLastPartOfUrl={setLastPartOfUrl}/>}
         {pageName === 'Text-to-Video' && <TexttoVideo base_models={products} credits={credits} setCredits={setCredits} generationsImages={generationsImages} setGenerationsImages={setGenerationsImages} generationsVideos={generationsVideos} setGenerationsVideos={setGenerationsVideos} activeTab={activeTab} startingModel={startingModel} setLastPartOfUrl={setLastPartOfUrl}/>}
         {pageName === 'Morph' && <Morph base_models={products} credits={credits} setCredits={setCredits} generationsImages={generationsImages} setGenerationsImages={setGenerationsImages} generationsVideos={generationsVideos} setGenerationsVideos={setGenerationsVideos} activeTab={activeTab} startingModel={startingModel} setLastPartOfUrl={setLastPartOfUrl}/>}
+        {pageName === 'Gallery' && <MyVideos/>}
         {pageName === 'Explore' && <InferenceHistory activeTab={activeTab} />}
         {pageName === 'Create' && <MyModels handleInformation={handleModelDetails} setProducts={setModels} products={models} activeTab={activeTab} isModalOpen={isModalOpen} setModalOpen={setModalOpen} />}
         {pageName === 'Model Details' && <ModelDetails model_id={modelID} model_name={model_name} created_at={createdAt} resolution={resolution} learning_rate={learningRate} batch_size={batchSize} training_steps={trainingSteps} urls={urls} base_model={base_model} is_gif={false} />}
