@@ -224,6 +224,69 @@ const frequencies = [
   // { value: 'annually', label: 'Annually', priceSuffix: '/year' },
 ]
 
+function VideoTabs() {
+  // Initial tabs array
+  const initialTabs = [
+    { name: 'Text-to-Video', href: "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/ac7dea45-431a-4b7f-b73f-50f00c9d5479/transcode=true,width=450/AD_Seed.value_00005.mp4", current: true },
+    { name: 'Image-to-Video', href: "https://flush-user-images.s3.us-east-2.amazonaws.com/warpvideo_demo_video.mp4", current: false },
+    { name: 'Video-to-Video', href: "https://flush-user-images.s3.amazonaws.com/warpvideo/58ae31b2a688e038ada980a2edcf8848eb04bb947aa7ffe9e65f2c398d0de409/video_31.mp4", current: false },
+    { name: 'Morph', href: "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/80cc91a7-ad53-4560-8412-3e2d64e9b650/transcode=true,width=450/AD_00001.mp4", current: false },
+    { name: 'Face Swap', href: "https://d28dkohlqf5vwj.cloudfront.net/products/faceswap-realistic-video.webm", current: false },
+  ];
+
+  // State to keep track of the current active tab
+  const [tabs, setTabs] = useState(initialTabs);
+
+  // Find the current active tab's href
+  const currentTab = tabs.find(tab => tab.current)?.href;
+
+  // Function to update the active tab
+  function handleTabClick(href) {
+    const updatedTabs = tabs.map(tab => ({
+      ...tab,
+      current: tab.href === href,
+    }));
+    setTabs(updatedTabs);
+  }
+
+  return (
+    <div>
+      <div className="flex justify-center items-center ">
+        <div className="bg-black w-1/2 border border-gray-900 rounded-lg">
+          <div className="sm:block">
+            <nav className="isolate flex divide-gray-200 rounded-lg shadow bg-black" aria-label="Tabs">
+              {tabs.map((tab, tabIdx) => (
+                <a
+                  key={tab.name}
+                  onClick={() => handleTabClick(tab.href)}
+                  className={`${tab.current ? 'text-white' : 'text-gray-500 hover:text-gray-500'} 
+                              ${tabIdx === 0 ? 'rounded-l-lg' : ''} 
+                              ${tabIdx === tabs.length - 1 ? 'rounded-r-lg' : ''}
+                              cursor-pointer group relative min-w-0 flex-1 overflow-hidden bg-black py-4 px-4 text-center text-sm font-medium hover:bg-gray-900 focus:z-10`}
+                  aria-current={tab.current ? 'page' : undefined}
+                >
+                  <span>{tab.name}</span>
+                  <span
+                    aria-hidden="true"
+                    className={`${tab.current ? 'bg-indigo-500' : 'bg-transparent'} absolute inset-x-0 bottom-0 h-[1px]`}
+                  />
+                </a>
+              ))}
+            </nav>
+          </div>
+        </div>
+      </div>
+      <div className="bg-black w-2/5 mt-10 mx-auto flex justify-center items-center">
+        <video key={currentTab} autoPlay loop muted className="w-full rounded-lg" title="AI Image Morph">
+          <source src={currentTab} type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </div>
+    </div>
+  );
+}
+
+
 export default function Example() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [frequency, setFrequency] = useState(frequencies[0])
@@ -372,6 +435,8 @@ chain.run(subject="urban photography")
           </div>
         </div>
 
+        <VideoTabs />
+
         {/* CTA section */}
         <div className="relative -z-10 mt-32 px-6 lg:px-8">
           <div
@@ -404,18 +469,6 @@ chain.run(subject="urban photography")
                 API Docs <span aria-hidden="true">→</span>
               </a>
             </div>
-          </div>
-          <div
-            className="absolute left-1/2 right-0 top-full -z-10 hidden -translate-y-1/2 transform-gpu overflow-hidden blur-3xl sm:block"
-            aria-hidden="true"
-          >
-            <div
-              className="aspect-[1155/678] w-[72.1875rem] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30"
-              style={{
-                clipPath:
-                  'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
-              }}
-            />
           </div>
         </div>
       </main>
