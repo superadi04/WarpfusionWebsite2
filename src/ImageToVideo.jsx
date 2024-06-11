@@ -848,8 +848,8 @@ function Image1Input({ selectedImage, setSelectedImage, displayedImage, setDispl
   return (
     <div className="">
       {selectedImage ? (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '30vh' }}>
-          <img src={displayedImage} alt="Uploaded" style={{ height: '20vh' }} />
+        <div style={{ width: '100%', height: '30vh' }}>
+          <img src={displayedImage} alt="Uploaded" />
         </div>
       ) : (
         <div
@@ -857,7 +857,7 @@ function Image1Input({ selectedImage, setSelectedImage, displayedImage, setDispl
           onDragOver={onDragOver}
           onDragLeave={onDragLeave}
           onDrop={onDrop}
-          style={{ height: '20vh' }}
+          style={{ height: '30vh' }}
         >
           <div className="text-center">
             {/* Replace with your icon component */}
@@ -1317,7 +1317,7 @@ export default function ImageToVideo({ base_models, credits, setCredits, generat
                   <label htmlFor="comment" className="block text-md text-left font-medium leading-6 text-gray-300">
                     Upload Images
                   </label>
-                  <div className='grid grid-cols-2 gap-2 pt-2'>
+                  <div className='pt-2'>
                     <Image1Input selectedImage={selectedVideo} setSelectedImage={setSelectedVideo} displayedImage={displayedVideo} setDisplayedImage={setDisplayedVideo} />
                   </div>
                 </div>
