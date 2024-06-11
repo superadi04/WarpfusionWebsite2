@@ -44,16 +44,24 @@ function classNames(...classes) {
 }
 
 function ProgressBox({ plan, credits, maxCredits }) {
+  if (!plan) {
+    return <div className="overflow-hidden"></div>;
+  }
+
+  // Extract the plan name up to the first dash and capitalize the first letter
+  const planName = plan.split('-')[0];
+  const displayPlanName = planName.charAt(0).toUpperCase() + planName.slice(1);
+
   return (
     <div className="overflow-hidden">
       <div className="py-2 w-36">
-        <p className="text-sm text-left font-semibold leading-6 text-gray-300">{plan} Plan</p>
+        <p className="text-sm text-left font-semibold leading-6 text-gray-300">{displayPlanName} Plan</p>
         {
-          plan === "max" ?
+          displayPlanName === "Max" ?
             <p className="text-gray-300" style={{ fontSize: "10px", textAlign: "left" }}>Unlimited Credits</p>
           :
             <>
-              <Progress value={100 * ((maxCredits - credits) / maxCredits)} fontS color="violet" />
+              <Progress value={100 * ((maxCredits - credits) / maxCredits)} color="violet" />
               <div>
                 <p className="text-gray-300 -mt-1" style={{ fontSize: "10px", textAlign: "left", display: "inline-block", width: "100%" }}>{maxCredits - credits}/{maxCredits} credits</p>
               </div>
@@ -235,7 +243,7 @@ export default function Dashboard({ pageName, modelID, setModelID, createdAt, se
                     </Disclosure.Button>
                   </div>
                   <div className="flex flex-shrink-0 items-center">
-                    <a href="https://flushai.cloud/">
+                    <a href="./">
                       <img
                         className="h-9 w-auto"
                         src="/warpvideologo.png"

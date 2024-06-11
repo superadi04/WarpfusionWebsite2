@@ -434,7 +434,8 @@ function RecentCreations({ }) {
   const [data, setData] = useState([...data2].reverse());
 
   const breakpointColumnsObj = {
-    default: 4,
+    default: 5,
+    1600: 4,
     1100: 3,
     700: 2,
     500: 1
@@ -523,10 +524,7 @@ export default function InferenceHistory({ activeTab }) {
   return (
     <>
       <div className='mx-auto px-4 sm:px-6 lg:px-8 overflow-y-auto' style={{ maxHeight: 'calc(100vh - 0px)' }}>
-        <h2 className="text-3xl mt-5 font-semibold tracking-tight text-gray-300 text-left">
-          Explore
-        </h2>
-        <div className="mt-8 ">
+        <div className="mt-6 ">
           <RecentCreations/>
         </div>
       </div>

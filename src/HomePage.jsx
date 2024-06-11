@@ -153,10 +153,29 @@ const tiers = [
 
 const faqs = [
   {
-    id: 1,
-    question: "What's the best thing about Switzerland?",
+    question: "How do I become an affiliate?",
     answer:
-      "I don't know, but the flag is a big plus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas cupiditate laboriosam fugiat.",
+      "Go sign up for the affiliate program at https://warpvideo.tolt.io/login. You must create a unique link that is your unique affiliate link. Then, join our discord server and you can ask any questions about the program/how to grow your affiliate marketing!",
+  },
+  {
+    question: "How does the affiliate program work?",
+    answer:
+      "All Affiliates receive a lifetime commission of 20% on the revenue they generate from their link. This means that, if anyone clicks on your Affiliate link and subscribes for Warpvideo (within 60 days of subscribing), you will receive 20% of all the money that they pay forever. Some of our affiliates have received hundreds to thousands of dollars doing this!",
+  },
+  {
+    question: "How do I cancel my subscription?",
+    answer:
+      "You can cancel your subscription by clicking the Cancel Subscription button on the Pricing Page. It will appear in the same place as the original Subscribe button. We offer a 100% money back guarantee, no questions asked. If you want a refund, please email team@warpvideo.ai and you will receive a refund!",
+  },
+  {
+    question: "What is motion brush?",
+    answer:
+      "Motion brush is a specific version of Image to Video that will run Image to Video over the specific part of the Image that highlight with the brush. If you want only an arm or leg to move, simply highlight it with the Motion Brush, type in a prompt, and watch the magic happen!",
+  },
+  {
+    question: "What if I want to try out WarpVideo without buying a full plan?",
+    answer:
+      "We currently offer all of our services for free in the free plan! You can generate with Video to Video (up to 2 seconds), Image to Video, Motion Brush, and Morph all in the free plan.",
   },
   // More questions...
 ]
@@ -224,14 +243,33 @@ const frequencies = [
   // { value: 'annually', label: 'Annually', priceSuffix: '/year' },
 ]
 
+function FAQ() {
+  return (
+    <div className="">
+      <div className="mx-auto max-w-7xl divide-y divide-gray-300/10 px-6 py-24 sm:py-32 lg:px-8 lg:py-40">
+        <h2 className="text-4xl font-bold leading-10 tracking-tight text-gray-300 text-left">Frequently asked questions</h2>
+        <dl className="mt-10 space-y-8 divide-y divide-gray-300/10">
+          {faqs.map((faq) => (
+            <div key={faq.id} className="pt-8 lg:grid lg:grid-cols-12 lg:gap-8">
+              <dt className="text-base font-semibold leading-7 text-gray-300 lg:col-span-5 text-left">{faq.question}</dt>
+              <dd className="mt-4 lg:col-span-7 lg:mt-0">
+                <p className="text-base leading-7 text-gray-400 text-left">{faq.answer}</p>
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </div>
+  )
+}
+
+
 function VideoTabs() {
   // Initial tabs array
   const initialTabs = [
-    { name: 'Text-to-Video', href: "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/ac7dea45-431a-4b7f-b73f-50f00c9d5479/transcode=true,width=450/AD_Seed.value_00005.mp4", current: true },
     { name: 'Image-to-Video', href: "https://flush-user-images.s3.us-east-2.amazonaws.com/warpvideo_demo_video.mp4", current: false },
-    { name: 'Video-to-Video', href: "https://flush-user-images.s3.amazonaws.com/warpvideo/58ae31b2a688e038ada980a2edcf8848eb04bb947aa7ffe9e65f2c398d0de409/video_31.mp4", current: false },
     { name: 'Morph', href: "https://image.civitai.com/xG1nkqKTMzGDvpLrqFT7WA/80cc91a7-ad53-4560-8412-3e2d64e9b650/transcode=true,width=450/AD_00001.mp4", current: false },
-    { name: 'Face Swap', href: "https://d28dkohlqf5vwj.cloudfront.net/products/faceswap-realistic-video.webm", current: false },
+    { name: 'Motion Brush', href: "https://d28dkohlqf5vwj.cloudfront.net/products/faceswap-realistic-video.webm", current: false },
   ];
 
   // State to keep track of the current active tab
@@ -252,7 +290,7 @@ function VideoTabs() {
   return (
     <div>
       <div className="flex justify-center items-center ">
-        <div className="bg-black w-1/2 border border-gray-900 rounded-lg">
+        <div className="bg-black w-2/3 border border-gray-900 rounded-lg">
           <div className="sm:block">
             <nav className="isolate flex divide-gray-200 rounded-lg shadow bg-black" aria-label="Tabs">
               {tabs.map((tab, tabIdx) => (
@@ -317,7 +355,7 @@ chain.run(subject="urban photography")
 `;
 
   return (
-    <div className="w-full overflow-y-auto bg-[#1C1C1C] min-h-screen absolute top-0 left-0">
+    <div className="w-full overflow-y-auto bg-[#04040c] min-h-screen absolute top-0 left-0">
       {/* Header */}
       <header className="absolute top-0 left-0 inset-x-0 top-3 z-50">
         <nav className="flex items-center justify-between p-3 lg:px-24" aria-label="Global">
@@ -343,13 +381,13 @@ chain.run(subject="urban photography")
           </div>
           <div className="hidden lg:flex lg:gap-x-12">
             {navigation.map((item) => (
-              <a key={item.name} href={item.href} className="text-md font-semibold leading-6 text-gray-300">
+              <a key={item.name} href={item.href} className="text-md font-semibold leading-6 text-white">
                 {item.name}
               </a>
             ))}
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-            <a href="signin" className="text-md font-semibold leading-6 text-gray-300">
+            <a href="signin" className="text-md font-semibold leading-6 text-white">
               Log in <span aria-hidden="true">&rarr;</span>
             </a>
           </div>
@@ -405,19 +443,30 @@ chain.run(subject="urban photography")
       <main className="isolate">
         {/* Hero section */}
         <div className="relative pt-14">
-          <div
-            className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
+          {/* Video background */}
+          <video 
+            autoPlay 
+            loop 
+            muted 
+            playsInline 
+            className="absolute top-0 left-0 w-full h-full object-cover z-[-1]"
             aria-hidden="true"
           >
-          </div>
-          <div className="py-36">
+            <source src="landing_background.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+
+          <div className="absolute top-0 left-0 w-full h-full bg-black/50 z-[-1]"></div>
+
+          {/* Content */}
+          <div className="py-48 z-10">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
               <div className="mx-auto max-w-4xl text-center">
-                <h1 className="text-4xl font-bold tracking-tight text-gray-300 sm:text-8xl">
+                <h1 className="text-4xl font-bold tracking-tight text-white sm:text-8xl">
                   Magically Make Videos with AI
                 </h1>
-                <p className="mt-12 text-xl leading-8 text-gray-400">
-                Warpvideo is the all-in-one AI video creation platform that streamlines content production from ideation to production.
+                <p className="mt-12 text-xl leading-8 text-white">
+                  Warpvideo is the all-in-one AI video creation platform that streamlines content production from ideation to production.
                 </p>
                 <div className="mt-12 flex items-center justify-center">
                   <a
@@ -426,7 +475,7 @@ chain.run(subject="urban photography")
                   >
                     Get Started
                   </a>
-                  <a href="https://docs.flushai.cloud/introduction" className="text-lg px-10 py-5 font-semibold leading-6 text-gray-300">
+                  <a href="https://docs.flushai.cloud/introduction" className="text-lg px-10 py-5 font-semibold leading-6 text-white">
                     Join Discord <span aria-hidden="true">→</span>
                   </a>
                 </div>
@@ -435,21 +484,118 @@ chain.run(subject="urban photography")
           </div>
         </div>
 
-        <VideoTabs />
+        <div className="mt-28 px-4 lg:px-8 max-w-7xl mx-auto">
+          <h2 className="text-4xl font-bold text-white sm:text-5xl">
+            Video-to-Video
+          </h2>
+          <p className="mt-4 text-lg text-gray-400 mb-8">
+            Pick your style, fit your need. Whatever your content needs, we have the right tool to help you scale.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-7xl px-10 lg:px-0 mx-auto">
+          <div class="video-container">
+            <video autoPlay muted playsInline loop>
+              <source src="original.mp4" type="video/mp4"/>
+              Your browser does not support the video tag.
+            </video>
+            <h3 className='text-left text-white mt-3 text-2xl font-semibold'>
+              Original
+            </h3>
+          </div>
+          <div class="video-container">
+            <video autoPlay muted playsInline loop>
+              <source src="toonyou.mp4" type="video/mp4"/>
+              Your browser does not support the video tag.
+            </video>
+            <h3 className='text-left text-white mt-3 text-2xl font-semibold'>
+              Toonyou
+            </h3>
+          </div>
+          <div class="video-container">
+            <video autoPlay muted playsInline loop>
+              <source src="3dcartoon.mp4" type="video/mp4"/>
+              Your browser does not support the video tag.
+            </video>
+            <h3 className='text-left text-white mt-3 text-2xl font-semibold'>
+              3D Cartoon
+            </h3>
+          </div>
+          <div class="video-container">
+            <video autoPlay muted playsInline loop>
+              <source src="pixel.mp4" type="video/mp4"/>
+              Your browser does not support the video tag.
+            </video>
+            <h3 className='text-left text-white mt-3 text-2xl font-semibold'>
+              Pixel
+            </h3>
+          </div>
+          <div class="video-container">
+            <video autoPlay muted playsInline loop>
+              <source src="paperart.mp4" type="video/mp4"/>
+              Your browser does not support the video tag.
+            </video>
+            <h3 className='text-left text-white mt-3 text-2xl font-semibold'>
+              Paper Art
+            </h3>
+          </div>
+          <div class="video-container">
+            <video autoPlay muted playsInline loop>
+              <source src="cartoonanime.mp4" type="video/mp4"/>
+              Your browser does not support the video tag.
+            </video>
+            <h3 className='text-left text-white mt-3 text-2xl font-semibold'>
+              Cartoon Anime
+            </h3>
+          </div>
+          <div class="video-container">
+            <video autoPlay muted playsInline loop>
+              <source src="studioghibhli.mp4" type="video/mp4"/>
+              Your browser does not support the video tag.
+            </video>
+            <h3 className='text-left text-white mt-3 text-2xl font-semibold'>
+              Studio Ghibli
+            </h3>
+          </div>
+          <div class="video-container">
+            <video autoPlay muted playsInline loop>
+              <source src="sketch.mp4" type="video/mp4"/>
+              Your browser does not support the video tag.
+            </video>
+            <h3 className='text-left text-white mt-3 text-2xl font-semibold'>
+              Sketch
+            </h3>
+          </div>
+          <div class="video-container">
+            <video autoPlay muted playsInline loop>
+              <source src="lineart.mp4" type="video/mp4"/>
+              Your browser does not support the video tag.
+            </video>
+            <h3 className='text-left text-white mt-3 text-2xl font-semibold'>
+              Line Art
+            </h3>
+          </div>
+        </div>
+
+        <div className="mt-36 px-4 lg:px-8 max-w-7xl mx-auto">
+          <h2 className="text-4xl font-bold text-white sm:text-5xl">
+            Perfect for Creators, Marketers, Artists, and Producers.
+          </h2>
+          <p className="mt-4 text-lg text-gray-400 mb-8">
+            WarpVideo helps professionals speed up production, and enables consumers to make professional-quality content without years of experience.
+          </p>
+        </div>
+
+        <VideoTabs/>
+
+        <FAQ/>
 
         {/* CTA section */}
-        <div className="relative -z-10 mt-32 px-6 lg:px-8">
+        <div className="relative -z-10 mt-24 px-6 lg:px-8">
           <div
             className="absolute inset-x-0 top-1/2 -z-10 flex -translate-y-1/2 transform-gpu justify-center overflow-hidden blur-3xl sm:bottom-0 sm:right-[calc(50%-6rem)] sm:top-auto sm:translate-y-0 sm:transform-gpu sm:justify-end"
             aria-hidden="true"
           >
-            <div
-              className="aspect-[1108/632] w-[69.25rem] flex-none bg-gradient-to-r from-[#ff80b5] to-[#9089fc] opacity-25"
-              style={{
-                clipPath:
-                  'polygon(73.6% 48.6%, 91.7% 88.5%, 100% 53.9%, 97.4% 18.1%, 92.5% 15.4%, 75.7% 36.3%, 55.3% 52.8%, 46.5% 50.9%, 45% 37.4%, 50.3% 13.1%, 21.3% 36.2%, 0.1% 0.1%, 5.4% 49.1%, 21.4% 36.4%, 58.9% 100%, 73.6% 48.6%)',
-              }}
-            />
           </div>
           <div className="mx-auto max-w-2xl text-center">
             <h2 className="text-5xl font-bold tracking-tight text-gray-300 sm:text-5xl">
@@ -466,7 +612,7 @@ chain.run(subject="urban photography")
                 Get started
               </a>
               <a href="https://docs.flushai.cloud/introduction" className="text-md font-semibold leading-6 text-gray-300">
-                API Docs <span aria-hidden="true">→</span>
+                Join Discord <span aria-hidden="true">→</span>
               </a>
             </div>
           </div>

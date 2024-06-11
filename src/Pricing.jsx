@@ -610,11 +610,14 @@ export default function Pricing() {
 
   return (
     <div className="overflow-y-auto pb-5" style={{ maxHeight: 'calc(100vh - 0px)' }}>
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <h2 className="text-3xl mt-24 font-semibold tracking-tight text-gray-300 text-left">
-          Pricing
+      <div className="mx-auto max-w-7xl">
+        <h2 className="mt-10 text-4xl font-bold tracking-tight text-gray-300 sm:text-5xl">
+          Plans and Pricing
         </h2>
-        <div className="flex justify-center">
+        <p className="mx-auto mt-6 max-w-3xl text-center text-lg leading-8 text-gray-400">
+        Whether your content creation needs are large or small, we're here to help you scale.
+        </p>
+        <div className="flex justify-center mt-4">
           <RadioGroup
             value={frequency}
             onChange={setFrequency}
@@ -637,7 +640,7 @@ export default function Pricing() {
         {curPlan !== 'free' && <div className="text-center text-gray-500 text-sm mb-6">
           If you want a refund, please contact us at <a href="mailto:team@warpvideo.ai" className="text-indigo-600 hover:underline">team@warpvideo.ai</a>
         </div>}
-        {<div className="text-center text-gray-500 text-sm mb-6">
+        {<div className="text-center text-gray-500 text-sm mb-5 mt-5">
           100% Money Back Guarantee
         </div>}
         <div className="isolate mx-auto mt-10 grid max-w-md grid-cols-1 gap-8 lg:mx-0 lg:max-w-none lg:grid-cols-4">
@@ -729,7 +732,7 @@ export default function Pricing() {
           ))}
         </div>
 
-        <div className='ring-1 ring-[#3b3b3b] rounded-3xl p-8 mt-10'>
+        <div className='ring-1 ring-[#3b3b3b] rounded-3xl p-8 mt-10 mb-20'>
           <div className="text-center text-gray-300 text-3xl  font-bold">
             Credit Pack
           </div>
