@@ -863,7 +863,7 @@ function Image1Input({ selectedImage, setSelectedImage, displayedImage, setDispl
             {/* Replace with your icon component */}
             <PhotoIcon className="mx-auto h-20 w-20 text-gray-300" aria-hidden="true" />
 
-            <div className="mt-1 text-sm leading-6 text-gray-600">
+            <div className="mt-4 flex text-md leading-6 text-gray-600">
               <label
                 htmlFor="file-upload"
                 className={`upload-text-bg relative cursor-pointer rounded-md font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500`}
@@ -882,6 +882,7 @@ function Image1Input({ selectedImage, setSelectedImage, displayedImage, setDispl
               </label>
               <p className="pl-1">or drag and drop</p>
             </div>
+            <p className="text-xs leading-5 text-gray-600">Image files up to 10MB</p>
           </div>
         </div>
       )}

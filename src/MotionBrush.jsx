@@ -995,9 +995,6 @@ function ImageInput({ selectedImage, setSelectedImage, displayedImage, setDispla
         }
     }, [isDrawing, brushSize, canvasRef, maskCanvasRef]);
 
-
-
-
     const stopDrawing = useCallback(() => {
         if (isDrawing) {
             setIsDrawing(false);
@@ -1056,11 +1053,11 @@ function ImageInput({ selectedImage, setSelectedImage, displayedImage, setDispla
                     onDragOver={onDragOver}
                     onDragLeave={onDragLeave}
                     onDrop={onDrop}
-                    style={{ height: '50vh', width: '50vh', margin: '10px auto', padding: '10px' }}
+                    style={{ height: '30vh' }}
 
                 >
                     <div className="text-center">
-                        <PhotoIcon className="mx-auto h-24 w-24 text-gray-300" aria-hidden="true" />
+                        <PhotoIcon className="mx-auto h-20 w-20 text-gray-300" aria-hidden="true" />
                         <div className="mt-4 flex text-md leading-6 text-gray-600">
                             <label
                                 htmlFor="file-upload"
@@ -1528,9 +1525,9 @@ export default function MotionBrush({ base_models, credits, setCredits, generati
 
                                 <div className='px-5 py-4'>
                                     <label htmlFor="comment" className="block text-md text-left font-medium leading-6 text-gray-300">
-                                        Upload Images
+                                        Upload Image
                                     </label>
-                                    <div className='grid grid-cols-2 gap-2 pt-2'>
+                                    <div className='pt-2'>
                                         <ImageInput selectedImage={selectedVideo} setSelectedImage={setSelectedVideo} displayedImage={displayedVideo} setDisplayedImage={setDisplayedVideo} brushSize={brushSize} canvasRef={canvasRef} maskCanvasRef={maskCanvasRef} />
                                         {/* <Image1Input selectedImage={selectedVideo} setSelectedImage={setSelectedVideo} displayedImage={displayedVideo} setDisplayedImage={setDisplayedVideo} /> */}
                                         <div className="mt-2" style={{ position: 'relative', display: 'flex', alignItems: 'center', gap: '10px' }}>

@@ -973,7 +973,7 @@ export default function VideotoVideo({ base_models, credits, setCredits, generat
                         >
                           <div className="text-center">
                             {/* Replace with your icon component */}
-                            <VideoCameraIcon className="mx-auto h-24 w-24 text-gray-300" aria-hidden="true" />
+                            <VideoCameraIcon className="mx-auto h-20 w-20 text-gray-300" aria-hidden="true" />
 
                             <div className="mt-4 flex text-md leading-6 text-gray-600 ">
                               <label
