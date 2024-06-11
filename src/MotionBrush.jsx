@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useCallback, Fragment } from 'react'
 import { styled } from '@mui/material/styles';
 import CircularProgress from '@mui/material/CircularProgress';
-import { AtSymbolIcon, CodeBracketIcon, LinkIcon, PhotoIcon, SparklesIcon } from '@heroicons/react/20/solid'
+import { AtSymbolIcon, CodeBracketIcon, LinkIcon, PhotoIcon, SparklesIcon, PaintBrushIcon } from '@heroicons/react/20/solid'
 import { Dialog, Transition } from '@headlessui/react'
 import { ExclamationTriangleIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { XCircleIcon } from '@heroicons/react/20/solid'
@@ -67,7 +67,7 @@ function TextArea({ Title, Rows, value, setValue }) {
                     id="comment"
                     value={value} // Control the component using value prop
                     onChange={handleChange} // Set up the onChange event handler
-                    className="bg-[#1C1C1C] block w-full rounded-md border-0 py-1.5 text-gray-300 shadow-sm ring-1 ring-inset ring-[#3b3b3b] placeholder:text-gray-400  sm:text-sm sm:leading-6"
+                    className="bg-[#090911] block w-full rounded-md border-0 py-1.5 text-gray-300 shadow-sm ring-0.5  ring-inset ring-[#262B31] placeholder:text-gray-400  sm:text-sm sm:leading-6"
                     placeholder={`Enter your ${Title.toLowerCase()}`} // Optional placeholder
                     style={{ paddingLeft: '8px', paddingright: '8px' }}
                 />
@@ -170,63 +170,6 @@ function WarningModal({ show, setShow, message }) {
             </div>
         </div>
     );
-}
-
-function ModelsModal({ open, setOpen, model, setModel, models, setHeight, setWidth, setSteps }) {
-    return (
-        <Transition.Root show={open} as={Fragment}>
-            <Dialog as="div" className="relative z-10" onClose={setOpen}>
-                <Transition.Child
-                    as={Fragment}
-                    enter="ease-out duration-300"
-                    enterFrom="opacity-0"
-                    enterTo="opacity-100"
-                    leave="ease-in duration-200"
-                    leaveFrom="opacity-100"
-                    leaveTo="opacity-0"
-                >
-                    <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
-                </Transition.Child>
-
-                <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
-                    <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-                        <Transition.Child
-                            as={Fragment}
-                            enter="ease-out duration-300"
-                            enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                            enterTo="opacity-100 translate-y-0 sm:scale-100"
-                            leave="ease-in duration-200"
-                            leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-                            leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                        >
-                            <Dialog.Panel className="relative transform overflow-hidden bg-[#1f1f1f] rounded-lg px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl sm:p-6">
-                                <div className="absolute right-0 top-0 hidden pr-4 pt-4 sm:block">
-                                    <button
-                                        type="button"
-                                        className="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                                        onClick={() => setOpen(false)}
-                                    >
-                                        <span className="sr-only">Close</span>
-                                        <XMarkIcon className="h-6 w-6 bg-[#1f1f1f]" aria-hidden="true" />
-                                    </button>
-                                </div>
-                                <div className="sm:flex sm:items-start">
-                                    <div className="mt-3 text-center sm:mt-0 sm:text-left">
-                                        <Dialog.Title as="h3" className="text-xl font-semibold leading-6 text-gray-300">
-                                            Select Style
-                                        </Dialog.Title>
-                                        <div className="mt-2">
-                                            <Models open={open} setOpen={setOpen} model={model} setModel={setModel} models={models} setHeight={setHeight} setWidth={setWidth} setSteps={setSteps} />
-                                        </div>
-                                    </div>
-                                </div>
-                            </Dialog.Panel>
-                        </Transition.Child>
-                    </div>
-                </div>
-            </Dialog>
-        </Transition.Root>
-    )
 }
 
 const products = [
@@ -577,318 +520,6 @@ const products = [
     },
 ]
 
-function Image2Input({ selectedImage, setSelectedImage, displayedImage, setDisplayedImage }) {
-    const [isDragging, setIsDragging] = useState(false);
-    const fileInputRef = useRef(null);
-
-    const handleFilesUpload = (files) => {
-        const imageFile = Array.from(files).find(file => file.type.startsWith('image/'));
-        if (imageFile) {
-            const imageUrl = URL.createObjectURL(imageFile);
-            console.log("Image URL: ", imageUrl); // Debugging
-            setDisplayedImage(imageUrl);
-            setSelectedImage(imageFile);
-        }
-    }
-
-    const onFileChange = (e) => {
-        handleFilesUpload(e.target.files);
-    }
-
-    const onDragOver = useCallback((e) => {
-        e.preventDefault();
-        setIsDragging(true);
-    }, []);
-
-    const onDragLeave = useCallback(() => {
-        setIsDragging(false);
-    }, []);
-
-    const onDrop = useCallback((e) => {
-        e.preventDefault();
-        setIsDragging(false);
-        const files = e.dataTransfer.files;
-        handleFilesUpload(files);
-    }, []);
-
-    return (
-        <div className="">
-            {selectedImage ? (
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '30vh' }}>
-                    <img src={displayedImage} alt="Uploaded" style={{ height: '20vh' }} />
-                </div>
-            ) : (
-                <div
-                    className={`mt-1 flex justify-center items-center rounded-lg border ${isDragging ? "bg-gray-500/50" : "bg-[#090911]"} border-dashed border-gray-700/50 px-6 py-7`}
-                    onDragOver={onDragOver}
-                    onDragLeave={onDragLeave}
-                    onDrop={onDrop}
-                    style={{ height: '20vh' }}
-                >
-                    <div className="text-center">
-                        {/* Replace with your icon component */}
-                        <PhotoIcon className="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
-
-                        <div className="mt-1 text-sm leading-6 text-gray-600">
-                            <label
-                                htmlFor="file-upload"
-                                className={`upload-text-bg relative cursor-pointer rounded-md font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500`}
-                            >
-                                <span>Upload image</span>
-                                <input
-                                    ref={fileInputRef}
-                                    id="file-upload"
-                                    name="file-upload"
-                                    type="file"
-                                    className="sr-only"
-                                    onChange={onFileChange}
-                                    accept="image/*" // Accept only image files
-                                    multiple={false} // Allow only one file to be selected
-                                />
-                            </label>
-                            <p className="pl-1">or drag and drop</p>
-                        </div>
-                    </div>
-                </div>
-            )}
-        </div>
-    );
-}
-
-function Image3Input({ selectedImage, setSelectedImage, displayedImage, setDisplayedImage }) {
-    const [isDragging, setIsDragging] = useState(false);
-    const fileInputRef = useRef(null);
-
-    const handleFilesUpload = (files) => {
-        const imageFile = Array.from(files).find(file => file.type.startsWith('image/'));
-        if (imageFile) {
-            const imageUrl = URL.createObjectURL(imageFile);
-            console.log("Image URL: ", imageUrl); // Debugging
-            setDisplayedImage(imageUrl);
-            setSelectedImage(imageFile);
-        }
-    }
-
-    const onFileChange = (e) => {
-        handleFilesUpload(e.target.files);
-    }
-
-    const onDragOver = useCallback((e) => {
-        e.preventDefault();
-        setIsDragging(true);
-    }, []);
-
-    const onDragLeave = useCallback(() => {
-        setIsDragging(false);
-    }, []);
-
-    const onDrop = useCallback((e) => {
-        e.preventDefault();
-        setIsDragging(false);
-        const files = e.dataTransfer.files;
-        handleFilesUpload(files);
-    }, []);
-
-    return (
-        <div className="">
-            {selectedImage ? (
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '30vh' }}>
-                    <img src={displayedImage} alt="Uploaded" style={{ height: '20vh' }} />
-                </div>
-            ) : (
-                <div
-                    className={`flex justify-center items-center rounded-lg border ${isDragging ? "bg-gray-500/50" : "bg-[#090911]"} border-dashed border-gray-700/50 px-6 py-7`}
-                    onDragOver={onDragOver}
-                    onDragLeave={onDragLeave}
-                    onDrop={onDrop}
-                    style={{ height: '20vh' }}
-                >
-                    <div className="text-center">
-                        {/* Replace with your icon component */}
-                        <PhotoIcon className="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
-
-                        <div className="mt-1 text-sm leading-6 text-gray-600">
-                            <label
-                                htmlFor="file-upload"
-                                className={`upload-text-bg relative cursor-pointer rounded-md font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500`}
-                            >
-                                <span>Upload image</span>
-                                <input
-                                    ref={fileInputRef}
-                                    id="file-upload"
-                                    name="file-upload"
-                                    type="file"
-                                    className="sr-only"
-                                    onChange={onFileChange}
-                                    accept="image/*" // Accept only image files
-                                    multiple={false} // Allow only one file to be selected
-                                />
-                            </label>
-                            <p className="pl-1">or drag and drop</p>
-                        </div>
-                    </div>
-                </div>
-            )}
-        </div>
-    );
-}
-
-function Image4Input({ selectedImage, setSelectedImage, displayedImage, setDisplayedImage }) {
-    const [isDragging, setIsDragging] = useState(false);
-    const fileInputRef = useRef(null);
-
-    const handleFilesUpload = (files) => {
-        const imageFile = Array.from(files).find(file => file.type.startsWith('image/'));
-        if (imageFile) {
-            const imageUrl = URL.createObjectURL(imageFile);
-            console.log("Image URL: ", imageUrl); // Debugging
-            setDisplayedImage(imageUrl);
-            setSelectedImage(imageFile);
-        }
-    }
-
-    const onFileChange = (e) => {
-        handleFilesUpload(e.target.files);
-    }
-
-    const onDragOver = useCallback((e) => {
-        e.preventDefault();
-        setIsDragging(true);
-    }, []);
-
-    const onDragLeave = useCallback(() => {
-        setIsDragging(false);
-    }, []);
-
-    const onDrop = useCallback((e) => {
-        e.preventDefault();
-        setIsDragging(false);
-        const files = e.dataTransfer.files;
-        handleFilesUpload(files);
-    }, []);
-
-    return (
-        <div className="">
-            {selectedImage ? (
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '30vh' }}>
-                    <img src={displayedImage} alt="Uploaded" style={{ height: '20vh' }} />
-                </div>
-            ) : (
-                <div
-                    className={`flex justify-center items-center rounded-lg border ${isDragging ? "bg-gray-500/50" : "bg-[#090911]"} border-dashed border-gray-700/50 px-6 py-7`}
-                    onDragOver={onDragOver}
-                    onDragLeave={onDragLeave}
-                    onDrop={onDrop}
-                    style={{ height: '20vh' }}
-                >
-                    <div className="text-center">
-                        {/* Replace with your icon component */}
-                        <PhotoIcon className="mx-auto h-12 w-12 text-gray-300" aria-hidden="true" />
-
-                        <div className="mt-1 text-sm leading-6 text-gray-600">
-                            <label
-                                htmlFor="file-upload"
-                                className={`upload-text-bg relative cursor-pointer rounded-md font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500`}
-                            >
-                                <span>Upload image</span>
-                                <input
-                                    ref={fileInputRef}
-                                    id="file-upload"
-                                    name="file-upload"
-                                    type="file"
-                                    className="sr-only"
-                                    onChange={onFileChange}
-                                    accept="image/*" // Accept only image files
-                                    multiple={false} // Allow only one file to be selected
-                                />
-                            </label>
-                            <p className="pl-1">or drag and drop</p>
-                        </div>
-                    </div>
-                </div>
-            )}
-        </div>
-    );
-}
-
-function Image1Input({ selectedImage, setSelectedImage, displayedImage, setDisplayedImage }) {
-    const [isDragging, setIsDragging] = useState(false);
-    const fileInputRef = useRef(null);
-
-    const handleFilesUpload = (files) => {
-        const imageFile = Array.from(files).find(file => file.type.startsWith('image/'));
-        if (imageFile) {
-            const imageUrl = URL.createObjectURL(imageFile);
-            console.log("Image URL: ", imageUrl); // Debugging
-            setDisplayedImage(imageUrl);
-            setSelectedImage(imageFile);
-        }
-    }
-
-    const onFileChange = (e) => {
-        handleFilesUpload(e.target.files);
-    }
-
-    const onDragOver = useCallback((e) => {
-        e.preventDefault();
-        setIsDragging(true);
-    }, []);
-
-    const onDragLeave = useCallback(() => {
-        setIsDragging(false);
-    }, []);
-
-    const onDrop = useCallback((e) => {
-        e.preventDefault();
-        setIsDragging(false);
-        const files = e.dataTransfer.files;
-        handleFilesUpload(files);
-    }, []);
-
-    return (
-        <div className="">
-            {selectedImage ? (
-                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '30vh' }}>
-                    <img src={displayedImage} alt="Uploaded" style={{ height: '20vh' }} />
-                </div>
-            ) : (
-                <div
-                    className={`mt-1 flex justify-center items-center rounded-lg border ${isDragging ? "bg-gray-500/50" : "bg-[#090911]"} border-dashed border-gray-700/50 px-6 py-7`}
-                    onDragOver={onDragOver}
-                    onDragLeave={onDragLeave}
-                    onDrop={onDrop}
-                    style={{ height: '20vh' }}
-                >
-                    <div className="text-center">
-                        {/* Replace with your icon component */}
-                        <PhotoIcon className="mx-auto h-20 w-20 text-gray-300" aria-hidden="true" />
-
-                        <div className="mt-1 text-sm leading-6 text-gray-600">
-                            <label
-                                htmlFor="file-upload"
-                                className={`upload-text-bg relative cursor-pointer rounded-md font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500`}
-                            >
-                                <span>Upload image</span>
-                                <input
-                                    ref={fileInputRef}
-                                    id="file-upload"
-                                    name="file-upload"
-                                    type="file"
-                                    className="sr-only"
-                                    onChange={onFileChange}
-                                    accept="image/*" // Accept only image files
-                                    multiple={false} // Allow only one file to be selected
-                                />
-                            </label>
-                            <p className="pl-1">or drag and drop</p>
-                        </div>
-                    </div>
-                </div>
-            )}
-        </div>
-    );
-}
-
 function ImagePlaceholder() {
     return (
         <div className="w-full">
@@ -911,42 +542,91 @@ function ImagePlaceholder() {
     );
 }
 
+function Image1Input({ selectedImage, setSelectedImage, displayedImage, setDisplayedImage }) {
+    const [isDragging, setIsDragging] = useState(false);
+    const fileInputRef = useRef(null);
+  
+    const handleFilesUpload = (files) => {
+      const imageFile = Array.from(files).find(file => file.type.startsWith('image/'));
+      if (imageFile) {
+        const imageUrl = URL.createObjectURL(imageFile);
+        console.log("Image URL: ", imageUrl); // Debugging
+        setDisplayedImage(imageUrl);
+        setSelectedImage(imageFile);
+      }
+    }
+  
+    const onFileChange = (e) => {
+      handleFilesUpload(e.target.files);
+    }
+  
+    const onDragOver = useCallback((e) => {
+      e.preventDefault();
+      setIsDragging(true);
+    }, []);
+  
+    const onDragLeave = useCallback(() => {
+      setIsDragging(false);
+    }, []);
+  
+    const onDrop = useCallback((e) => {
+      e.preventDefault();
+      setIsDragging(false);
+      const files = e.dataTransfer.files;
+      handleFilesUpload(files);
+    }, []);
+  
+    return (
+      <div className="">
+        {selectedImage ? (
+          <div >
+            <img src={displayedImage} style={{  height: '30vh' }} alt="Uploaded" />
+          </div>
+        ) : (
+          <div
+            className={`mt-1 flex justify-center items-center rounded-lg border ${isDragging ? "bg-gray-500/50" : "bg-[#090911]"} border-dashed border-gray-700/50 px-6 py-7`}
+            onDragOver={onDragOver}
+            onDragLeave={onDragLeave}
+            onDrop={onDrop}
+            style={{ height: '30vh' }}
+          >
+            <div className="text-center">
+              {/* Replace with your icon component */}
+              <PhotoIcon className="mx-auto h-20 w-20 text-gray-300" aria-hidden="true" />
+  
+              <div className="mt-4 flex text-md leading-6 text-gray-600">
+                <label
+                  htmlFor="file-upload"
+                  className={`upload-text-bg relative cursor-pointer rounded-md font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500`}
+                >
+                  <span>Upload image</span>
+                  <input
+                    ref={fileInputRef}
+                    id="file-upload"
+                    name="file-upload"
+                    type="file"
+                    className="sr-only"
+                    onChange={onFileChange}
+                    accept="image/*" // Accept only image files
+                    multiple={false} // Allow only one file to be selected
+                  />
+                </label>
+                <p className="pl-1">or drag and drop</p>
+              </div>
+              <p className="text-xs leading-5 text-gray-600">Image files up to 10MB</p>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  }
 
-function ImageInput({ selectedImage, setSelectedImage, displayedImage, setDisplayedImage, brushSize, canvasRef, maskCanvasRef }) {
+
+function ImageInput({ displayedImage, setDisplayedImage, brushSize, canvasRef, maskCanvasRef }) {
     const [isDragging, setIsDragging] = useState(false);
     const fileInputRef = useRef(null);
     const [isDrawing, setIsDrawing] = useState(false);
     const lastPosition = useRef({ x: null, y: null });
-
-    const handleFilesUpload = (files) => {
-        const imageFile = Array.from(files).find(file => file.type === 'image/png' || file.type === 'image/jpeg');
-        if (imageFile) {
-            const imageUrl = URL.createObjectURL(imageFile);
-            setDisplayedImage(imageUrl);
-            setSelectedImage(imageFile);
-        } else {
-            alert("Please upload a PNG image to preserve transparency.");
-        }
-    };
-
-    const onFileChange = (e) => {
-        handleFilesUpload(e.target.files);
-    };
-
-    const onDragOver = useCallback((e) => {
-        e.preventDefault();
-        setIsDragging(true);
-    }, []);
-
-    const onDragLeave = useCallback(() => {
-        setIsDragging(false);
-    }, []);
-
-    const onDrop = useCallback((e) => {
-        e.preventDefault();
-        setIsDragging(false);
-        handleFilesUpload(e.dataTransfer.files);
-    }, []);
 
     const getMousePosition = (canvas, event) => {
         const rect = canvas.getBoundingClientRect();
@@ -1001,7 +681,7 @@ function ImageInput({ selectedImage, setSelectedImage, displayedImage, setDispla
         }
     }, [isDrawing]);
     useEffect(() => {
-        if (selectedImage && displayedImage && canvasRef.current && maskCanvasRef.current) {
+        if (displayedImage && canvasRef.current && maskCanvasRef.current) {
             const ctx = canvasRef.current.getContext('2d');
             const maskCtx = maskCanvasRef.current.getContext('2d');
             const img = new Image();
@@ -1019,71 +699,141 @@ function ImageInput({ selectedImage, setSelectedImage, displayedImage, setDispla
             };
             img.src = displayedImage;
         }
-    }, [selectedImage, displayedImage, canvasRef, maskCanvasRef]);
-
-
+    }, [displayedImage, canvasRef, maskCanvasRef]);
 
     return (
-        <div className="col-span-full mt-4 w-full lg:w-3/5" style={{ position: 'relative' }}>
-            {selectedImage ? (
-                <>
-                    <canvas
-                        ref={canvasRef}
-                        onMouseDown={startDrawing}
-                        onMouseMove={draw}
-                        onMouseUp={stopDrawing}
-                        onMouseOut={stopDrawing}
-                        style={{
-                            maxWidth: '100%',
-                            maxHeight: '80vh',
-                            border: '1px solid black',
-                            display: 'block'
-                        }}
-                    />
-                    <canvas
-                        ref={maskCanvasRef}
-                        style={{
-                            display: 'none' // Keep this canvas hidden as it's only used to capture the mask
-                        }}
-                    />
-                </>
-            ) : (
-                <div
-                    className={`mt-1 flex justify-center items-center rounded-lg border ${isDragging ? "bg-gray-500/50" : "bg-[#090911]"} border-dashed border-gray-700/50 px-6 py-7`}
-                    onDragOver={onDragOver}
-                    onDragLeave={onDragLeave}
-                    onDrop={onDrop}
-                    style={{ height: '30vh' }}
-
-                >
-                    <div className="text-center">
-                        <PhotoIcon className="mx-auto h-20 w-20 text-gray-300" aria-hidden="true" />
-                        <div className="mt-4 flex text-md leading-6 text-gray-600">
-                            <label
-                                htmlFor="file-upload"
-                                className="upload-text-bg relative cursor-pointer rounded-md font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
-                            >
-                                <span>Upload image</span>
-                                <input
-                                    ref={fileInputRef}
-                                    id="file-upload"
-                                    name="file-upload"
-                                    type="file"
-                                    className="sr-only"
-                                    onChange={onFileChange}
-                                    accept="image/*"
-                                    multiple={false}
-                                />
-                            </label>
-                            <p className="pl-1">or drag and drop</p>
-                        </div>
-                        <p className="text-xs leading-5 text-gray-600">Image files up to 10MB</p>
-                    </div>
-                </div>
-            )}
+        <div>
+            <canvas
+                ref={canvasRef}
+                onMouseDown={startDrawing}
+                onMouseMove={draw}
+                onMouseUp={stopDrawing}
+                onMouseOut={stopDrawing}
+                style={{
+                    maxWidth: '100%',
+                    maxHeight: '70vh',
+                    border: '1px solid black',
+                    display: 'block'
+                }}
+            />
+            <canvas
+                ref={maskCanvasRef}
+                style={{
+                    display: 'none' // Keep this canvas hidden as it's only used to capture the mask
+                }}
+            /> 
         </div>
     );
 }
+
+function MotionBrushModal({ open, setOpen, displayedImage, setDisplayedImage, canvasRef, brushSize, maskCanvasRef, handleSliderChange}) {
+    const updateDisplayedImageFromCanvas = useCallback(() => {
+        if (canvasRef.current) {
+            const canvas = canvasRef.current;
+            const dataUrl = canvas.toDataURL('image/png');
+            setDisplayedImage(dataUrl);
+            setOpen(false)
+        }
+    }, [canvasRef, setDisplayedImage]);
+
+    return (
+      <Transition.Root show={open} as={Fragment}>
+        <Dialog as="div" className="relative z-10" onClose={setOpen}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+          </Transition.Child>
+          <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+            <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                enterTo="opacity-100 translate-y-0 sm:scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+              >
+                <Dialog.Panel className="relative transform overflow-hidden bg-[#090911] rounded-lg px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl sm:p-6">
+                  <div className="absolute right-0 top-0 hidden pr-4 pt-4 sm:block">
+                    <button
+                      type="button"
+                      className="rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                      onClick={() => setOpen(false)}
+                    >
+                      <span className="sr-only">Close</span>
+                      <XMarkIcon className="h-6 w-6 bg-[#090911]" aria-hidden="true" />
+                    </button>
+                  </div>
+                  <div className="sm:flex sm:items-start">
+                    <div className="mt-3 text-center sm:mt-0 sm:text-left">
+                      <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-300">
+                        <div className='text-3xl'>
+                            Motion Brush
+                        </div>
+                        <p className="text-md mt-2 mb-2 tracking-tight text-gray-400 text-left" style={{ fontWeight: 'normal' }}>
+                        Paint the area you want to control with your cursor. Make sure to upload an image first.
+                        </p>
+                        
+                        <ImageInput displayedImage={displayedImage} canvasRef={canvasRef} brushSize={brushSize} maskCanvasRef={maskCanvasRef}/>
+
+                        <div className="mt-3" style={{ position: 'relative',  alignItems: 'center', gap: '10px' }}>
+                            <div style={{ position: 'relative' }} className='w-48'>
+                                <input
+                                    type="range"
+                                    min="1"
+                                    max="200"
+                                    value={brushSize}
+                                    onChange={handleSliderChange}
+                                    className="slider"
+                                    style={{ width: '100%' }}
+                                />
+                                <div style={{
+                                    position: 'absolute',
+                                    left: `calc(${(brushSize - 1) / 199 * 100}% - 1px)`,
+                                    top: '30px',
+                                    background: '#5a67d8',
+                                    padding: '3px 7px',
+                                    borderRadius: '5px',
+                                    display: 'inline-block',
+                                    transform: 'translateX(-50%)',
+                                    color: 'white',
+                                }}>
+                                    {brushSize}
+                                </div>
+                            </div>
+                        </div>
+                      </Dialog.Title>
+                      <div>
+                      <div className="mt-12">
+                            <button
+                            type="button"
+                            className="inline-flex items-center rounded-lg bg-indigo-600 px-4 py-2 text-xl font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                            onClick={updateDisplayedImageFromCanvas}
+                            >
+                                Save
+                            </button>
+                        </div>
+                      </div>
+                      
+                    </div>
+                  </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition.Root>
+    )
+}
+
 
 export default function MotionBrush({ base_models, credits, setCredits, generationsImages, setGenerationsImages, generationsVideos, setGenerationsVideos, activeTab, startingModel, setLastPartOfUrl }) {
     const [selectedDeliveryMethod, setSelectedDeliveryMethod] = useState(deliveryMethods[0])
@@ -1189,6 +939,8 @@ export default function MotionBrush({ base_models, credits, setCredits, generati
     const [displayedTarget, setDisplayedTarget] = useState(null)
     const [displayedImage3, setDisplayedImage3] = useState(null)
     const [displayedImage4, setDisplayedImage4] = useState(null)
+
+    const [isOpen, setIsOpen] = useState(false);
 
     const handleFilesUpload = (files) => {
         const videoFile = Array.from(files).find(file => file.type.startsWith('video/'));
@@ -1307,7 +1059,7 @@ export default function MotionBrush({ base_models, credits, setCredits, generati
     }
   };
 
-    const VerifiedVideo = ({ imageUrl, altDescription, index }) => {
+    const VerifiedVideo = ({ imageUrl, altDescription, index, videoModalOpen, setVideoModalOpen }) => {
         const indexRef = useRef(index);
 
         const changeIndex = (currIndex) => {
@@ -1347,13 +1099,13 @@ export default function MotionBrush({ base_models, credits, setCredits, generati
 
         // Render actual image if it is verified.
         return (
-            <div className='w-full'>
-                <video
-                    src={imageUrl}
-                    alt={altDescription}
-                    className="object-cover rounded-lg hover:brightness-50 transition duration-300 cursor-pointer"
-                    controls
-                />
+            <div className='w-full z-10' onClick={setVideoModalOpen}>
+            <VideoModal open={videoModalOpen} setOpen={setVideoModalOpen} source={imageUrl}/>
+            <video
+                src={imageUrl}
+                alt={altDescription}
+                className="object-cover rounded-lg hover:brightness-50 transition duration-300 cursor-pointer"
+            />
             </div>
         );
     };
@@ -1513,11 +1265,13 @@ export default function MotionBrush({ base_models, credits, setCredits, generati
         }
     };
 
+    const [videoModalOpen, setVideoModalOpen] = useState(false);
+
     return (
         <div className="">
             <WarningModal show={show} setShow={setShow} message={message} />
             <div className="px-6 pt-2 overflow-y-auto h-screen">
-                <form className="flex flex-col md:flex-row">
+                <div className="flex flex-col md:flex-row">
                     {/* Order summary */}
                     <div className="flex-shrink-0 w-full md:w-[450px] md:pr-5 h-screen md:h-auto overflow-auto">
                         <div className="mt-4 rounded-lg overflow-y-auto shadow-sm" style={{ border: '0.5px solid', borderColor: "#262B31" }}>
@@ -1528,35 +1282,17 @@ export default function MotionBrush({ base_models, credits, setCredits, generati
                                         Upload Image
                                     </label>
                                     <div className='pt-2'>
-                                        <ImageInput selectedImage={selectedVideo} setSelectedImage={setSelectedVideo} displayedImage={displayedVideo} setDisplayedImage={setDisplayedVideo} brushSize={brushSize} canvasRef={canvasRef} maskCanvasRef={maskCanvasRef} />
-                                        {/* <Image1Input selectedImage={selectedVideo} setSelectedImage={setSelectedVideo} displayedImage={displayedVideo} setDisplayedImage={setDisplayedVideo} /> */}
-                                        <div className="mt-2" style={{ position: 'relative', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                            <div className='text-gray-500 text-xl'>Brush Size:</div>
-                                            <div style={{ position: 'relative' }} className='w-48'>
-                                                <input
-                                                    type="range"
-                                                    min="1"
-                                                    max="200"
-                                                    value={brushSize}
-                                                    onChange={handleSliderChange}
-                                                    className="slider"
-                                                    style={{ width: '100%' }}
-                                                />
-                                                <div style={{
-                                                    position: 'absolute',
-                                                    left: `calc(${(brushSize - 1) / 199 * 100}% - 1px)`,
-                                                    top: '30px',
-                                                    background: '#5a67d8',
-                                                    padding: '3px 7px',
-                                                    borderRadius: '5px',
-                                                    display: 'inline-block',
-                                                    transform: 'translateX(-50%)',
-                                                    color: 'white',
-                                                }}>
-                                                    {brushSize}
-                                                </div>
+                                        <Image1Input selectedImage={selectedVideo} setSelectedImage={setSelectedVideo} displayedImage={displayedVideo} setDisplayedImage={setDisplayedVideo} />
+                                        {/* <ImageInput selectedImage={selectedVideo} setSelectedImage={setSelectedVideo} displayedImage={displayedVideo} setDisplayedImage={setDisplayedVideo} brushSize={brushSize} canvasRef={canvasRef} maskCanvasRef={maskCanvasRef} /> */}
+                                        <div className="flex justify-end">
+                                            <button
+                                                className="flex items-center justify-center space-x-2 rounded mt-2 bg-[#101213] px-2 py-1 text-sm font-semibold text-gray-300 ring-0.5 ring-[#363636]"
+                                                onClick={setIsOpen}
+                                            >
+                                                Add Motion Brush  
+                                                <PaintBrushIcon className="paint-brush-icon ml-2" />
+                                            </button>
                                             </div>
-                                        </div>
                                     </div>
                                     <div>
                                         <TextArea Title={"Prompt"} Rows={4} value={promptImage} setValue={setPromptImage} />
@@ -1580,7 +1316,7 @@ export default function MotionBrush({ base_models, credits, setCredits, generati
                             </div>
                         </div>
                     </div>
-
+                    <MotionBrushModal open={isOpen} setOpen={setIsOpen} displayedImage={displayedVideo} setDisplayedImage={setDisplayedVideo} canvasRef={canvasRef} brushSize={brushSize} maskCanvasRef={maskCanvasRef} handleSliderChange={handleSliderChange}/>
                     <div className='flex-grow md:mt-1 sm:-pt-10'>
                         <div className="mx-auto rounded-md">
                             <div className='' />
@@ -1588,34 +1324,34 @@ export default function MotionBrush({ base_models, credits, setCredits, generati
                                 <div className="flex w-full flex-col">
                                     <div className="mb-20 overflow-y-scroll">
 
-                                        {generationsVideos.slice().reverse().map((item, index) => (
-                                            <div key={index} className="pt-3">
-                                                <div className="center-content">
-                                                    <Masonry
-                                                        breakpointCols={breakpointColumnsObj}
-                                                        className="my-masonry-grid pl-5 gap-2"
-                                                        columnClassName="my-masonry-grid_column"
-                                                    >
-                                                        {item.image_urls.map((image, imageIndex) => (
-                                                            <div key={imageIndex}>
-                                                                <VerifiedVideo
-                                                                    key={imageIndex}
-                                                                    imageUrl={image}
-                                                                    altDescription="Description of Image"
-                                                                    index={generationsVideos.length - index - 1}
-                                                                />
-                                                            </div>
-                                                        ))}
-                                                    </Masonry>
+                                    <div className="pt-3">
+                                        <div className="center-content">
+                                        <Masonry
+                                            breakpointCols={breakpointColumnsObj}
+                                            className="my-masonry-grid pl-5 gap-2"
+                                            columnClassName="my-masonry-grid_column"
+                                        >
+                                            {generationsVideos.slice().reverse().map((item, index) => (
+                                            item.image_urls.map((image, imageIndex) => (
+                                                <div key={imageIndex}>
+                                                <VerifiedVideo
+                                                    imageUrl={image}
+                                                    altDescription="Description of Image"
+                                                    index={generationsVideos.length - index - 1}
+                                                />
                                                 </div>
-                                            </div>
-                                        ))}
+                                            ))
+                                            ))}
+                                        </Masonry>
+                                        </div>
+                                    </div>
+
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     )

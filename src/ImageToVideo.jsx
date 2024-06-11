@@ -890,10 +890,13 @@ function Image1Input({ selectedImage, setSelectedImage, displayedImage, setDispl
   );
 }
 
+
+
+
 function ImagePlaceholder() {
   return (
-    <div className="w-full">
-      <div className="relative items-center block p-6 rounded-lg shadow-md bg-indigo-900"> {/* Adjusted background to bg-gray-800 */}
+    <div className="w-full ">
+      <div className="relative items-center block p-6 rounded-lg shadow-md bg-indigo-900 h-64"> {/* Adjusted background to bg-gray-800 */}
         <div role="status" className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"> {/* Corrected class to className */}
           <svg aria-hidden="true" className="w-8 h-8 mr-2 text-gray-200 animate-spin-fast fill-indigo-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -910,6 +913,47 @@ function ImagePlaceholder() {
       </div>
     </div>
   );
+}
+
+function VideoModal({ open, setOpen, source}) {
+  return (
+    <Transition.Root show={open} as={Fragment}>
+      <Dialog as="div" className="relative z-100" onClose={setOpen}>
+        <Transition.Child
+          as={Fragment}
+          enter="ease-out duration-300"
+          enterFrom="opacity-0"
+          enterTo="opacity-100"
+          leave="ease-in duration-200"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"/>
+        </Transition.Child>
+        <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+          <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+            <Transition.Child
+              as={Fragment}
+              enter="ease-out duration-300"
+              enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+              enterTo="opacity-100 translate-y-0 sm:scale-100"
+              leave="ease-in duration-200"
+              leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+              leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+            >
+              <Dialog.Panel className="">
+              <video
+                src={source}
+                controls
+                className="object-cover rounded-lg transition duration-300 cursor-pointer"
+              />
+              </Dialog.Panel>
+            </Transition.Child>
+          </div>
+        </div>
+      </Dialog>
+    </Transition.Root>
+  )
 }
 
 export default function ImageToVideo({ base_models, credits, setCredits, generationsImages, setGenerationsImages, generationsVideos, setGenerationsVideos, activeTab, startingModel, setLastPartOfUrl }) {
@@ -1013,9 +1057,6 @@ export default function ImageToVideo({ base_models, credits, setCredits, generat
   const [selectedImage3, setSelectedImage3] = useState(null);
   const [selectedImage4, setSelectedImage4] = useState(null);
   const [displayedVideo, setDisplayedVideo] = useState(null)
-  const [displayedTarget, setDisplayedTarget] = useState(null)
-  const [displayedImage3, setDisplayedImage3] = useState(null)
-  const [displayedImage4, setDisplayedImage4] = useState(null)
 
   const handleFilesUpload = (files) => {
     const videoFile = Array.from(files).find(file => file.type.startsWith('video/'));
@@ -1133,7 +1174,7 @@ export default function ImageToVideo({ base_models, credits, setCredits, generat
     return uploadedImageUrls;
   };
 
-  const VerifiedVideo = ({ imageUrl, altDescription, index }) => {
+  const VerifiedVideo = ({ imageUrl, altDescription, index, videoModalOpen, setVideoModalOpen }) => {
     const indexRef = useRef(index);
 
     const changeIndex = (currIndex) => {
@@ -1173,12 +1214,12 @@ export default function ImageToVideo({ base_models, credits, setCredits, generat
 
     // Render actual image if it is verified.
     return (
-      <div className='w-full'>
+      <div className='w-full z-10' onClick={setVideoModalOpen}>
+        <VideoModal open={videoModalOpen} setOpen={setVideoModalOpen} source={imageUrl}/>
         <video
           src={imageUrl}
           alt={altDescription}
           className="object-cover rounded-lg hover:brightness-50 transition duration-300 cursor-pointer"
-          controls
         />
       </div>
     );
@@ -1304,6 +1345,8 @@ export default function ImageToVideo({ base_models, credits, setCredits, generat
     500: 1
   };
 
+  const [videoModalOpen, setVideoModalOpen] = useState(false);
+
   return (
     <div className="">
       <WarningModal show={show} setShow={setShow} message={message} />
@@ -1348,28 +1391,31 @@ export default function ImageToVideo({ base_models, credits, setCredits, generat
                 <div className="flex w-full flex-col">
                   <div className="mb-20 overflow-y-scroll">
 
-                    {generationsVideos.slice().reverse().map((item, index) => (
-                      <div key={index} className="pt-3">
+                    
+                      <div className="pt-3">
                         <div className="center-content">
                           <Masonry
                             breakpointCols={breakpointColumnsObj}
                             className="my-masonry-grid pl-5 gap-2"
                             columnClassName="my-masonry-grid_column"
                           >
-                            {item.image_urls.map((image, imageIndex) => (
-                              <div key={imageIndex}>
-                                <VerifiedVideo
-                                  key={imageIndex}
-                                  imageUrl={image}
-                                  altDescription="Description of Image"
-                                  index={generationsVideos.length - index - 1}
-                                />
-                              </div>
+                            {generationsVideos.slice().reverse().map((item, index) => (
+                              item.image_urls.map((image, imageIndex) => (
+                                <div key={imageIndex}>
+                                  <VerifiedVideo
+                                    imageUrl={image}
+                                    altDescription="Description of Image"
+                                    index={generationsVideos.length - index - 1}
+                                    videoModalOpen={videoModalOpen}
+                                    setVideoModalOpen={setVideoModalOpen}
+                                  />
+                                </div>
+                              ))
                             ))}
                           </Masonry>
                         </div>
                       </div>
-                    ))}
+
                   </div>
                 </div>
               </div>

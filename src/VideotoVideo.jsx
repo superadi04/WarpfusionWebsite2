@@ -487,6 +487,46 @@ function ModelsAccordion({ model, setModel, models, setHeight, setWidth, setStep
   );
 }
 
+function VideoModal({ open, setOpen, source}) {
+    return (
+      <Transition.Root show={open} as={Fragment}>
+        <Dialog as="div" className="relative z-100" onClose={setOpen}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"/>
+          </Transition.Child>
+          <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+            <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                enterTo="opacity-100 translate-y-0 sm:scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+              >
+                <Dialog.Panel className="">
+                <video
+                  src={source}
+                  controls
+                  className="object-cover rounded-lg transition duration-300 cursor-pointer"
+                />
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition.Root>
+    )
+  }
 
 function ImagePlaceholder() {
   return (
@@ -808,7 +848,7 @@ export default function VideotoVideo({ base_models, credits, setCredits, generat
     }
   }
 
-  const VerifiedVideo = ({ imageUrl, altDescription, index }) => {
+  const VerifiedVideo = ({ imageUrl, altDescription, index, videoModalOpen, setVideoModalOpen }) => {
     const indexRef = useRef(index);
 
     const changeIndex = (currIndex) => {
@@ -848,15 +888,15 @@ export default function VideotoVideo({ base_models, credits, setCredits, generat
 
     // Render actual image if it is verified.
     return (
-      <div className='w-full'>
-        <video
-          src={imageUrl}
-          alt={altDescription}
-          className="object-cover rounded-lg hover:brightness-50 transition duration-300 cursor-pointer"
-          controls
-        />
-      </div>
-    );
+        <div className='w-full z-10' onClick={setVideoModalOpen}>
+          <VideoModal open={videoModalOpen} setOpen={setVideoModalOpen} source={imageUrl}/>
+          <video
+            src={imageUrl}
+            alt={altDescription}
+            className="object-cover rounded-lg hover:brightness-50 transition duration-300 cursor-pointer"
+          />
+        </div>
+      );
   };
 
   const navigate = useNavigate();
@@ -942,6 +982,8 @@ export default function VideotoVideo({ base_models, credits, setCredits, generat
     1000: 2,
     500: 1
   };
+
+  const [videoModalOpen, setVideoModalOpen] = useState(false);
 
   return (
     <div className="">
@@ -1051,28 +1093,29 @@ export default function VideotoVideo({ base_models, credits, setCredits, generat
                   <div className="flex w-full flex-col">
                     <div className="mb-20 overflow-y-scroll">
 
-                      {generationsVideos.slice().reverse().map((item, index) => (
-                        <div key={index} className="pt-3">
-                          <div className="center-content">
-                            <Masonry
-                              breakpointCols={breakpointColumnsObj}
-                              className="my-masonry-grid pl-5 gap-2"
-                              columnClassName="my-masonry-grid_column"
-                            >
-                              {item.image_urls.map((image, imageIndex) => (
+                    <div className="pt-3">
+                        <div className="center-content">
+                          <Masonry
+                            breakpointCols={breakpointColumnsObj}
+                            className="my-masonry-grid pl-5 gap-2"
+                            columnClassName="my-masonry-grid_column"
+                          >
+                            {generationsVideos.slice().reverse().map((item, index) => (
+                              item.image_urls.map((image, imageIndex) => (
                                 <div key={imageIndex}>
                                   <VerifiedVideo
-                                    key={imageIndex}
                                     imageUrl={image}
                                     altDescription="Description of Image"
                                     index={generationsVideos.length - index - 1}
+                                    videoModalOpen={videoModalOpen}
+                                    setVideoModalOpen={setVideoModalOpen}
                                   />
                                 </div>
-                              ))}
-                            </Masonry>
-                          </div>
+                              ))
+                            ))}
+                          </Masonry>
                         </div>
-                      ))}
+                      </div>
 
                     </div>
                   </div>

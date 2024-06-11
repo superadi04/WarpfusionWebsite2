@@ -1132,7 +1132,7 @@ export default function Morph({ base_models, credits, setCredits, generationsIma
     return uploadedImageUrls;
   };
 
-  const VerifiedVideo = ({ imageUrl, altDescription, index }) => {
+  const VerifiedVideo = ({ imageUrl, altDescription, index, videoModalOpen, setVideoModalOpen }) => {
     const indexRef = useRef(index);
 
     const changeIndex = (currIndex) => {
@@ -1172,12 +1172,12 @@ export default function Morph({ base_models, credits, setCredits, generationsIma
 
     // Render actual image if it is verified.
     return (
-      <div className='w-full'>
+        <div className='w-full z-10' onClick={setVideoModalOpen}>
+        <VideoModal open={videoModalOpen} setOpen={setVideoModalOpen} source={imageUrl}/>
         <video
           src={imageUrl}
           alt={altDescription}
           className="object-cover rounded-lg hover:brightness-50 transition duration-300 cursor-pointer"
-          controls
         />
       </div>
     );
@@ -1389,6 +1389,8 @@ export default function Morph({ base_models, credits, setCredits, generationsIma
     500: 1
   };
 
+  const [videoModalOpen, setVideoModalOpen] = useState(false);
+
   return (
     <div className="">
       <WarningModal show={show} setShow={setShow} message={message} />
@@ -1475,28 +1477,29 @@ export default function Morph({ base_models, credits, setCredits, generationsIma
                 <div className="flex w-full flex-col">
                   <div className="mb-20 overflow-y-scroll">
 
-                    {generationsVideos.slice().reverse().map((item, index) => (
-                      <div key={index} className="pt-3">
+                  <div className="pt-3">
                         <div className="center-content">
                           <Masonry
                             breakpointCols={breakpointColumnsObj}
                             className="my-masonry-grid pl-5 gap-2"
                             columnClassName="my-masonry-grid_column"
                           >
-                            {item.image_urls.map((image, imageIndex) => (
-                              <div key={imageIndex}>
-                                <VerifiedVideo
-                                  key={imageIndex}
-                                  imageUrl={image}
-                                  altDescription="Description of Image"
-                                  index={generationsVideos.length - index - 1}
-                                />
-                              </div>
+                            {generationsVideos.slice().reverse().map((item, index) => (
+                              item.image_urls.map((image, imageIndex) => (
+                                <div key={imageIndex}>
+                                  <VerifiedVideo
+                                    imageUrl={image}
+                                    altDescription="Description of Image"
+                                    index={generationsVideos.length - index - 1}
+                                    videoModalOpen={videoModalOpen}
+                                    setVideoModalOpen={setVideoModalOpen}
+                                  />
+                                </div>
+                              ))
                             ))}
                           </Masonry>
                         </div>
                       </div>
-                    ))}
                   </div>
                 </div>
               </div>
