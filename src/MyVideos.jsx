@@ -122,7 +122,7 @@ function VideoComponent({ src, hoverText, id, seed }) {
 
   const handleClick = event => {
     event.preventDefault();
-    navigate(`/video/${id}`);
+    // navigate(`/video/${id}`);
   };
 
   return (
@@ -231,13 +231,11 @@ export default function MyVideos({ setSeed, setStyle, setPrompt, setUrl, credits
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-    //   const { data: userData } = await supabase.auth.getUser();
-    //   if (!userData.user) {
-    //     // navigate('/signup');
-    //     return;
-    //   }
-
-      const userId = "ac1f6589-ab07-4bc0-b06b-72b9956096f6";
+      const { data: userData } = await supabase.auth.getUser();
+      if (!userData.user) {
+        // navigate('/signup');
+        return;
+      }
       console.log("Fetching data for user ID:", userId);
       const { data: data2, error: error5 } = await supabase.from('inferences').select('*').eq('user_id', userId);
       console.log("data 2", data2, error5)
@@ -246,7 +244,6 @@ export default function MyVideos({ setSeed, setStyle, setPrompt, setUrl, credits
         console.error('Error fetching inferences:', error5);
       } else {
         console.log(data2)
-        console.log("jits;flkasjdfsd")
         setData(data2 ?? []);
       }
 

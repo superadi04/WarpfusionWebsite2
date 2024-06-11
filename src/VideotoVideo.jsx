@@ -244,6 +244,66 @@ const products = [
     description: 'Pixel',
     link: 'Pixel'
   },
+  {
+    id: "Sketch Anime",
+    "model_name": "Sketch Anime",
+    "base_model": "",
+    "learning_rate": null,
+    "resolution": null,
+    "training_steps": null,
+    "status": "Sketch Anime",
+    "batch_size": null,
+    title: 'Sketch Anime',
+    price: 'Sketch Anime',
+    imageSrc: 'Sketch Anime.jpeg',
+    description: 'Sketch Anime',
+    link: 'Sketch Anime'
+  },
+  {
+    id: "Anime Lineart",
+    "model_name": "Anime Lineart",
+    "base_model": "",
+    "learning_rate": null,
+    "resolution": null,
+    "training_steps": null,
+    "status": "Anime Lineart",
+    "batch_size": null,
+    title: 'Anime Lineart',
+    price: 'Anime Lineart',
+    imageSrc: 'Anime Lineart.jpeg',
+    description: 'Anime Lineart',
+    link: 'Anime Lineart'
+  },
+  {
+    id: "Studio Ghibli",
+    "model_name": "Studio Ghibli",
+    "base_model": "",
+    "learning_rate": null,
+    "resolution": null,
+    "training_steps": null,
+    "status": "Studio Ghibli",
+    "batch_size": null,
+    title: 'Studio Ghibli',
+    price: 'Studio Ghibli',
+    imageSrc: 'Studio Ghibli.jpeg',
+    description: 'Studio Ghibli',
+    link: 'Studio Ghibli'
+  },
+  {
+    id: "Stone",
+    "model_name": "Stone",
+    "base_model": "",
+    "learning_rate": null,
+    "resolution": null,
+    "training_steps": null,
+    "status": "Stone",
+    "batch_size": null,
+    title: 'Stone',
+    price: 'Stone',
+    imageSrc: 'Stone.jpeg',
+    description: 'Stone',
+    link: 'Stone'
+  },
 ]
 
 function Models({ open, setOpen, model, setModel, models, setHeight, setWidth, setSteps }) {

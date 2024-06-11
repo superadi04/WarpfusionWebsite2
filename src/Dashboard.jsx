@@ -22,6 +22,7 @@ import FAQ from "./FAQ"
 import MyVideos from './MyVideos'
 import ImageToVideo from './ImageToVideo'
 import MotionBrush from './MotionBrush'
+import VideoCard from './VideoCard'
 
 const supabase = createClient('https://zylqiknjgpjzjhylylnw.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inp5bHFpa25qZ3BqempoeWx5bG53Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDU2MTEwMzMsImV4cCI6MjAyMTE4NzAzM30.ua5KcEvaU-2lkp_kHx1rOM4MFekUAZ7Ozd-fTrnMs7g')
 
@@ -69,14 +70,14 @@ const classNames2 = (current) => {
     : 'text-gray-300 hover:bg-gray-600 hover:text-white rounded-md px-3 py-2 text-sm font-medium';
 };
 
-export default function Dashboard({ pageName, modelID, setModelID, createdAt, setCreatedAt, resolution, setResolution, learningRate, setLearningRate, batchSize, setBatchSize, trainingSteps, setTrainingSteps, model_name, setModelName, base_model, setBaseModel, handleModelDetails, urls, setUrls, products, startingModel, setLastPartOfUrl }) {
+export default function Dashboard({ pageName, modelID, setModelID, createdAt, setCreatedAt, resolution, setResolution, learningRate, setLearningRate, batchSize, setBatchSize, trainingSteps, setTrainingSteps, model_name, setModelName, base_model, setBaseModel, handleModelDetails, urls, setUrls, products, startingModel, setLastPartOfUrl, url, style, prompt, seed }) {
   const location = useLocation();
   const [navigation, setNavigation] = useState([
     { name: 'Create', href: '/create', current: false },
     { name: 'Explore', href: '/explore', current: false },
     { name: 'Your Videos', href: '/my-videos', current: false },
     { name: 'Pricing', href: '/pricing', current: false },
-    {name: 'Discord', href: 'https://discord.com/invite/fzdHj9DeuC', current: false},
+    {name: 'Discord', href: 'https://discord.com/invite/QHwrUGDk3Q', current: false},
     {name: 'FAQ', href: '/faq', current: false}
   ]);
 
@@ -127,20 +128,23 @@ export default function Dashboard({ pageName, modelID, setModelID, createdAt, se
       setUsername("saketh.kotamraju@gmail.com")
       const userId =  "404d5ad4-cefc-4155-bc89-9ad6f14047dc"; //userData?.user?.id;
 
-      // Fetch user details
-      const { data: userDetails } = await supabase
-        .from('user_details')
-        .select("*")
-        .eq('id', userId ?? '');
-      // console.log("data", userDetails)
+      // // Fetch user details
+      // const { data: userDetails } = await supabase
+      //   .from('user_details')
+      //   .select("*")
+      //   .eq('id', userId ?? '');
+      // // console.log("data", userDetails)
 
-      if (userDetails && userDetails[0]) {
-        let p = userDetails[0]['plan']
-        const capitalizedStr = p.charAt(0).toUpperCase() + p.slice(1);
-        setPlan(capitalizedStr);
-        setCredits(userDetails[0]['credits']);
-        setMaxCredits(userDetails[0]['max_credits']);
-      }
+      // if (userDetails && userDetails[0]) {
+      //   let p = userDetails[0]['plan']
+      //   const capitalizedStr = p.charAt(0).toUpperCase() + p.slice(1);
+      //   setPlan(capitalizedStr);
+      //   setCredits(userDetails[0]['credits']);
+      //   setMaxCredits(userDetails[0]['max_credits']);
+      // }
+      setPlan("premium-warpvideo-monthly");
+      setCredits(200)
+      setMaxCredits(200)
     };
 
     fetchDataAndCheckAPIKey();  }, []);
@@ -382,13 +386,14 @@ export default function Dashboard({ pageName, modelID, setModelID, createdAt, se
         {pageName === 'Morph' && <Morph base_models={products} credits={credits} setCredits={setCredits} generationsImages={generationsImages} setGenerationsImages={setGenerationsImages} generationsVideos={generationsVideos} setGenerationsVideos={setGenerationsVideos} activeTab={activeTab} startingModel={startingModel} setLastPartOfUrl={setLastPartOfUrl}/>}
         {pageName === 'ImageToVideo' && <ImageToVideo base_models={products} credits={credits} setCredits={setCredits} generationsImages={generationsImages} setGenerationsImages={setGenerationsImages} generationsVideos={generationsVideos} setGenerationsVideos={setGenerationsVideos} activeTab={activeTab} startingModel={startingModel} setLastPartOfUrl={setLastPartOfUrl}/>}
         {pageName === 'MotionBrush' && <MotionBrush base_models={products} credits={credits} setCredits={setCredits} generationsImages={generationsImages} setGenerationsImages={setGenerationsImages} generationsVideos={generationsVideos} setGenerationsVideos={setGenerationsVideos} activeTab={activeTab} startingModel={startingModel} setLastPartOfUrl={setLastPartOfUrl}/>}
-        {pageName === 'Gallery' && <MyVideos/>}
+        {pageName === 'Gallery' && <MyVideos />}
         {pageName === 'Explore' && <InferenceHistory activeTab={activeTab} />}
         {pageName === 'Create' && <MyModels handleInformation={handleModelDetails} setProducts={setModels} products={models} activeTab={activeTab} isModalOpen={isModalOpen} setModalOpen={setModalOpen} />}
         {pageName === 'Model Details' && <ModelDetails model_id={modelID} model_name={model_name} created_at={createdAt} resolution={resolution} learning_rate={learningRate} batch_size={batchSize} training_steps={trainingSteps} urls={urls} base_model={base_model} is_gif={false} />}
         {pageName === 'API Keys' && <APIKeys />}
         {pageName === 'Pricing' && <Pricing />}
         {pageName === 'FAQ' && <FAQ />}
+        {pageName === 'VideoCard' && <VideoCard seed={seed} style={style} prompt={prompt} url={url} />}
       </div>
     </div>
   )
