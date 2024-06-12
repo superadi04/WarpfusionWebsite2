@@ -981,42 +981,15 @@ export default function ImageToVideo({ base_models, credits, setCredits, generat
     const checkSession = async () => {
       const { data: userData, error } = await supabase.auth.getSession();
       if (!userData.session) {
-        // console.log("here")
-        // console.log('User is not signed in!', data);
+        console.log("here")
+        console.log('User is not signed in!', data);
       } else if (error) {
         console.log('Error getting session:', error.message);
       }
       else {
         setApiKey(userData.session.user.id);
       }
-      const { data: userData2 } = await supabase.auth.getUser();
-
-      async function fetchData() {
-        try {
-          const { data: data2, error: error2 } = await supabase
-            .from('all_models')
-            .select("*")
-            .eq('user_id', userData2.user.id ?? '');
-
-          if (error2) throw error2;
-          // console.log("data 2", data2);
-          // const model_dict = data2.reduce((acc, { model_name, id }) => {
-          //   if (model_name && id) acc[model_name] = id;
-          //   return acc;
-          // }, {});
-          // console.log("models before", models)
-          // console.log("new models", model_dict)
-          // setModels(prevModels => ({ ...prevModels, ...data2 }));
-          // console.log("base models", base_models);
-          // console.log("models", models)
-          // setModels([...base_models, ...data2]);
-          setModels([...products, ...data2]);
-          // setModels(base_models => ([...base_models, ...data2]));
-        } catch (error) {
-          // console.log("error", error)
-        }
-      }
-      fetchData();
+      // const { data: userData2 } = await supabase.auth.getUser();
     };
 
     checkSession();

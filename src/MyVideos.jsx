@@ -233,7 +233,7 @@ export default function MyVideos({ setSeed, setStyle, setPrompt, setUrl, credits
       setLoading(true);
       const { data: userData } = await supabase.auth.getUser();
       if (!userData.user) {
-        // navigate('/signup');
+        navigate('/signup');
         return;
       }
       console.log("Fetching data for user ID:", userId);

@@ -5,7 +5,6 @@ import { ChevronDownIcon, MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import { PlusIcon } from '@heroicons/react/20/solid'
 import { useState } from 'react'
 import InferenceHistory from './InferenceHistory'
-import Playground from "./Playground"
 import VideotoVideo from './VideotoVideo'
 import { useNavigate } from 'react-router-dom';
 import APIKeys from './APIKeys'
@@ -14,7 +13,6 @@ import MyModels from "./MyModels"
 import ModelDetails from './ModelDetails'
 import Pricing from './Pricing'
 import { Progress } from '@mantine/core';
-import FinetuneModal from './CreateNewModel'
 import { createClient } from '@supabase/supabase-js'
 import TexttoVideo from "./TexttoVideo"
 import Morph from "./Morph"
@@ -129,31 +127,27 @@ export default function Dashboard({ pageName, modelID, setModelID, createdAt, se
     const fetchDataAndCheckAPIKey = async () => {
       const { data: userData } = await supabase.auth.getUser();
 
-      // if (!userData.user) {
-      //   navigate('/signin');
-      // }
+      if (!userData.user) {
+        navigate('/signin');
+      }
 
-      // setUsername(userData?.user?.email);
-      setUsername("saketh.kotamraju@gmail.com")
-      const userId =  "404d5ad4-cefc-4155-bc89-9ad6f14047dc"; //userData?.user?.id;
+      setUsername(userData?.user?.email);
+      // setUsername("saketh.kotamraju@gmail.com")
+      const userId =  userData?.user?.id;
 
-      // // Fetch user details
-      // const { data: userDetails } = await supabase
-      //   .from('user_details')
-      //   .select("*")
-      //   .eq('id', userId ?? '');
-      // // console.log("data", userDetails)
+      // Fetch user details
+      const { data: userDetails } = await supabase
+        .from('user_details')
+        .select("*")
+        .eq('id', userId ?? '');
 
-      // if (userDetails && userDetails[0]) {
-      //   let p = userDetails[0]['plan']
-      //   const capitalizedStr = p.charAt(0).toUpperCase() + p.slice(1);
-      //   setPlan(capitalizedStr);
-      //   setCredits(userDetails[0]['credits']);
-      //   setMaxCredits(userDetails[0]['max_credits']);
-      // }
-      setPlan("premium-warpvideo-monthly");
-      setCredits(200)
-      setMaxCredits(200)
+      if (userDetails && userDetails[0]) {
+        let p = userDetails[0]['plan']
+        const capitalizedStr = p.charAt(0).toUpperCase() + p.slice(1);
+        setPlan(capitalizedStr);
+        setCredits(userDetails[0]['credits']);
+        setMaxCredits(userDetails[0]['max_credits']);
+      }
     };
 
     fetchDataAndCheckAPIKey();  }, []);
@@ -346,7 +340,7 @@ export default function Dashboard({ pageName, modelID, setModelID, createdAt, se
           </>
         )}
       </Disclosure>
-
+{/* 
       <FinetuneModal
         isOpen={isModalOpen}
         selectedImages={selectedImages}
@@ -360,7 +354,7 @@ export default function Dashboard({ pageName, modelID, setModelID, createdAt, se
         formatTimeStamp={formatTimeStamp}
         models={models}
         setModels={setCredits}
-      />
+      /> */}
 
       <div className='px-6 bg-[#1C1C1C]'>
         {

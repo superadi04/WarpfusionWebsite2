@@ -413,8 +413,8 @@ chain.run(subject="urban photography")
                 <span className="sr-only">Your Company</span>
                 <img
                   className="h-8 w-auto"
-                  src="/finalflushlogo.png"
-                  alt="AI Art Studio"
+                  src="/warpvideologo.png"
+                  alt="AI Image Morph"
                 />
               </a>
               <button
@@ -488,7 +488,7 @@ chain.run(subject="urban photography")
                   >
                     Get Started
                   </a>
-                  <a href="https://docs.flushai.cloud/introduction" className="text-lg px-10 py-5 font-semibold leading-6 text-white">
+                  <a href="https://discord.gg/QHwrUGDk3Q" className="text-lg px-10 py-5 font-semibold leading-6 text-white">
                     Join Discord <span aria-hidden="true">→</span>
                   </a>
                 </div>
@@ -628,7 +628,7 @@ chain.run(subject="urban photography")
               >
                 Get started
               </a>
-              <a href="https://docs.flushai.cloud/introduction" className="text-md font-semibold leading-6 text-gray-300">
+              <a href="https://discord.gg/QHwrUGDk3Q" className="text-md font-semibold leading-6 text-gray-300">
                 Join Discord <span aria-hidden="true">→</span>
               </a>
             </div>

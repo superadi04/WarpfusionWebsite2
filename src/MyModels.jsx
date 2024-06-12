@@ -1,7 +1,6 @@
 import { Fragment, useState, useEffect } from 'react'
 import { Menu, Transition, Dialog } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
-import FinetuneModal from './CreateNewModel'
 import { createClient } from '@supabase/supabase-js'
 import { useNavigate } from 'react-router-dom';
 import { ExclamationTriangleIcon, XMarkIcon } from '@heroicons/react/24/outline'
@@ -1022,7 +1021,7 @@ export default function MyModels({ handleInformation, isModalOpen, setModalOpen,
           {/* <TexttoVideoCreation creationName={"Deforum"} description={"Create immersive videos with Deforum with a text prompt"} tag={"Popular"} plan={plan} setOpen={setOpen} /> */}
           {/* <Text2VideoCreation  creationName={"Text to Video"} description={"Create hyperrealistic videos with text"} tag={"Popular"} setOpen={setOpen} demoVideoLink={"text_to_video.mp4"} setPricingModalOpen={setPricingModalOpen} /> */}
           <MotionBrush creationName={"Motion Brush"} description={"Make parts of your photo move"} tag={"Popular"} setOpen={setOpen} demoVideoLink={"motion_brush.mp4"} />
-          <Tooncrafter  creationName={"ToonCrafter"} description={"Interpolate two cartoon images"} tag={"Popular"} setOpen={setOpen} demoVideoLink={"tooncrafter.mp4"}/>
+          {/* <Tooncrafter  creationName={"ToonCrafter"} description={"Interpolate two cartoon images"} tag={"Popular"} setOpen={setOpen} demoVideoLink={"tooncrafter.mp4"}/> */}
         </div>
         <h2 className="text-3xl mt-7 font-semibold tracking-tight text-gray-300 text-left">
           Discover

@@ -575,8 +575,8 @@ export default function VideotoVideo({ base_models, credits, setCredits, generat
     const checkSession = async () => {
       const { data: userData, error } = await supabase.auth.getSession();
       if (!userData.session) {
-        // console.log("here")
-        // console.log('User is not signed in!', data);
+        console.log("here")
+        console.log('User is not signed in!', data);
       } else if (error) {
         console.log('Error getting session:', error.message);
       }
@@ -601,7 +601,7 @@ export default function VideotoVideo({ base_models, credits, setCredits, generat
     };
 
     checkSession();
-    setApiKey("404d5ad4-cefc-4155-bc89-9ad6f14047dc")
+    // setApiKey("404d5ad4-cefc-4155-bc89-9ad6f14047dc")
   }, []);
 
   const [promptImage, setPromptImage] = useState("masterpiece, realistic");

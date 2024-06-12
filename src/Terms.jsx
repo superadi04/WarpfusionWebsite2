@@ -1,7 +1,6 @@
 import { Fragment, useState, useEffect } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
-import FinetuneModal from './CreateNewModel'
 import { createClient } from '@supabase/supabase-js'
 import { useNavigate } from 'react-router-dom';
 
