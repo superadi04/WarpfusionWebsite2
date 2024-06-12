@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 import { Dialog } from '@headlessui/react'
 import {
   Bars3Icon,
@@ -21,8 +21,8 @@ import SyntaxHighlighter from 'react-syntax-highlighter';
 import { darcula } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 
 const navigation = [
-  { name: 'Explore', href: '' },
-  { name: 'FAQ', href: '' },
+  { name: 'Explore', href: '#explore' },
+  { name: 'FAQ', href: '#faq' },
 ]
 
 const tiers = [
@@ -354,6 +354,18 @@ chain = Chain(
 chain.run(subject="urban photography")
 `;
 
+  const exploreRef = useRef(null); // Create a ref for the target div
+
+  const scrollToExplore = () => {
+    exploreRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' }); // Function to scroll to the ref
+  };
+
+  const faqref = useRef(null); // Create a ref for the target div
+
+  const scrollToExplore2 = () => {
+    faqref.current.scrollIntoView({ behavior: 'smooth', block: 'start' }); // Function to scroll to the ref
+  };
+
   return (
     <div className="w-full overflow-y-auto bg-[#04040c] min-h-screen absolute top-0 left-0">
       {/* Header */}
@@ -380,11 +392,12 @@ chain.run(subject="urban photography")
             </button>
           </div>
           <div className="hidden lg:flex lg:gap-x-12">
-            {navigation.map((item) => (
-              <a key={item.name} href={item.href} className="text-md font-semibold leading-6 text-white">
-                {item.name}
+              <a href={'#explore'} onClick={scrollToExplore} className="text-md font-semibold leading-6 text-white">
+                Explore
               </a>
-            ))}
+              <a href={'#faq'} onClick={scrollToExplore2} className="text-md font-semibold leading-6 text-white">
+                FAQ
+              </a>
           </div>
           <div className="hidden lg:flex lg:flex-1 lg:justify-end">
             <a href="signin" className="text-md font-semibold leading-6 text-white">
@@ -484,7 +497,7 @@ chain.run(subject="urban photography")
           </div>
         </div>
 
-        <div className="mt-28 px-4 lg:px-8 max-w-7xl mx-auto">
+        <div ref={exploreRef} className="mt-28 px-4 lg:px-8 max-w-7xl mx-auto">
           <h2 className="text-4xl font-bold text-white sm:text-5xl">
             Video-to-Video
           </h2>
@@ -492,6 +505,8 @@ chain.run(subject="urban photography")
             Pick your style, fit your need. Whatever your content needs, we have the right tool to help you scale.
           </p>
         </div>
+
+        
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-7xl px-10 lg:px-0 mx-auto">
           <div class="video-container">
@@ -588,7 +603,9 @@ chain.run(subject="urban photography")
 
         <VideoTabs/>
 
+        <div ref={faqref}>
         <FAQ/>
+        </div>
 
         {/* CTA section */}
         <div className="relative -z-10 mt-24 px-6 lg:px-8">

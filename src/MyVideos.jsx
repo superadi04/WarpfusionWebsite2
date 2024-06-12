@@ -265,10 +265,8 @@ export default function MyVideos({ setSeed, setStyle, setPrompt, setUrl, credits
   }, []);
 
   return (
-    <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 0px)' }}>
-      <h2 className="text-3xl mt-24 font-semibold tracking-tight text-gray-300 text-left">My Videos</h2>
-      <div className="mt-8">
-
+    <div className="mx-auto px-4 sm:px-6 lg:px-8 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 0px)' }}>
+      <div className="mt-6">
           <RecentCreations data2={data} setSeed={setSeed} setStyle={setStyle} setPrompt={setPrompt} setUrl={setUrl} />
       </div>
     </div>
