@@ -944,6 +944,63 @@ function MotionBrush({ imageSrc, creationName, description, tag, plan, setOpen, 
 }
 
 
+function Tooncrafter({ imageSrc, creationName, description, tag, plan, setOpen, demoVideoLink, credits }) {
+  // const additionalClasses = plan === 'free' ? 'bg-[#0b0b0b] opacity-50' : '';
+  const additionalClasses = credits < 200 ? 'bg-[#0b0b0b] opacity-50' : '';
+
+  function handleClick(e) {
+    // if (!loggedIn) {
+    //   e.preventDefault();
+    //   setPricingModalOpen(true)
+    // }
+    if (credits < 200) {
+      e.preventDefault();
+      setOpen(true);
+    }
+  }
+
+  return (
+    <div className={`relative z-10 flex flex-row ${additionalClasses}  h-32`}> {/* Added h-64 for fixed height */}
+      <a href="/motion-brush" onClick={handleClick} className='h-full w-full'> {/* Changed to h-full w-full to fill the parent */}
+        <div key={imageSrc} className="group flex flex-row overflow-hidden rounded-lg relative w-full h-full">
+          {/* Text Container */}
+          <div className={`flex flex-col space-y-2 p-4 bg-[#131313] w-1/2 h-full`}>
+            <h3 className="text-md font-medium text-gray-300 text-left">
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span aria-hidden="true" className="absolute inset-0" />
+                {creationName}
+                {credits < 200 && (
+                  <div className="">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+                    </svg>
+                  </div>
+                )}
+              </div>
+            </h3>
+            <p className="text-sm text-left text-gray-500">
+              {description}
+            </p>
+          </div>
+          {/* Video Container */}
+          <div className="w-1/2 h-full" style={{ transition: 'opacity 0.1s ease-in-out' }}>
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              className={`h-full w-full object-cover object-center`}
+              src={demoVideoLink}>
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+      </a>
+    </div>
+  );
+}
+
+
 export default function MyModels({ handleInformation, isModalOpen, setModalOpen, activeTab, products, setProducts }) {
   const [open, setOpen] = useState(false);
   const [pricingModalOpen, setPricingModalOpen] = useState(false);
@@ -965,6 +1022,7 @@ export default function MyModels({ handleInformation, isModalOpen, setModalOpen,
           {/* <TexttoVideoCreation creationName={"Deforum"} description={"Create immersive videos with Deforum with a text prompt"} tag={"Popular"} plan={plan} setOpen={setOpen} /> */}
           {/* <Text2VideoCreation  creationName={"Text to Video"} description={"Create hyperrealistic videos with text"} tag={"Popular"} setOpen={setOpen} demoVideoLink={"text_to_video.mp4"} setPricingModalOpen={setPricingModalOpen} /> */}
           <MotionBrush creationName={"Motion Brush"} description={"Make parts of your photo move"} tag={"Popular"} setOpen={setOpen} demoVideoLink={"motion_brush.mp4"} />
+          <Tooncrafter  creationName={"ToonCrafter"} description={"Interpolate two cartoon images"} tag={"Popular"} setOpen={setOpen} demoVideoLink={"tooncrafter.mp4"}/>
         </div>
         <h2 className="text-3xl mt-7 font-semibold tracking-tight text-gray-300 text-left">
           Discover
